@@ -23,7 +23,7 @@ export default function LoginPage() {
       <Card className="p-8 lg:p-12">
         <CardContent className="mx-auto max-w-[450px] space-y-6">
           <div className="space-y-2 text-center">
-            <h1 className="text-3xl font-bold">Connexion</h1>
+            <h1 className="text-3xl font-bold text-[#25026B]">Connexion</h1>
             <p className="text-muted-foreground">
               Content de te revoir! Veuillez entrer vos coordonnées.
             </p>
@@ -48,12 +48,13 @@ export default function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                placeholder="Entrez votre mot de passe"
               />
             </div>
             <div className="text-right">
               <Link
                 href="/forgot-password"
-                className="text-sm text-primary hover:underline"
+                className="text-sm text-[#25026B] hover:underline font-bold"
               >
                 Mot de passe oublié
               </Link>
@@ -88,7 +89,7 @@ export default function LoginPage() {
           </div>
           <div className="text-center text-sm">
             vous n&apos;avez pas de compte?{" "}
-            <Link href="/register" className="text-primary hover:underline">
+            <Link href="/register" className="text-primary hover:underline text-[#25026B] font-bold">
               Inscrivez-vous
             </Link>
           </div>

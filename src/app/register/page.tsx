@@ -35,7 +35,7 @@ export default function RegisterPage() {
       <Card className="p-8 lg:p-12">
         <CardContent className="mx-auto max-w-[450px] space-y-6">
           <div className="space-y-2 text-center">
-            <h1 className="text-3xl font-bold">Inscription</h1>
+            <h1 className="text-3xl font-bold text-[#25026B]">Inscription</h1>
             <p className="text-muted-foreground">
               Entrez vos informations et créer un compte
             </p>
@@ -143,7 +143,7 @@ export default function RegisterPage() {
           </div>
           <div className="text-center text-sm">
             Vous avez un compte?{" "}
-            <Link href="/login" className="text-primary hover:underline">
+            <Link href="/login" className="text-primary hover:underline text-[#25026B] font-bold">
               Connectez-vous
             </Link>
           </div>
