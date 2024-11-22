@@ -23,15 +23,12 @@ const HeroSection: React.FC = () => {
         </div>
 
         {/* Images à droite */}
-        <div className="flex space-x-4">
+        <div className="flex space-x-4 mr-20">
           <ImageSection
-            imageUrl="https://via.placeholder.com/200"
+            imageUrl="/images/teacher-helping-kids-class.jpg"
             alt="Enfant 1"
           />
-          <ImageSection
-            imageUrl="https://via.placeholder.com/200"
-            alt="Enfant 2"
-          />
+          
         </div>
       </div>
     </section>

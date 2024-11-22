@@ -28,7 +28,7 @@ const TestimonialSlider: React.FC<TestimonialSliderProps> = ({ testimonials }) =
   };
 
   return (
-    <div className="text-center py-12">
+    <div className="text-center py-8">
       <h2 className="text-3xl font-bold text-[#1A013F] mb-8">Avis</h2>
       <div className="flex justify-center items-center gap-4">
         {/* Bouton Précédent */}

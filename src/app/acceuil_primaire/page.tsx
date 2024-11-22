@@ -10,20 +10,20 @@ import Testimonials from "@/components/ui/primaire/section/Testimonials";
 export default function AcceuilPrimaire() {
     const programmingCourses = [
         {
-            icon: "https://via.placeholder.com/48x48?text=Scratch",
+            icon: "/images/scratch.png",
             title: "Scratch",
             description: "Nous créons des jeux à l'aide des blocs visuels.",
             age: "7 ans",
         },
         {
-            icon: "https://via.placeholder.com/48x48?text=Python",
+            icon: "/images/python.png",
             title: "Python",
             description:
                 "Nous écrivons des applications, des jeux et des sites web en utilisant le code d'un programme.",
             age: "10 ans",
         },
         {
-            icon: "https://via.placeholder.com/48x48?text=Roblox",
+            icon: "/images/roblox.jpg",
             title: "Roblox",
             description:
                 "Nous travaillons avec des graphiques 3D et créons des mondes virtuels.",

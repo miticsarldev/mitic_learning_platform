@@ -4,32 +4,32 @@ import CardCourse from "../components/CardCourse";
 const PopularCourses: React.FC = () => {
   const courses = [
     {
-      image: "https://via.placeholder.com/300x200?text=Design+UX/UI",
+      image: "/images/category_images.jpg",
       title: "Design UX/UI",
       duration: "6 mois",
     },
     {
-      image: "https://via.placeholder.com/300x200?text=Business+Plan",
+      image: "/images/category_images.jpg",
       title: "Business plan",
       duration: "6 mois",
     },
     {
-      image: "https://via.placeholder.com/300x200?text=Marketing+Digital",
+      image: "/images/category_images.jpg",
       title: "Marketing digital",
       duration: "6 mois",
     },
     {
-      image: "https://via.placeholder.com/300x200?text=Comptabilite",
+      image: "/images/category_images.jpg",
       title: "Comptabilité",
       duration: "6 mois",
     },
     {
-      image: "https://via.placeholder.com/300x200?text=E-commerce",
+      image: "/images/category_images.jpg",
       title: "E-commerce",
       duration: "6 mois",
     },
     {
-      image: "https://via.placeholder.com/300x200?text=Data+Analysis",
+      image: "/images/category_images.jpg",
       title: "Analyse de données",
       duration: "6 mois",
     },
@@ -41,7 +41,7 @@ const PopularCourses: React.FC = () => {
         <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 text-gray-800">
           Cours populaires
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 ml-20">
           {courses.map((course, index) => (
             <CardCourse
               key={index}
