@@ -1,6 +1,11 @@
 import React from "react";
-import ImageSection from "../components/ImageSection";
+import { Swiper, SwiperSlide } from "swiper/react"; // Importation des composants de Swiper
+import "swiper/css"; // Styles de base de Swiper
+import "swiper/css/effect-fade"; // Styles pour un effet spécifique
+import "swiper/css/navigation"; // Styles pour les boutons de navigation
+import { Navigation, EffectFade, Autoplay } from "swiper/modules";
 import { PrimaryButton, SecondaryButton } from "../components/Buttons";
+import ImageSection from "../components/ImageSection";
 
 const HeroSection: React.FC = () => {
   return (
@@ -22,13 +27,31 @@ const HeroSection: React.FC = () => {
           </div>
         </div>
 
-        {/* Images à droite */}
-        <div className="flex space-x-4 mr-20">
-          <ImageSection
-            imageUrl="/images/teacher-helping-kids-class.jpg"
-            alt="Enfant 1"
-          />
-          
+        {/* Slider des images à droite */}
+        <div className="w-full md:w-1/2">
+          <Swiper
+            modules={[Navigation, EffectFade, Autoplay]} // Modules utilisés
+            effect="fade" // Effet de transition
+            autoplay={{ delay: 3000 }} // Défilement automatique toutes les 3s
+            loop={true} // Répète les images en boucle
+            className="rounded-lg shadow-lg" // Ajout d'une ombre et de coins arrondis
+          >
+            {/* Slide 1 */}
+            <SwiperSlide>
+              <ImageSection
+                imageUrl="/images/teacher-helping-kids-class.jpg"
+                alt="Enfant 1"
+              />
+            </SwiperSlide>
+            {/* Slide 2 */}
+            <SwiperSlide>
+
+              <ImageSection
+                imageUrl="/images/shallow-focus-shot-african-child-learning-school.jpg"
+                alt="Enfant 1"
+              />
+            </SwiperSlide>
+          </Swiper>
         </div>
       </div>
     </section>
