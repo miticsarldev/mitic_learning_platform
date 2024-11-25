@@ -7,13 +7,13 @@ const DomainesEtudes: React.FC = () => {
             title: "Développeur fullstack",
             description:
                 "Créez des applications modernes et flexibles en maîtrisant le front-end et le back-end.",
-            image: "/images/fullstack.png", // Remplacez par votre image
+            image: "/images/python.png", // Remplacez par votre image
         },
         {
             title: "Graphiste",
             description:
                 "Maîtrisez les concepts fondamentaux du design et libérez votre créativité.",
-            image: "/images/graphiste.png",
+            image: "/images/python.png",
         },
         {
             title: "Développeur Python",
@@ -25,13 +25,19 @@ const DomainesEtudes: React.FC = () => {
             title: "Développeur Java",
             description:
                 "Créez des solutions performantes et sécurisées avec ce langage universel.",
-            image: "/images/java.png",
+            image: "/images/python.png",
         },
         {
             title: "Développeur front-end",
             description:
                 "Donnez vie aux interfaces web modernes et dynamiques.",
-            image: "/images/frontend.png",
+            image: "/images/python.png",
+        }, 
+        {
+            title: "Développeur front-end",
+            description:
+                "Donnez vie aux interfaces web modernes et dynamiques.",
+            image: "/images/python.png",
         },
         // Ajoutez d'autres domaines ici
     ];
