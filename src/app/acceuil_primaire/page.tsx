@@ -1,5 +1,7 @@
 "use client";
 
+import ContactSection from "@/components/ui/contactForm/ContactSection";
+import FooterSection from "@/components/ui/footer/FooterSection";
 import CategorySection from "@/components/ui/primaire/section/CategorySection";
 import HeroSection from "@/components/ui/primaire/section/HeroSection";
 import PopularCourses from "@/components/ui/primaire/section/PopularCourse";
@@ -44,6 +46,8 @@ export default function AcceuilPrimaire() {
                 </div>
             </section>
             <Testimonials />
+            <ContactSection />
+            <FooterSection />
         </>
     );
 }
