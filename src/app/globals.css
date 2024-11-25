@@ -76,3 +76,19 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+.rounded-bottom {
+  position: relative;
+  overflow: hidden;
+}
+
+.rounded-bottom::after {
+  content: "";
+  position: absolute;
+  bottom: -50px; /* Ajustez selon la courbe désirée */
+  left: 0;
+  width: 100%;
+  height: 100px; /* Ajustez selon la courbe désirée */
+  background-color: #1a013f; /* Même couleur que le fond de la section */
+  border-radius: 50% 50% 0 0;
+}
