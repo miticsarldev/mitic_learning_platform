@@ -10,7 +10,6 @@ import { PaintBucket, MonitorDot, Database, Briefcase } from 'lucide-react';
 import { CategoryCard } from "@/components/ui/CategoryCard";
 import TestimonialCard from "@/components/ui/TestimonialCard";
 
-
 type Testimonial = {
     name: string;
     email: string;
@@ -86,7 +85,7 @@ export default function ListeCours() {
             email: "sali.hill@example.com",
             description:
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
-            avatar: "/images/Capture d’écran 2024-11-21 162903.png", // Remplacez par l'URL de votre image.
+            avatar: "/images/Capture d’écran 2024-11-21 162903.png",
         },
     ];
 
@@ -170,7 +169,6 @@ export default function ListeCours() {
                     </div>
                 </div>
             </section>
-
         </>
     );
 }
