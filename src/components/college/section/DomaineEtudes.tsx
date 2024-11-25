@@ -37,11 +37,11 @@ const DomainesEtudes: React.FC = () => {
     ];
 
     return (
-        <section className="bg-[#29015D] py-12 px-6 text-white">
+        <section className=" py-12 px-6 text-white">
             <div className="max-w-6xl mx-auto">
                 {/* Titre principal */}
-                <h2 className="text-3xl font-bold text-center mb-4">Domaine d’études</h2>
-                <p className="text-center text-gray-200 mb-8">
+                <h2 className="text-3xl font-bold text-center mb-4 text-[#29015D]">Domaine d’études</h2>
+                <p className="text-center mb-8 text-[#29015D]">
                     Sélectionnez le domaine académique ou professionnel qui correspond le mieux à vos centres d'intérêt et objectifs de carrière.
                 </p>
 
