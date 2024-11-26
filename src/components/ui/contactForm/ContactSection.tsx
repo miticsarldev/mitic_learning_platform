@@ -20,8 +20,8 @@ const ContactSection: React.FC = () => {
   ];
 
   return (
-    <section className="bg-blue-100 py-10">
-      <div className="max-w-6xl mx-auto flex flex-col lg:flex-row items-center space-y-6 lg:space-y-0 lg:space-x-12 px-4">
+    <section className="bg-blue-50 py-10">
+      <div className="max-w-6xl mx-auto flex flex-col lg:flex-row items-center gap-10 space-y-6 lg:space-y-0 lg:space-x-12 px-2">
         {/* Texte et étapes */}
         <div className="flex-1">
           <h1 className="text-2xl font-bold text-gray-900 mb-6">Essayez une leçon gratuite !</h1>
@@ -29,7 +29,7 @@ const ContactSection: React.FC = () => {
         </div>
 
         {/* Formulaire */}
-        <div className="flex-1">
+        <div className="flex-1 ml-10">
           <Form />
         </div>
       </div>

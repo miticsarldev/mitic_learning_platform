@@ -9,7 +9,7 @@ const ReseauxSociaux: React.FC = () => {
     ];
 
     return (
-        <div className="flex justify-center space-x-4 mt-4">
+        <div className="flex justify-start space-x-4 mt-4">
             {socialLinks.map((social) => (
                 <a href={social.url} target="_blank" rel="noopener noreferrer" key={social.name}>
                     <img

@@ -10,16 +10,16 @@ import Navbar from "../../navbar/Navbar";
 
 const HeroSection: React.FC = () => {
   return (
-    <div className="bg-[#1A013F] text-white">
+    <div className="bg-[#1A013F] text-white px-10">
       {/* Barre de navigation */}
       <Navbar />
 
       {/* Section principale */}
       <section className="py-12 md:py-20 rounded-bottom">
-        <div className="container mx-auto px-6 flex flex-col-reverse md:flex-row items-center justify-between">
+        <div className="container mx-auto flex flex-col-reverse md:flex-row items-center justify-between">
           {/* Texte à gauche */}
-          <div className="max-w-lg px-10">
-            <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-6">
+          <div className="max-w-lg">
+            <h1 className="text-3xl md:text-5xl font-bold leading-tight mb-6">
               L'école où vous souhaitez étudier
             </h1>
             <p className="text-lg mb-8">

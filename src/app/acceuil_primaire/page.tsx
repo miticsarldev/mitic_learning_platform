@@ -1,7 +1,10 @@
 "use client";
 
+import { LandingPage } from "@/components/heroSection/LandingPage";
 import ContactSection from "@/components/ui/contactForm/ContactSection";
+import FounderSection from "@/components/ui/contactForm/FounderSection";
 import FooterSection from "@/components/ui/footer/FooterSection";
+import { Gallery } from "@/components/ui/primaire/components/Gallery";
 import CategorySection from "@/components/ui/primaire/section/CategorySection";
 import HeroSection from "@/components/ui/primaire/section/HeroSection";
 import PopularCourses from "@/components/ui/primaire/section/PopularCourse";
@@ -35,17 +38,22 @@ export default function AcceuilPrimaire() {
 
     return (
         <>
-            <HeroSection />
-            <PopularCourses />
+            <LandingPage />
+            <Gallery />
             <section className="py-12">
                 <div className="container mx-auto px-6">
                     <h1 className="text-3xl md:text-4xl font-bold text-center mb-8 text-[#1A013F]">
                         Découvrir nos cours
                     </h1>
-                    <CategorySection title="Programmation" courses={programmingCourses} />
+                    <div className="flex flex-col gap-10">
+                        <CategorySection title="Programmation" courses={programmingCourses} />
+                        <CategorySection title="Programmation" courses={programmingCourses} />
+                        <CategorySection title="Programmation" courses={programmingCourses} />
+                    </div>
                 </div>
             </section>
             <Testimonials />
+            <FounderSection />
             <ContactSection />
             <FooterSection />
         </>

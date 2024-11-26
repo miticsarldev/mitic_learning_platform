@@ -7,7 +7,7 @@ const Navbar: React.FC = () => {
     const menuItems = ['Accueil', 'Cours', 'Classe', 'Enterprise'];
 
     return (
-        <nav className=" py-4 px-6 flex justify-evenly items-center">
+        <nav className=" py-4 flex justify-between items-center">
             {/* Logo */}
             <Logo />
 

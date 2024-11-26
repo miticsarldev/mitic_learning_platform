@@ -9,8 +9,6 @@ const FooterSection: React.FC = () => (
     <div className="max-w-6xl mx-auto">
       {/* Titre et réseaux sociaux */}
       <TitrePrincipal />
-      <ReseauxSociaux />
-
       {/* Grille principale */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mt-8 text-white">
         {/* Colonne 1 */}

@@ -37,11 +37,12 @@ const PopularCourses: React.FC = () => {
 
   return (
     <section className="py-12 bg-gray-50">
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto">
         <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 text-gray-800">
           Cours populaires
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 ml-20">
+        {/* Grid Layout */}
+        <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 pl-36">
           {courses.map((course, index) => (
             <CardCourse
               key={index}
