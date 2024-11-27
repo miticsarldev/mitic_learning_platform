@@ -1,6 +1,7 @@
 "use client";
 
-import { LandingPage } from "@/components/heroSection/LandingPage";
+import { LandingPage } from "@/components/ui/primaire/section/heroSection/LandingPage";
+import Navbar from "@/components/navbar";
 import ContactSection from "@/components/ui/contactForm/ContactSection";
 import FounderSection from "@/components/ui/contactForm/FounderSection";
 import FooterSection from "@/components/ui/footer/FooterSection";
@@ -38,6 +39,7 @@ export default function AcceuilPrimaire() {
 
     return (
         <>
+            <Navbar />
             <LandingPage />
             <Gallery />
             <section className="py-12">

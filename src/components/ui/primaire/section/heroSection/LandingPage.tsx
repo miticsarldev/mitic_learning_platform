@@ -16,22 +16,7 @@ export const LandingPage: React.FC = () => {
           className="object-cover absolute inset-0 size-full"
         />
         <div className="flex relative flex-col w-full max-w-[1665px] max-md:max-w-full">
-          <nav className="flex flex-wrap gap-5 justify-between w-full whitespace-nowrap max-md:max-w-full">
-            <div className="pr-0 pl-6 text-3xl font-bold tracking-widest text-white rounded-full bg-slate-400 h-[70px] w-[70px]">
-              Mitic
-            </div>
-            <div className="flex flex-wrap gap-10 self-start text-2xl tracking-wide max-md:max-w-full">
-              <div className="flex flex-wrap gap-10 my-auto text-white max-md:max-w-full">
-                {navItems.map((item, index) => (
-                  <NavItem key={index} text={item} />
-                ))}
-              </div>
-              <div className="flex gap-7 font-medium">
-                <Button text="Connexion" variant="secondary" />
-                <Button text="Inscription" variant="primary" />
-              </div>
-            </div>
-          </nav>
+          
           <main className="flex flex-wrap gap-10 mt-48 ml-5 w-full max-w-[1638px] max-md:mt-10 max-md:mr-2 max-md:max-w-full">
             <div className="flex-auto max-md:max-w-full">
               <div className="flex gap-5 max-md:flex-col">

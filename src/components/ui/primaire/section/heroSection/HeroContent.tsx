@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { HeroContentProps } from './type';
 import { Button } from './Button';
-import { PrimaryButton, SecondaryButton } from '../ui/primaire/components/Buttons';
+import { PrimaryButton, SecondaryButton } from '../../components/Buttons';
 
 export const HeroContent: React.FC<HeroContentProps> = ({ title, description }) => (
     <div className="flex flex-col items-start mr-0 w-full text-white max-md:max-w-full">

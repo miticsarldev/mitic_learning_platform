@@ -4,7 +4,11 @@ import { motion } from "framer-motion";
 const FounderSection: React.FC = () => {
   return (
     <section className="bg-blue-50 py-16 px-8">
+      <h1 className="text-3xl md:text-4xl font-bold text-center mb-8 text-[#1A013F]">
+        Notre Equipe
+      </h1>
       <div className="container mx-auto flex flex-col md:flex-row items-center justify-center space-y-10 md:space-y-0 md:space-x-12">
+
         {/* Image avec animation */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
