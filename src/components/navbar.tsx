@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 
 export default function Navbar() {
   return (
-    <header className="sticky max-w-screen-xl mx-auto top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky max-w-screen-full px-20 mx-auto top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-14 items-center">
         <div className="mr-4 hidden md:flex">
           <Link className="mr-6 flex items-center space-x-2" href="/">
@@ -19,27 +19,65 @@ export default function Navbar() {
           <nav className="flex items-center space-x-6 text-sm font-medium">
             <Link
               className="transition-colors hover:text-foreground/80 text-foreground"
-              href="/courses"
+              href="/"
             >
-              Les Cours
+              Acceuil
             </Link>
+            <div className="relative group">
+              <button className="transition-colors hover:text-foreground/80 text-foreground">
+                Cours
+              </button>
+              <div className="absolute left-0 hidden group-hover:block bg-white shadow-lg rounded-md py-2 z-50">
+                <Link
+                  className="block px-4 py-2 hover:bg-gray-100 text-foreground"
+                  href="/courses/math"
+                >
+                  Mathématiques
+                </Link>
+                <Link
+                  className="block px-4 py-2 hover:bg-gray-100 text-foreground"
+                  href="/courses/science"
+                >
+                  Sciences
+                </Link>
+                <Link
+                  className="block px-4 py-2 hover:bg-gray-100 text-foreground"
+                  href="/courses/history"
+                >
+                  Histoire
+                </Link>
+              </div>
+            </div>
+            <div className="relative group">
+              <button className="transition-colors hover:text-foreground/80 text-foreground">
+                Classe
+              </button>
+              <div className="absolute left-0 hidden group-hover:block bg-white shadow-lg rounded-md py-2 z-50">
+                <Link
+                  className="block px-4 py-2 hover:bg-gray-100 text-foreground"
+                  href="/classes/primary"
+                >
+                  Primaire
+                </Link>
+                <Link
+                  className="block px-4 py-2 hover:bg-gray-100 text-foreground"
+                  href="/classes/secondary"
+                >
+                  Secondaire
+                </Link>
+                <Link
+                  className="block px-4 py-2 hover:bg-gray-100 text-foreground"
+                  href="/classes/highschool"
+                >
+                  Lycée
+                </Link>
+              </div>
+            </div>
             <Link
               className="transition-colors hover:text-foreground/80 text-foreground"
-              href="/tutors"
+              href="/enterprise"
             >
-              Les Tutors
-            </Link>
-            <Link
-              className="transition-colors hover:text-foreground/80 text-foreground"
-              href="/about"
-            >
-              A Propos
-            </Link>
-            <Link
-              className="transition-colors hover:text-foreground/80 text-foreground"
-              href="/contact"
-            >
-              Contact
+              Entreprise
             </Link>
           </nav>
         </div>
@@ -54,7 +92,7 @@ export default function Navbar() {
                 <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                 <Input
                   type="search"
-                  placeholder="Rechercher un courses..."
+                  placeholder="Rechercher un cours..."
                   className="pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px]"
                 />
               </div>
