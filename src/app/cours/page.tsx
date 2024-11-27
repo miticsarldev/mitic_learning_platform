@@ -1,9 +1,29 @@
 'use client'; // Mark this file as a Client Component
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaHome, FaTrophy } from "react-icons/fa";
 import Aside from ".//aside";
+const ProgressBar = ({ onprogress }: { onprogress: number | null }) => {
+  const totalSteps = 10;
 
+  // Vérifier si `onprogress` est défini avant de calculer `filledSteps`
+  const filledSteps = onprogress !== null ? Math.round((onprogress / 100) * totalSteps) : 0;
+
+  return (
+    <div className="relative bg-gray-200 h-4 w-full rounded-full">
+      {[...Array(totalSteps)].map((_, index) => (
+        <div
+          key={index}
+          className={`absolute top-0 left-${(index / totalSteps) * 100}% h-4 rounded-full ${index < filledSteps ? 'bg-[#490AC6]' : 'bg-gray-300'}`}
+          style={{
+            width: `${100 / totalSteps}%`,
+            left: `${(index / totalSteps) * 100}%`,
+          }}
+        />
+      ))}
+    </div>
+  );
+};
 // The rest of your component code remains unchanged
 const CourseDetails = () => {
   const [visibleComments, setVisibleComments] = useState(2);
@@ -62,7 +82,16 @@ const CourseDetails = () => {
   const handleLoadMore = () => {
     setVisibleComments(prevVisible => prevVisible + 2);
   };
+  
+  const [onprogress, setOnProgress] = useState<number | null>(null);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setOnProgress((prev) => (prev !== null && prev < 100 ? prev + 10 : 100));
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
@@ -87,10 +116,7 @@ const CourseDetails = () => {
           <FaHome className="text-[#490AC6] text-xl mr-4" />
           {/* Barre de progression */}
           <div className="relative bg-gray-200 h-4 flex-grow rounded-full">
-            <div
-              className="absolute top-0 left-0 h-4 bg-[#490AC6] rounded-full"
-              style={{ width: "50%" }} // Dynamique selon l'avancement
-            ></div>
+      <ProgressBar onprogress={onprogress} />
             {/* Flèche triangulaire */}
             <div
               className="absolute -bottom-3 left-1/2 transform -translate-x-1/2"
@@ -107,57 +133,94 @@ const CourseDetails = () => {
           <FaTrophy className="text-yellow-500 text-xl ml-4" />
         </div>
       </section>
-
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-6 py-8 px-4">
-        {/* Main Section */}
-        <div className="md:col-span-3">
-          {/* Video/Image */}
-          <div className="relative">
-            <img
-              src="https://via.placeholder.com/800x400"
-              alt="Vidéo principale"
-              className="rounded-lg shadow-md"
-            />
-            <div className="absolute inset-0 flex justify-center items-center">
-              <button className="bg-purple-700 text-white w-16 h-16 rounded-full flex justify-center items-center">
-                ▶
-              </button>
-            </div>
-          </div>
+<main className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-6 py-8 px-4">
+  {/* Vidéo seule sur une ligne */}
+  <div className="md:col-span-4">
+    <div className="relative">
+      <img
+        src="https://via.placeholder.com/800x400"
+        alt="Vidéo principale"
+        className="rounded-lg shadow-md w-full max-w-3xl mx-auto"
+      />
+      <div className="absolute inset-0 flex justify-center items-center">
+        <button className="bg-purple-700 text-white w-16 h-16 rounded-full flex justify-center items-center">
+          ▶
+        </button>
+      </div>
+    </div>
+  </div>
 
-          {/* Lesson Content */}
-          <h2 className="text-2xl font-bold mt-6">
-            Titre de la leçon en cours
-          </h2>
-          <p className="text-gray-600 mt-2">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin
-            sodales metus sed ex faucibus.
-          </p>
+  {/* Texte de la leçon et sidebar */}
+  <div className="md:col-span-3">
 
-          {/* Alerts */}
-          <div className="mt-4 space-y-4">
-            <div className="flex items-start bg-purple-100 p-4 rounded-lg">
-              <span className="text-purple-500 text-lg">ℹ️</span>
-              <p className="ml-4 text-gray-700">
-                Aliquam erat volutpat. Pellentesque accumsan nisi vel ultrices
-                cursus.
-              </p>
-            </div>
-            <div className="flex items-start bg-orange-100 p-4 rounded-lg">
-              <span className="text-orange-500 text-lg">ℹ️</span>
-              <p className="ml-4 text-gray-700">
-                Vestibulum vehicula risus nec arcu vehicula, at tincidunt lorem
-                vestibulum.
-              </p>
-            </div>
-          </div>
-        </div>
+  {/* Titre de la leçon */}
+  <h2 className="text-2xl font-bold mt-6">
+    Titre de la leçon en cours
+  </h2>
 
-        {/* Sidebar */}
+  {/* Description */}
+  <p className="text-gray-600 mt-2">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin sodales metus sed ex faucibus.
+    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aliquid, ea obcaecati. Vel explicabo fuga, nam suscipit, aspernatur id ipsa ad dolores qui, magni consequuntur repudiandae placeat libero ex eum voluptatem!
+  </p>
 
-        <Aside />
-      </main>
+  {/* Alerts */}
+  <div className="mt-4 space-y-4">
+    <div className="flex items-start bg-purple-100 p-4 rounded-lg">
+      <span className="text-purple-500 text-lg">ℹ️</span>
+      <p className="ml-4 text-gray-700">
+        Aliquam erat volutpat. Pellentesque accumsan nisi vel ultrices cursus.
+      </p>
+    </div>
+    <div className="flex items-start bg-orange-100 p-4 rounded-lg">
+      <span className="text-orange-500 text-lg">ℹ️</span>
+      <p className="ml-4 text-gray-700">
+        Vestibulum vehicula risus nec arcu vehicula, at tincidunt lorem vestibulum.
+      </p>
+    </div>
+  </div>
+  {/* Image */}
+  <div className="relative mb-6 mt-5">
+    <img
+      src="https://via.placeholder.com/800x400"
+      alt="Illustration"
+      className="rounded-lg shadow-md w-full mx-auto"
+    />
+  </div>
+   {/* Titre de la leçon */}
+   <h2 className="text-2xl font-bold mt-6">
+    Titre 1
+  </h2>
+  {/* Liste des éléments */}
+  <ul className="list-disc pl-6 mt-4 text-gray-700">
+    <li>Point clé 1 : Lorem ipsum dolor sit amet</li>
+    <li>Point clé 2 : Consectetur adipiscing elit</li>
+    <li>Point clé 3 : Proin sodales metus sed ex faucibus</li>
+  </ul>
+  {/* Titre de la leçon */}
+  <h2 className="text-2xl font-bold mt-6">
+    Titre 2
+  </h2>
+  {/* Liste des éléments */}
+  <ul className="list-disc pl-6 mt-4 text-gray-700">
+    <li>Point clé 1 : Lorem ipsum dolor sit amet</li>
+    <li>Point clé 2 : Consectetur adipiscing elit</li>
+    <li>Point clé 3 : Proin sodales metus sed ex faucibus</li>
+  </ul>
+  <div className="flex items-start bg-red-400 p-4 rounded-lg">
+      <span className="text-orange-500 text-lg">ℹ️</span>
+      <p className="ml-4 text-gray-700">
+        Vestibulum vehicula risus nec arcu vehicula, at tincidunt lorem vestibulum.
+      </p>
+    </div>
+</div>
+
+
+  {/* Sidebar */}
+  <Aside />
+</main>
+
 
       {/* Footer Section */}
       <section className="bg-white shadow-md py-6 px-4">
