@@ -10,8 +10,8 @@ import Instructor from './instructor';
 import StudentFeedback from './studentFeedBack';
 import FAQs from './faq';
 
-const primaryColor = "#490AC6";
-const butonColor2 = "#25026B";
+// const primaryColor = "#490AC6";
+// const butonColor2 = "#25026B";
 
 const CoursdetailsPage = () => {
   return (
