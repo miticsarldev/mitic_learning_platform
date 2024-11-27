@@ -17,7 +17,6 @@ const CoursdetailsPage = () => {
   return (
     <div className="flex min-h-screen flex-col">
       <Navbar />
-      <main className="flex-1 max-w-screen-xl mx-auto">
         <Header />
         <Stats />
         <SecondaryNavBar /> {/* Barre secondaire */}
@@ -26,7 +25,6 @@ const CoursdetailsPage = () => {
         <Instructor />
         <StudentFeedback />
         <FAQs />
-      </main>
     </div>
   );
 };
