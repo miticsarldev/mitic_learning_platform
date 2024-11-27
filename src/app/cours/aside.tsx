@@ -4,9 +4,9 @@ import { FaArrowLeft, FaArrowRight, FaCheck } from "react-icons/fa";
 
 export default function Sidebar() {
   return (
-    <aside className="bg-white shadow-md p-4 rounded-lg relative">
+    <div className="shadow-md p-4 rounded-lg relative h-full flex flex-col">
       {/* Conteneur du titre et des flèches */}
-      <div className="flex items-center justify-between mb-4 bg-[#490AC6] p-4">
+      <div className="flex items-center justify-between mb-4 bg-[#25026B] p-4">
         {/* Flèche gauche */}
         <button
           className="bg-gray-200 p-3 rounded-full shadow hover:bg-gray-300"
@@ -38,19 +38,19 @@ export default function Sidebar() {
       {/* Liste scrollable */}
       <ul
         id="lessonList"
-        className="space-y-2 overflow-y-auto no-scrollbar h-64"
-        style={{ display: "flex", flexDirection: "column" }}
+        className="space-y-2 overflow-y-auto no-scrollbar flex-grow"
       >
         {/* Ajouter des éléments statiques pour le défilement */}
         {Array.from({ length: 20 }).map((_, index) => (
           <li className="flex items-center" key={index}>
-            <span className="bg-[#490AC6] w-6 h-6 rounded-full flex items-center justify-center text-white mr-2">
+            <span className="bg-[#25026B] w-6 h-6 rounded-full flex items-center justify-center text-white mr-2">
               <FaCheck className="text-xs" />
             </span>
             Leçon Statique {index + 1}
           </li>
         ))}
       </ul>
-    </aside>
+    </div>
   );
 }
+

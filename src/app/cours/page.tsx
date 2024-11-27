@@ -14,7 +14,7 @@ const ProgressBar = ({ onprogress }: { onprogress: number | null }) => {
       {[...Array(totalSteps)].map((_, index) => (
         <div
           key={index}
-          className={`absolute top-0 left-${(index / totalSteps) * 100}% h-4 rounded-full ${index < filledSteps ? 'bg-[#490AC6]' : 'bg-gray-300'}`}
+          className={`absolute top-0 left-${(index / totalSteps) * 100}% h-4 rounded-full ${index < filledSteps ? 'bg-[#25026B]' : 'bg-gray-300'}`}
           style={{
             width: `${100 / totalSteps}%`,
             left: `${(index / totalSteps) * 100}%`,
@@ -113,7 +113,7 @@ const CourseDetails = () => {
       <section className="bg-white py-4 shadow-md">
         <div className="max-w-7xl mx-auto px-4 flex items-center">
           {/* Icône maison */}
-          <FaHome className="text-[#490AC6] text-xl mr-4" />
+          <FaHome className="text-[#25026B] text-xl mr-4" />
           {/* Barre de progression */}
           <div className="relative bg-gray-200 h-4 flex-grow rounded-full">
       <ProgressBar onprogress={onprogress} />
@@ -144,7 +144,7 @@ const CourseDetails = () => {
         className="rounded-lg shadow-md w-full max-w-3xl mx-auto"
       />
       <div className="absolute inset-0 flex justify-center items-center">
-        <button className="bg-purple-700 text-white w-16 h-16 rounded-full flex justify-center items-center">
+        <button className="bg-[#25026B] text-white w-16 h-16 rounded-full flex justify-center items-center">
           ▶
         </button>
       </div>
