@@ -3,7 +3,7 @@ import { PartnerCardProps } from "./types";
 
 export const PartnerCard: React.FC<PartnerCardProps> = ({ id }) => {
   return (
-    <div className="flex flex-col w-[33%] max-md:ml-0 max-md:w-full">
+    <div className="flex flex-col w-full max-w-xs w-[33%] max-md:ml-0 max-md:w-full">
       <div className="flex flex-col grow max-md:mt-10 max-md:max-w-full ">
         <div className="flex flex-col max-w-full rounded-3xl ">
           <div 

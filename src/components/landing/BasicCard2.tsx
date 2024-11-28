@@ -15,24 +15,24 @@ export function NotificationCard2({
   imageSrc,
 }: CourseCardProps) {
   return (
-    <article className="flex flex-col px-5 py-4 w-full max-w-[350px] rounded-2xl bg-white bg-opacity-80">
-      <div className="flex gap-4 items-center">
+    <article className="flex flex-col px-4 py-3 w-full max-w-[280px] rounded-xl bg-white bg-opacity-90">
+      <div className="flex gap-3 items-center">
         {/* Image dynamique via props */}
         <img
           src={imageSrc}
           alt="Course avatar"
-          className="rounded-full h-14 w-14 object-cover"
+          className="rounded-full h-10 w-10 object-cover"
           role="img"
           aria-label="Course avatar"
         />
         <div className="flex flex-col grow">
           {/* Titre */}
-          <h2 className="text-lg font-bold tracking-wide leading-snug text-zinc-600">
+          <h2 className="text-base font-semibold tracking-wide leading-snug text-zinc-600">
             {title}
           </h2>
           {/* Heure */}
           <time
-            className="text-sm font-medium text-gray-500"
+            className="text-xs font-medium text-gray-500"
             dateTime={new Date().toISOString()}
           >
             {time}
@@ -40,7 +40,7 @@ export function NotificationCard2({
         </div>
       </div>
       {/* Conteneur flex pour le bouton aligné à droite */}
-      <div className="flex justify-end mt-1 mr-4">
+      <div className="flex justify-end mt-2 mr-3">
         <JoinButton onClick={onJoin} />
       </div>
     </article>

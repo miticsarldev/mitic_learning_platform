@@ -1,5 +1,6 @@
 "use client";
 import { StatisticsContainer } from "@/components/landing/Chiffres";
+import { CoursesPage } from "@/components/landing/CoursePage";
 import  Features  from "@/components/landing/Features";
 import { Partners } from "@/components/landing/Partners";
 import Navbar from "@/components/navbar";
@@ -14,6 +15,7 @@ export default function Landing() {
             <LandingPage />
             <Gallery />
             <Features />
+            <CoursesPage />
             <StatisticsContainer />
             <Partners />
             <FooterSection />

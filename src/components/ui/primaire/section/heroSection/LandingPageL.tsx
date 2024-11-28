@@ -36,16 +36,16 @@ export const LandingPage: React.FC = () => {
                     className="object-contain grow  w-full aspect-[0.9]  max-md:max-w-full"
                   />
                   {/* Notification Card en avant-plan sur l'image */}
-                <div className="absolute top-1/4 left-50 z-20">
+                <div className="absolute top-1/4 left-50 z-10">
                   <NotificationCard
                     imageSrc="https://cdn.builder.io/api/v1/image/assets/b0aa033756e746f9ae04e3e003be37d3/2b46bcdbf44a56976f4de34166fcb16b4bb3ab10410f4d7e7e1eab04a6b72c65?apiKey=b0aa033756e746f9ae04e3e003be37d3&"
                     title="Étudiant assisté"
                   />
                 </div>
                   {/* Notification Card 2 avec positionnement personnalisé */}
-                  <div className="absolute bottom-1/4 right-20 z-20">
+                  <div className="absolute bottom-1/3 right-20 z-20">
                     <NotificationCard
-                      imageSrc="https://cdn.builder.io/api/v1/image/assets/b0aa033756e746f9ae04e3e003be37d3/2b46bcdbf44a56976f4de34166fcb16b4bb3ab10410f4d7e7e1eab04a6b72c65?apiKey=b0aa033756e746f9ae04e3e003be37d3&"
+                      imageSrc="https://cdn-icons-png.flaticon.com/512/561/561127.png"  // Icône d'email
                       title="Vous avez terminé vos cours"
                       price='Félicitation'
                     />

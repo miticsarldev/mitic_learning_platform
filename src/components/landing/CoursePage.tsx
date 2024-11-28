@@ -4,9 +4,7 @@ import { CourseHero } from "./CourseHero";
 export const CoursesPage: React.FC = () => {
   return (
     <main className="flex flex-col items-center w-full max-md:max-w-full">
-      <h1 className="text-5xl font-semibold leading-tight text-violet-950 max-md:max-w-full max-md:text-4xl">
-        Decouver nos cours
-      </h1>
+      <h2 className="text-3xl font-bold text-[#1A013F] mb-8">Decouver nos cours</h2>
       <CourseHero
         title="Nous créons des programmes avec les universités et les meilleures entreprises du pays"
         description="Prenez le temps d'explorer notre vaste sélection de programmes afin de découvrir le cours parfait qui répond à vos aspirations et à vos besoins d'apprentissage."
