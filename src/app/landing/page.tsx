@@ -1,23 +1,21 @@
 "use client";
-import Avis from "@/components/college/section/Avis";
-import DomainesEtudes from "@/components/college/section/DomaineEtudes";
 import { StatisticsContainer } from "@/components/landing/Chiffres";
+import  Features  from "@/components/landing/Features";
+import { Partners } from "@/components/landing/Partners";
 import Navbar from "@/components/navbar";
-import ContactSection from "@/components/ui/contactForm/ContactSection";
 import FooterSection from "@/components/ui/footer/FooterSection";
 import { Gallery } from "@/components/ui/primaire/components/Gallery";
-import { LandingPage } from "@/components/ui/primaire/section/heroSection/LandingPage";
+import { LandingPage } from "@/components/ui/primaire/section/heroSection/LandingPageL";
 
-export default function AcceuilCollege() {
+export default function Landing() {
     return (
         <div >
             <Navbar />
             <LandingPage />
             <Gallery />
-            <DomainesEtudes />
-            <Avis/>
+            <Features />
             <StatisticsContainer />
-            <ContactSection />
+            <Partners />
             <FooterSection />
         </div>
     );
