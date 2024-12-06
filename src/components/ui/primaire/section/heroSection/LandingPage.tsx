@@ -21,7 +21,7 @@ export const LandingPage: React.FC = () => {
             <div className="flex-auto max-md:max-w-full">
               <div className="flex gap-5 max-md:flex-col">
                 <section className="flex flex-col w-6/12 max-md:ml-0 max-md:w-full">
-                  <HeroContent
+                <HeroContent
                     title="L'école où vous souhaitez étudier"
                     description="Nous préparons vos enfants de 5 à 17 ans à une carrière réussie dans l'informatique et dans d'autres domaines basés sur des programmes de formation modernes"
                   />
