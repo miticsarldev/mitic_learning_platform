@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 
 const Content = () => {
-  const [expandedLesson, setExpandedLesson] = useState(null);
+  const [expandedLesson, setExpandedLesson] = useState<number | null>(null);
 
   const lessons = [
     {
@@ -31,7 +31,7 @@ const Content = () => {
     // Ajoutez d'autres leçons ici
   ];
 
-  const toggleLesson = (index) => {
+  const toggleLesson = (index: number | null) => {
     setExpandedLesson(expandedLesson === index ? null : index);
   };
 
@@ -56,7 +56,10 @@ const Content = () => {
         {/* Lessons List */}
         <div className="space-y-4">
           {lessons.map((lesson, index) => (
-            <div key={index} className="border rounded-lg overflow-hidden shadow-sm">
+            <div
+              key={index}
+              className="border rounded-lg overflow-hidden shadow-sm"
+            >
               <div
                 className="flex justify-between items-center bg-white p-4 cursor-pointer"
                 onClick={() => toggleLesson(index)}
@@ -93,7 +96,9 @@ const Content = () => {
                             )}
                             <span>{detail.title}</span>
                           </div>
-                          <span className="text-gray-500">{detail.duration}</span>
+                          <span className="text-gray-500">
+                            {detail.duration}
+                          </span>
                         </li>
                       ))}
                     </ul>

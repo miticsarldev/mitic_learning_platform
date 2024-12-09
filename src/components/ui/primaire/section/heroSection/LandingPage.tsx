@@ -1,9 +1,7 @@
-import * as React from 'react';
-import { NavItem } from './NavItem';
-import { Button } from './Button';
-import { HeroContent } from './HeroContent';
+import * as React from "react";
+import { HeroContent } from "./HeroContent";
 
-const navItems = ['Accueil', 'Cours', 'Classe', 'Enterprise'];
+// const navItems = ['Accueil', 'Cours', 'Classe', 'Enterprise'];
 
 export const LandingPage: React.FC = () => {
   return (
@@ -16,12 +14,11 @@ export const LandingPage: React.FC = () => {
           className="object-cover absolute inset-0 size-full"
         />
         <div className="flex relative flex-col w-full max-w-[1665px] max-md:max-w-full">
-          
           <main className="flex flex-wrap gap-10 mt-48 ml-5 w-full max-w-[1638px] max-md:mt-10 max-md:mr-2 max-md:max-w-full">
             <div className="flex-auto max-md:max-w-full">
               <div className="flex gap-5 max-md:flex-col">
                 <section className="flex flex-col w-6/12 max-md:ml-0 max-md:w-full">
-                <HeroContent
+                  <HeroContent
                     title="L'école où vous souhaitez étudier"
                     description="Nous préparons vos enfants de 5 à 17 ans à une carrière réussie dans l'informatique et dans d'autres domaines basés sur des programmes de formation modernes"
                   />

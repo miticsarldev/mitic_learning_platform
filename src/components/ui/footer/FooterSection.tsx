@@ -1,8 +1,7 @@
-import React from 'react';
-import TitrePrincipal from './TitrePrincipal';
-import ReseauxSociaux from './ReseauxSociaux';
-import ColonneLiens from './ColonneLiens';
-import Contact from './Contact';
+import React from "react";
+import TitrePrincipal from "./TitrePrincipal";
+import ColonneLiens from "./ColonneLiens";
+import Contact from "./Contact";
 
 const FooterSection: React.FC = () => (
   <footer className="bg-[#1A013F] py-10">
@@ -15,10 +14,10 @@ const FooterSection: React.FC = () => (
         <ColonneLiens
           titre="POUR LES PARENTS"
           liens={[
-            { label: 'Blogue', url: '#' },
-            { label: 'Prix', url: '#' },
-            { label: 'Accord offre', url: '#' },
-            { label: 'politique de confidentialité', url: '#' },
+            { label: "Blogue", url: "#" },
+            { label: "Prix", url: "#" },
+            { label: "Accord offre", url: "#" },
+            { label: "politique de confidentialité", url: "#" },
           ]}
         />
 
@@ -26,10 +25,10 @@ const FooterSection: React.FC = () => (
         <ColonneLiens
           titre="À PROPOS DE NOUS"
           liens={[
-            { label: 'Avis', url: '#' },
-            { label: 'Notre équipe', url: '#' },
-            { label: 'Partenaires', url: '#' },
-            { label: 'Postes vacants', url: '#' },
+            { label: "Avis", url: "#" },
+            { label: "Notre équipe", url: "#" },
+            { label: "Partenaires", url: "#" },
+            { label: "Postes vacants", url: "#" },
           ]}
         />
 
@@ -37,11 +36,11 @@ const FooterSection: React.FC = () => (
         <ColonneLiens
           titre="INSTRUCTIONS"
           liens={[
-            { label: 'Programmation', url: '#' },
-            { label: 'Conception et créativité', url: '#' },
-            { label: 'Matières scolaires', url: '#' },
-            { label: 'Langues étrangères', url: '#' },
-            { label: 'Programmes de développement', url: '#' },
+            { label: "Programmation", url: "#" },
+            { label: "Conception et créativité", url: "#" },
+            { label: "Matières scolaires", url: "#" },
+            { label: "Langues étrangères", url: "#" },
+            { label: "Programmes de développement", url: "#" },
           ]}
         />
 
@@ -51,8 +50,8 @@ const FooterSection: React.FC = () => (
 
       {/* Informations légales */}
       <div className="mt-8 text-center text-gray-400">
-        ITGENIO LP | SL035285 <br />
-        5 South Charlotte Street, Edinburgh, Scotland, EH2 4AN
+        ITGENIO LP | SL035285 <br />5 South Charlotte Street, Edinburgh,
+        Scotland, EH2 4AN
       </div>
     </div>
   </footer>

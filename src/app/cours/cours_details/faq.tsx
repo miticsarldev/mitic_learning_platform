@@ -21,10 +21,10 @@ const FAQs = () => {
   ];
 
   // State pour suivre les questions ouvertes
-  const [openIndexes, setOpenIndexes] = useState([]);
+  const [openIndexes, setOpenIndexes] = useState<number[]>([]);
 
   // Fonction pour gérer l'ouverture/fermeture d'une question
-  const toggleFAQ = (index) => {
+  const toggleFAQ = (index: number) => {
     if (openIndexes.includes(index)) {
       // Si déjà ouvert, on le ferme
       setOpenIndexes(openIndexes.filter((i) => i !== index));
@@ -39,10 +39,14 @@ const FAQs = () => {
       {/* En-tête */}
       <div className="flex items-center space-x-2 mb-4">
         <span className="w-6 h-0.5 bg-[#490AC6]"></span>
-        <h1 className="text-xl font-bold text-[#25026B]">Foire aux Questions (FAQs)</h1>
+        <h1 className="text-xl font-bold text-[#25026B]">
+          Foire aux Questions (FAQs)
+        </h1>
       </div>
 
-      <h2 className="text-2xl font-bold mb-8">Vous avez encore des doutes ? Soyons plus clairs</h2>
+      <h2 className="text-2xl font-bold mb-8">
+        Vous avez encore des doutes ? Soyons plus clairs
+      </h2>
 
       {/* Section FAQ */}
       <div className="space-y-4">
@@ -57,7 +61,9 @@ const FAQs = () => {
               {/* Bouton + ou - */}
               <button
                 className="w-6 h-6 flex items-center justify-center rounded-full bg-white text-[#25026B] font-bold"
-                aria-label={openIndexes.includes(index) ? "Réduire" : "Développer"}
+                aria-label={
+                  openIndexes.includes(index) ? "Réduire" : "Développer"
+                }
               >
                 {openIndexes.includes(index) ? "-" : "+"}
               </button>
@@ -65,9 +71,7 @@ const FAQs = () => {
 
             {/* Réponse (affichée uniquement si la question est ouverte) */}
             {openIndexes.includes(index) && (
-              <div className="p-4 text-gray-700 bg-gray-100">
-                {faq.answer}
-              </div>
+              <div className="p-4 text-gray-700 bg-gray-100">{faq.answer}</div>
             )}
           </div>
         ))}

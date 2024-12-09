@@ -1,3 +1,4 @@
+/* eslint-disable react/react-in-jsx-scope */
 "use client";
 
 import Link from "next/link";
@@ -49,7 +50,6 @@ export default function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                placeholder="Entrez votre mot de passe"
               />
             </div>
             <div className="text-right">
@@ -90,7 +90,10 @@ export default function LoginPage() {
           </div>
           <div className="text-center text-sm">
             vous n&apos;avez pas de compte?{" "}
-            <Link href="/register" className="text-primary hover:underline text-[#25026B] font-bold">
+            <Link
+              href="/register"
+              className="text-primary hover:underline text-[#25026B] font-bold"
+            >
               Inscrivez-vous
             </Link>
           </div>
