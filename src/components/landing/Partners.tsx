@@ -42,9 +42,7 @@ export const Partners: React.FC = () => {
           {partnersData.map((partner) => (
             <SwiperSlide key={partner.id}>
               <div className="flex justify-center">
-                <PartnerCard
-                  id={partner.id}
-                />
+                <PartnerCard id={partner.id} />
               </div>
             </SwiperSlide>
           ))}
