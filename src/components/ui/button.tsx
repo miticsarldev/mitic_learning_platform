@@ -38,6 +38,7 @@ export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean
+  color?: string; // Ajout de la prop `color`
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -45,9 +46,9 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     const Comp = asChild ? Slot : "button"
     return (
       <Comp
-        className={cn(buttonVariants({ variant, size, className }))}
-        ref={ref}
-        {...props}
+      className={cn(buttonVariants({ variant, size, className }))}  // Utilisation de `color`
+      ref={ref}
+      {...props}
       />
     )
   }

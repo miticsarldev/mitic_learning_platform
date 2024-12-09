@@ -73,9 +73,22 @@ export default function Navbar() {
                 </Link>
               </div>
             </div>
+
             <Link
               className="transition-colors hover:text-foreground/80 text-foreground"
-              href="/enterprise"
+              href="/entreprise"
+            >
+            Entreprise
+          </Link>
+            <Link
+              className="transition-colors hover:text-foreground/80 text-foreground"
+              href="/cours/cours_details"
+            >
+              Les Details de Cours
+            </Link>
+            <Link
+              className="transition-colors hover:text-foreground/80 text-foreground"
+              href="/tutors"
             >
               Entreprise
             </Link>
