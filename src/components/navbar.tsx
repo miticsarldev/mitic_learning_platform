@@ -88,6 +88,12 @@ export default function Navbar() {
             </Link>
             <Link
               className="transition-colors hover:text-foreground/80 text-foreground"
+              href="/cours"
+            >
+              Les Details de Cours pendant la formation
+            </Link>
+            <Link
+              className="transition-colors hover:text-foreground/80 text-foreground"
               href="/tutors"
             >
               Entreprise
