@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import Link from "next/link";
 import { BookOpen, Menu, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -12,58 +13,28 @@ export default function Navbar() {
         <div className="mr-4 hidden md:flex">
           <Link className="mr-6 flex items-center space-x-2" href="/">
             <BookOpen className="h-6 w-6" />
-            <span className="hidden font-bold sm:inline-block">
-              MiticEduPlatform
-            </span>
+            <span className="hidden font-bold sm:inline-block">MiticEdu</span>
           </Link>
           <nav className="flex items-center space-x-6 text-sm font-medium">
-            <Link
-              className="transition-colors hover:text-foreground/80 text-foreground"
-              href="/"
-            >
-              Acceuil
-            </Link>
             <div className="relative group">
-              <button className="transition-colors hover:text-foreground/80 text-foreground">
-                Cours
-              </button>
-              <div className="absolute left-0 hidden group-hover:block bg-white shadow-lg rounded-md py-2 z-50">
+              <Link
+                href="/"
+                className="transition-colors hover:text-foreground/80 text-foreground"
+              >
+                Accueil
+              </Link>
+              <div className="absolute left-1/2 translate-x-[-50%] hidden group-hover:block bg-white shadow-lg rounded-md py-2 z-50">
                 <Link
                   className="block px-4 py-2 hover:bg-gray-100 text-foreground"
-                  href="/courses/math"
-                >
-                  Mathématiques
-                </Link>
-                <Link
-                  className="block px-4 py-2 hover:bg-gray-100 text-foreground"
-                  href="/courses/science"
-                >
-                  Sciences
-                </Link>
-                <Link
-                  className="block px-4 py-2 hover:bg-gray-100 text-foreground"
-                  href="/courses/history"
-                >
-                  Histoire
-                </Link>
-              </div>
-            </div>
-            <div className="relative group">
-              <button className="transition-colors hover:text-foreground/80 text-foreground">
-                Classe
-              </button>
-              <div className="absolute left-0 hidden group-hover:block bg-white shadow-lg rounded-md py-2 z-50">
-                <Link
-                  className="block px-4 py-2 hover:bg-gray-100 text-foreground"
-                  href="/classes/primary"
+                  href="/acceuil_primaire"
                 >
                   Primaire
                 </Link>
                 <Link
                   className="block px-4 py-2 hover:bg-gray-100 text-foreground"
-                  href="/classes/secondary"
+                  href="/acceuil_college"
                 >
-                  Secondaire
+                  College
                 </Link>
                 <Link
                   className="block px-4 py-2 hover:bg-gray-100 text-foreground"
@@ -73,28 +44,15 @@ export default function Navbar() {
                 </Link>
               </div>
             </div>
-
+            <Link
+              className="transition-colors hover:text-foreground/80 text-foreground"
+              href="/liste_cours"
+            >
+              Explorez nos Cours
+            </Link>
             <Link
               className="transition-colors hover:text-foreground/80 text-foreground"
               href="/entreprise"
-            >
-            Entreprise
-          </Link>
-            <Link
-              className="transition-colors hover:text-foreground/80 text-foreground"
-              href="/cours/cours_details"
-            >
-              Les Details de Cours
-            </Link>
-            <Link
-              className="transition-colors hover:text-foreground/80 text-foreground"
-              href="/cours"
-            >
-              Les Details de Cours pendant la formation
-            </Link>
-            <Link
-              className="transition-colors hover:text-foreground/80 text-foreground"
-              href="/tutors"
             >
               Entreprise
             </Link>
