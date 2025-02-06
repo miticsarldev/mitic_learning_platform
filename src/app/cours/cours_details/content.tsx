@@ -1,38 +1,11 @@
-"use client"; // Ajoute cette ligne en haut du fichier
+"use client"; // Indique que ce composant doit être rendu côté client
 import React, { useState } from "react";
 
-const Content = () => {
-  const [expandedLesson, setExpandedLesson] = useState<number | null>(null);
+const Content: React.FC<{ lessons: any[] }> = ({ lessons }) => {
+  const [expandedLesson, setExpandedLesson] = useState<string | null>(null);
 
-  const lessons = [
-    {
-      title: "Leçon 1",
-      sections: 2,
-      duration: "15 minutes",
-      details: [],
-    },
-    {
-      title: "Leçon 2",
-      sections: 2,
-      duration: "30 minutes",
-      details: [],
-    },
-    {
-      title: "Exercice : Exercice 2",
-      sections: 6,
-      duration: "120 minutes",
-      details: [
-        { type: "texte", title: "Énoncé", duration: "8 minutes" },
-        { type: "video", title: "Vidéo 1", duration: "15 minutes" },
-        { type: "video", title: "Vidéo 2", duration: "20 minutes" },
-        { type: "texte", title: "Correction", duration: "40 minutes" },
-      ],
-    },
-    // Ajoutez d'autres leçons ici
-  ];
-
-  const toggleLesson = (index: number | null) => {
-    setExpandedLesson(expandedLesson === index ? null : index);
+  const toggleLesson = (id: string | null) => {
+    setExpandedLesson(expandedLesson === id ? null : id);
   };
 
   return (
@@ -47,63 +20,55 @@ const Content = () => {
           Nos cours sont un mélange équilibré de vidéos et d’articles
         </h2>
         <div className="flex items-center space-x-4 text-gray-500 mb-8">
-          <span>10 Leçons</span>
-          <span>20 Vidéos</span>
-          <span>20 Articles</span>
-          <span>18 Exercices</span>
+          <span>{lessons.length} Leçons</span>
         </div>
 
         {/* Lessons List */}
         <div className="space-y-4">
-          {lessons.map((lesson, index) => (
+          {lessons.map((lesson: any) => (
             <div
-              key={index}
+              key={lesson._id}
               className="border rounded-lg overflow-hidden shadow-sm"
             >
               <div
                 className="flex justify-between items-center bg-white p-4 cursor-pointer"
-                onClick={() => toggleLesson(index)}
+                onClick={() => toggleLesson(lesson._id)}
               >
                 <div>
                   <h3 className="font-bold text-[#25026B]">{lesson.title}</h3>
                   <p className="text-gray-500">
-                    {lesson.sections} Sections • {lesson.duration}
+                    {lesson.sections?.length || 0} Sections • {lesson.duration}
                   </p>
                 </div>
                 <button>
-                  {expandedLesson === index ? (
+                  {expandedLesson === lesson._id ? (
                     <span className="text-[#490AC6]">-</span>
                   ) : (
                     <span className="text-[#490AC6]">+</span>
                   )}
                 </button>
               </div>
-              {expandedLesson === index && (
+              {expandedLesson === lesson._id && (
                 <div className="bg-gray-50 p-4">
-                  {lesson.details.length > 0 ? (
+                  {lesson.sections && lesson.sections.length > 0 ? (
                     <ul className="space-y-2">
-                      {lesson.details.map((detail, i) => (
+                      {lesson.sections.map((section: any) => (
                         <li
-                          key={i}
+                          key={section._id}
                           className="flex justify-between items-center text-gray-700"
                         >
                           <div className="flex items-center space-x-2">
-                            {detail.type === "video" && (
-                              <span className="text-[#490AC6]">🎥</span>
-                            )}
-                            {detail.type === "texte" && (
-                              <span className="text-[#25026B]">📄</span>
-                            )}
-                            <span>{detail.title}</span>
+                            <span className="text-[#490AC6]">📄</span>
+                            <span>{section.title}</span>
                           </div>
                           <span className="text-gray-500">
-                            {detail.duration}
+                            {section.description}
                           </span>
                         </li>
                       ))}
                     </ul>
                   ) : (
-                    <p className="text-gray-500">Aucun détail disponible</p>
+                    <p className="text-gray-500">Aucune section disponible</p>
                   )}
                 </div>
               )}

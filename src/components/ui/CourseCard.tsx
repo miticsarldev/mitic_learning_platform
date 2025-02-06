@@ -1,32 +1,51 @@
 import React from "react";
-
-type CardProps = {
-  image: string;
-  category: string;
-  duration: string;
-  title: string;
-  description: string;
-  price: string;
-  author: string;
-};
-
 import { Timer, CircleUserRound, Computer } from "lucide-react";
 import Link from "next/link";
 
+type CardProps = {
+  _id: string;
+  title: string;
+  description?: string;
+  path_image?: string;
+  path_video?: string;
+  price?: number;
+  isCertified?: boolean;
+  duration?: string;
+  status?: boolean;
+  created_by?: {
+    firstname: string;
+    lastname: string;
+  };
+  studyLevel_id?: {
+    name: string;
+  };
+  job_id?: {
+    name: string;
+  };
+  category_id?: {
+    name: string;
+  };
+};
+
 export const CourseCard: React.FC<CardProps> = ({
-  image,
-  category,
+  _id,
+  path_image,
+  category_id,
   duration,
   title,
   description,
   price,
-  author,
+  created_by,
 }) => {
   return (
-    <div className="bg-white shadow-md rounded-lg overflow-hidden w-72">
+    <Link href={`/cours/cours_details/${_id}`} className="bg-white shadow-md rounded-lg overflow-hidden w-72">
       {/* Image */}
       <div className="relative">
-        <img src={image} alt={title} className="w-full h-40 object-cover" />
+        <img
+          src={path_image || "/placeholder-image.jpg"}
+          alt={title}
+          className="w-full h-40 object-cover"
+        />
         <div className="absolute top-2 right-2 flex space-x-1">
           {/* Étoiles */}
           {[...Array(3)].map((_, index) => (
@@ -43,31 +62,40 @@ export const CourseCard: React.FC<CardProps> = ({
         <div className="flex justify-between text-sm text-gray-500 mb-2">
           <span className="flex items-center space-x-1">
             <Computer className="w-4 h-4" />
-            <span>{category}</span>
+            <span>{category_id?.name || "Non spécifié"}</span>
           </span>
           <span className="flex items-center space-x-1">
             <Timer className="w-4 h-4" />
-            <span>{duration}</span>
+            <span>{duration || "Indisponible"}</span>
           </span>
         </div>
 
         {/* Titre */}
-        <Link href={`/cours/`} className="text-lg font-semibold text-gray-900">
+        <Link href={`/cours/${title}`} className="text-lg font-semibold text-gray-900">
           {title}
         </Link>
 
         {/* Description */}
-        <p className="text-sm text-gray-600 my-2">{description}</p>
+        <p className="text-sm text-gray-600 my-2 line-clamp-4">
+          {description || "Aucune description disponible."}
+        </p>
+
 
         {/* Auteur et Prix */}
         <div className="flex justify-between items-center text-gray-700 mt-4">
           <span className="flex items-center space-x-2">
             <CircleUserRound className="w-5 h-5" />
-            <span>{author}</span>
+            <span>
+              {created_by
+                ? `${created_by.firstname} ${created_by.lastname}`
+                : "Auteur inconnu"}
+            </span>
           </span>
-          <span className="text-[#25026B] font-bold">{price}</span>
+          <span className="text-[#25026B] font-bold">
+            {price !== undefined ? `${price} FCFA` : "Gratuit"}
+          </span>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };

@@ -20,7 +20,7 @@ export const SecondaryButton: React.FC<ButtonProps> = ({ label, onClick }) => {
     return (
         <button
             onClick={onClick}
-            className="flex items-center space-x-2 text-white text-lg font-medium hover:text-gray-200 transition"
+            className="flex items-center space-x-2 text-white text-lg font-medium hover:text-gray-200 transition max-md:hidden"
         >
             <span className="w-10 h-10 rounded-full bg-white text-[#5F36F8] flex items-center justify-center">
                 ▶

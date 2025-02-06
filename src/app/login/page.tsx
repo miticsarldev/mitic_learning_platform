@@ -3,20 +3,43 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ChromeIcon as Google, Facebook, Instagram } from "lucide-react";
+import { useDispatch } from "react-redux";
+import axiosInstance from "../services/axiosInstance";
+import { setUser } from "../redux/userSlice";
+import { useAuthStore } from "@/store/authStore";
+import { loginUser } from "@/utils/auth";
+import { useRouter } from "next/navigation";
+
 
 export default function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const login = useAuthStore((state) => state.login);
+  const router = useRouter();
+  // States pour les champs de connexion
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Gestion de la soumission du formulaire
+  const handleSubmit = async (e: React.FormEvent) => {
+    setErrorMessage('');
     e.preventDefault();
-    console.log("Login submitted", { email, password });
+    const credentials = {
+      email: email,
+      password: password,
+    };
+    try {
+      const { user, accessToken } = await loginUser(credentials);
+      login(user, accessToken);
+      router.push("/"); // Redirection après connexion
+    } catch (err) {
+      setErrorMessage("Email ou mot de passe incorrect");
+    }
   };
 
   return (
@@ -25,6 +48,11 @@ export default function LoginPage() {
         <CardContent className="mx-auto max-w-[450px] space-y-6">
           <div className="space-y-2 text-center">
             <h1 className="text-3xl font-bold text-[#25026B]">Connexion</h1>
+            {errorMessage && (
+              <div className="bg-red-100 text-red-700 p-2 rounded mb-4">
+                {errorMessage}
+              </div>
+            )}
             <p className="text-muted-foreground">
               Content de te revoir! Veuillez entrer vos coordonnées.
             </p>
@@ -35,7 +63,8 @@ export default function LoginPage() {
               <Input
                 id="email"
                 placeholder="Entrez votre email"
-                type="email"
+                type="text"
+                name="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -46,6 +75,7 @@ export default function LoginPage() {
               <Input
                 id="password"
                 type="password"
+                name="password"
                 placeholder="Entrez votre mot de passe"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
