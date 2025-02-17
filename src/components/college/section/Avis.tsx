@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay, EffectCoverflow } from "swiper/modules";
 import "swiper/swiper-bundle.css";
@@ -46,7 +47,7 @@ const Avis: React.FC = () => {
           spaceBetween={30}
           slidesPerView={3}
           navigation
-          pagination={{ clickable: true  }}
+          pagination={{ clickable: true }}
           autoplay={{ delay: 4000, disableOnInteraction: false }}
           effect="coverflow"
           coverflowEffect={{
@@ -57,7 +58,7 @@ const Avis: React.FC = () => {
             slideShadows: true,
           }}
           loop={true}
-          onSlideChange={(swiper) => setActiveIndex(swiper.realIndex + 1)}
+          onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
           breakpoints={{
             320: { slidesPerView: 1 }, // Mobile
             768: { slidesPerView: 2 }, // Tablette
@@ -66,20 +67,23 @@ const Avis: React.FC = () => {
         >
           {images.map((image, index) => (
             <SwiperSlide key={index}>
-              <div
-                className={`relative rounded-lg shadow-lg overflow-hidden bg-white transform transition-transform duration-500`}
-              >
-                {/* Image */}
-                <img
+              <div className="relative rounded-lg shadow-lg overflow-hidden bg-white transition-transform duration-500">
+                {/* Image optimisée avec Next.js */}
+                <Image
                   src={image.src}
                   alt={image.alt}
-                  className="w-full h-64 object-cover"
+                  layout="responsive"
+                  width={500} // Ajuste en fonction de ton design
+                  height={300} // Ajuste en fonction de ton design
+                  className="object-cover"
+                  priority={index === 0} // Optimise le chargement de la première image
                 />
 
                 {/* Texte en superposition */}
                 <div
-                  className={`absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent p-4 transition-opacity duration-500 flex flex-col justify-end ${index === activeIndex ? "opacity-100" : "opacity-0"
-                    }`}
+                  className={`absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent p-4 flex flex-col justify-end transition-opacity duration-500 ${
+                    index === activeIndex ? "opacity-100" : "opacity-0"
+                  }`}
                 >
                   <h3 className="text-lg font-bold text-white">{image.title}</h3>
                   <p className="text-sm text-gray-200">{image.description}</p>

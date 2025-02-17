@@ -1,7 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:4444/api/course"; 
-
+const API_URL = "http://localhost:4444/api/course";
 
 interface Course {
     _id: string;
@@ -19,6 +18,12 @@ interface Course {
     category_id?: string;
 }
 
+// Définition du type pour les détails du cours
+interface CourseDetails extends Course {
+    lessons?: any[];  // Remplace "any" par un type plus précis si possible
+    sections?: any[];
+}
+
 export const fetchCourses = async (): Promise<Course[]> => {
     try {
         const response = await axios.get<Course[]>(API_URL);
@@ -34,18 +39,21 @@ export const fetchCourses = async (): Promise<Course[]> => {
  * @param courseId - L'ID du cours à récupérer
  * @returns Les détails du cours, y compris ses leçons et sections
  */
-export const fetchCourseDetails = async (courseId: any): Promise<any> => {
+export const fetchCourseDetails = async (courseId: string): Promise<CourseDetails> => {
     try {
         // Construire l'URL de l'API avec le courseId
         const url = `${API_URL}/getCourseAllInfo/${courseId}`;
 
         // Faire une requête GET vers le backend
-        const response = await axios.get(url);
+        const response = await axios.get<CourseDetails>(url);
 
         // Retourner les données de la réponse
         return response.data;
-    } catch (error: any) {
-        console.error('Erreur lors de la récupération des détails du cours :', error);
-        throw new Error(error.response?.data?.message || 'Erreur lors de la récupération des données');
+    } catch (error) {
+        if (axios.isAxiosError(error) && error.response) {
+            console.error('Erreur lors de la récupération des détails du cours :', error.response.data);
+            throw new Error(error.response.data.message || 'Erreur lors de la récupération des données');
+        }
+        throw new Error('Une erreur inconnue est survenue');
     }
 };

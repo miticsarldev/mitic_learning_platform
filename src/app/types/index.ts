@@ -1,5 +1,6 @@
 export type Mode = "add" | "modify" | "delete";
 export type Role = "administrateur" | "enseignant" | "etudiant" | "parent";
+
 export type User = {
     _id?: string;
     firstname: string;
@@ -12,7 +13,7 @@ export type User = {
     phone: string;
     address?: string;
     studyLevel?: string;
-    status: Boolean;
+    status: boolean; 
     createdAt?: string;
     updatedAt?: string;
 };
@@ -67,5 +68,3 @@ export type LessonDisplayProps = {
     lessons: Lesson[];
     lessonId: string;
 };
-
-
