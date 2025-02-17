@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import React from 'react';
 
 const ReseauxSociaux: React.FC = () => {
@@ -12,7 +13,7 @@ const ReseauxSociaux: React.FC = () => {
         <div className="flex justify-start space-x-4 mt-4">
             {socialLinks.map((social) => (
                 <a href={social.url} target="_blank" rel="noopener noreferrer" key={social.name}>
-                    <img
+                    <Image
                         src={`/images/logo_${social.name}.png`}
                         alt={`${social.name} icon`}
                         className="w-6 h-6"
