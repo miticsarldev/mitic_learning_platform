@@ -9,8 +9,22 @@ import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/authStore";
 import { logoutUser } from "@/utils/auth";
 
-const CourseCard = ({ course }) => {
+interface Course {
+    category: string;
+    title: string;
+    status: string;
+    startDate: string;
+    image: string;
+    progress: number;
+}
 
+interface Enrollment {
+    course_id: { title: string; path_image: string };
+    status: string;
+    start_date: string;
+}
+
+const CourseCard = ({ course }: { course: Course }) => {
     return (
         <motion.div
             className="flex items-start gap-4 p-4 bg-white shadow-md rounded-2xl"
@@ -35,42 +49,40 @@ const CourseCard = ({ course }) => {
                 icon={course.progress === 100 ? faCheckCircle : faCircle}
                 style={{ fontSize: "1.5rem", color: course.progress === 100 ? "#1C1E53" : "#9CA3AF" }}
             />
-
         </motion.div>
     );
 };
 
 const CourseHistory = () => {
-    const [courses, setCourses] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState("");
-    const [selectedCategory, setSelectedCategory] = useState(null);
-    const [selectedStatus, setSelectedStatus] = useState(null);
+    const [courses, setCourses] = useState<Course[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string>("");
+    const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+    const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
     const { user, logout } = useAuthStore();
-    const [userId, setUserId] = useState(user ? user.id : null);
+    const [userId, setUserId] = useState<string | null>(user ? user.id : null);
 
-    // Mettez à jour userId lorsque user change
     useEffect(() => {
         if (user) {
             setUserId(user.id);
         }
     }, [user]);
 
-    // Appel à l'API lorsque userId est défini
     useEffect(() => {
         if (userId) {
             const fetchCourses = async () => {
                 try {
                     setLoading(true);
-                    const response = await axios.get(`http://localhost:4444/api/enrollment/student/${userId}`);
-                    const progressResponse = axios.get(`http://localhost:4444//progress/student/${userId}`)
-                    const formattedCourses = response.data.map((enrollment : any) => ({
-                        category: "Développement", // Remplace si la catégorie est dans l'objet
+                    const response = await axios.get<Enrollment[]>(`http://localhost:4444/api/enrollment/student/${userId}`);
+                    const progressResponse = await axios.get(`http://localhost:4444/progress/student/${userId}`);
+
+                    const formattedCourses = response.data.map((enrollment: Enrollment) => ({
+                        category: "Développement", // Remplacer par la catégorie si disponible
                         title: enrollment.course_id.title,
                         status: enrollment.status === "completed" ? "Cours terminé!" : "En cours",
                         startDate: new Date(enrollment.start_date).toLocaleDateString("fr-FR"),
                         image: enrollment.course_id.path_image,
-                        progress: enrollment.status === "completed" ? 100 : 50, // Adapte en fonction de ton API
+                        progress: enrollment.status === "completed" ? 100 : 50, // Progress selon l'API
                     }));
                     setCourses(formattedCourses);
                 } catch (err) {
@@ -83,17 +95,15 @@ const CourseHistory = () => {
         }
     }, [userId]);
 
-    const categories = ["Développement", "Bureautique"];
-    const statuses = ["Tous", "Terminés", "En cours"];
-
     return (
         <div className="flex min-h-screen flex-col">
             <Navbar />
             <div className="px-20 p-6">
                 <h1 className="text-2xl font-bold text-gray-800 mb-4">Cours suivis</h1>
 
+                {/* Sélecteurs de catégorie et de statut */}
                 <div className="flex gap-2 mb-6">
-                    {categories.map((category) => (
+                    {["Développement", "Bureautique"].map((category) => (
                         <button
                             key={category}
                             className={`px-4 py-2 rounded-full border ${selectedCategory === category ? "bg-[#1C1E53] text-white" : "bg-white text-gray-800 border-gray-300"}`}
@@ -105,7 +115,7 @@ const CourseHistory = () => {
                 </div>
 
                 <div className="flex gap-2 mb-6">
-                    {statuses.map((status) => (
+                    {["Tous", "Terminés", "En cours"].map((status) => (
                         <button
                             key={status}
                             className={`px-4 py-2 rounded-full border ${selectedStatus === status ? "bg-[#1C1E53] text-white" : "bg-white text-gray-800 border-gray-300"}`}

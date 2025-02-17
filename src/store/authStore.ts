@@ -2,10 +2,19 @@
 
 import { create } from "zustand";
 
+// Définir une interface pour `user` si tu sais à quoi il ressemble
+interface User {
+    id: string;
+    firstname: string;
+    lastname ?: string;
+    role: string;
+    email: string;
+}
+
 interface AuthState {
-    user: any | null;
+    user: User | null;
     accessToken: string | null;
-    login: (user: any, token: string) => void;
+    login: (user: User, token: string) => void;
     logout: () => void;
 }
 

@@ -1,4 +1,10 @@
-export const loginUser = async (credentials: any) => {
+// Définir un type pour les credentials
+interface Credentials {
+    email: string;
+    password: string;
+}
+
+export const loginUser = async (credentials: Credentials) => {
     const res = await fetch("http://localhost:4444/api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },

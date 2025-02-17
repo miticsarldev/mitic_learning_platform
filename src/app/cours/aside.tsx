@@ -7,7 +7,7 @@ type Lesson = {
 };
 
 type SidebarProps = {
-  lessons: any[]; // Liste des leçons
+  lessons: Lesson[]; // Remplace `any[]` par `Lesson[]`
   currentLessonIndex: number; // Index de la leçon en cours
 };
 
@@ -19,7 +19,6 @@ const Sidebar: React.FC<SidebarProps> = ({ lessons, currentLessonIndex }) => {
     if (lessons[currentLessonIndex]) {
       setCurrentLesson(lessons[currentLessonIndex]);
       console.log(currentLessonIndex);
-      
     } else {
       setCurrentLesson(null); // Réinitialise si l'index est invalide
     }
