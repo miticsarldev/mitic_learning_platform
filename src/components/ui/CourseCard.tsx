@@ -1,6 +1,7 @@
 import React from "react";
 import { Timer, CircleUserRound, Computer } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 type CardProps = {
   _id: string;
@@ -41,7 +42,7 @@ export const CourseCard: React.FC<CardProps> = ({
     <Link href={`/cours/cours_details/${_id}`} className="bg-white shadow-md rounded-lg overflow-hidden w-72">
       {/* Image */}
       <div className="relative">
-        <img
+        <Image
           src={path_image || "/placeholder-image.jpg"}
           alt={title}
           className="w-full h-40 object-cover"

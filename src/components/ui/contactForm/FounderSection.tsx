@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 const FounderSection: React.FC = () => {
   return (
@@ -16,7 +17,7 @@ const FounderSection: React.FC = () => {
           transition={{ duration: 0.8 }}
           className="relative flex-shrink-0"
         >
-          <img
+          <Image
             src="/images/user_profil.png"
             alt="Fondateur"
             className="w-48 h-48 rounded-full shadow-lg border-4 border-white"

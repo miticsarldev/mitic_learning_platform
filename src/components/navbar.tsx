@@ -9,7 +9,7 @@ import { useAuthStore } from "@/store/authStore";
 import DropdownUser from "./DropdownUser";
 
 export default function Navbar() {
-  const { user, logout } = useAuthStore();
+  const { user } = useAuthStore();
   console.log(user);
   
 
