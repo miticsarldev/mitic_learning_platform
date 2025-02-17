@@ -24,7 +24,7 @@ export interface ICourse {
     description?: string;
     path_image?: string;
     path_video?: string;
-    price?: number;
+    price: number;
     isCertified?: boolean;
     duration: string;
     status?: boolean;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { CheckboxGroup } from "./ui/CheckboxGroup";
 import { RangeSlider } from "./ui/RangeSlider";
 import { ICourse } from "@/app/types";
@@ -8,33 +8,30 @@ interface FilterZoneProps {
   setFilteredCourses: (courses: ICourse[]) => void;
 }
 
-export const FilterZone: React.FC<FilterZoneProps> = ({
-  courses,
-  setFilteredCourses,
-}) => {
+export const FilterZone: React.FC<FilterZoneProps> = ({ courses, setFilteredCourses }) => {
   const [selectedGenre, setSelectedGenre] = useState<string[]>([]);
   const [selectedType, setSelectedType] = useState<string[]>([]);
   const [selectedDifficulty, setSelectedDifficulty] = useState<string[]>([]);
-  const maxDuration = Math.max(...courses.map((course) => Number(course.duration) || 0), 6);
+
+  // Utilisation de useMemo pour éviter le recalcul inutile de maxDuration
+  const maxDuration = useMemo(() => 
+    Math.max(...courses.map((course) => Number(course.duration) || 0), 6),
+    [courses]
+  );
+
   const [duration, setDuration] = useState<number>(maxDuration); // Valeur max par défaut
 
-  const [isFirstRender, setIsFirstRender] = useState(true); // Etat pour vérifier si c'est le premier rendu
+  const handleCheckboxChange = (selectedList: string[], value: string) => 
+    selectedList.includes(value) ? selectedList.filter((item) => item !== value) : [...selectedList, value];
 
-  const handleCheckboxChange = (selectedList: string[], value: string) => {
-    return selectedList.includes(value)
-      ? selectedList.filter((item) => item !== value)
-      : [...selectedList, value];
-  };
+  // Initialisation au premier rendu (évite de filtrer inutilement au chargement)
+  useEffect(() => {
+    setFilteredCourses(courses);
+  }, [courses, setFilteredCourses]);
 
   useEffect(() => {
-    if (isFirstRender) {
-      setIsFirstRender(false); // Première exécution terminée, on change l'état
-      return;
-    }
-
     let filteredCourses = [...courses];
 
-    // Vérifie si un filtre est actif
     const isFilterActive =
       selectedGenre.length > 0 ||
       selectedType.length > 0 ||
@@ -42,18 +39,18 @@ export const FilterZone: React.FC<FilterZoneProps> = ({
       duration < maxDuration;
 
     if (!isFilterActive) {
-      setFilteredCourses(courses); // Aucun filtre actif → afficher tous les cours
+      setFilteredCourses(courses);
       return;
     }
 
     // 🔹 Filtrer par genre (gratuite/payante)
     if (selectedGenre.length > 0) {
       filteredCourses = filteredCourses.filter((course) =>
-        (course?.price > 0 && selectedGenre.includes("payante")) ||
-        (course?.price <= 0 && selectedGenre.includes("gratuite"))
+        selectedGenre.some((genre) =>
+          (genre === "payante" && course?.price > 0) || (genre === "gratuite" && course?.price <= 0)
+        )
       );
     }
-    
 
     // 🔹 Filtrer par type de formation
     if (selectedType.length > 0) {
@@ -70,18 +67,19 @@ export const FilterZone: React.FC<FilterZoneProps> = ({
     }
 
     // 🔹 Filtrer par durée
-    filteredCourses = filteredCourses.filter(
-      (course) => Number(course.duration) <= duration
-    );
+    filteredCourses = filteredCourses.filter((course) => Number(course.duration) <= duration);
 
     setFilteredCourses(filteredCourses);
-  }, [selectedGenre, selectedType, selectedDifficulty, duration, courses, setFilteredCourses, isFirstRender]);
+  }, [selectedGenre, selectedType, selectedDifficulty, duration, courses, setFilteredCourses, maxDuration]);
 
   return (
     <div className="p-6 space-y-8">
       <CheckboxGroup
         title="Genre de formation"
-        options={[{ label: "Formation payante", value: "payante" }, { label: "Formation gratuite", value: "gratuite" }]}
+        options={[
+          { label: "Formation payante", value: "payante" },
+          { label: "Formation gratuite", value: "gratuite" },
+        ]}
         selectedOptions={selectedGenre}
         onChange={(value) => setSelectedGenre(handleCheckboxChange(selectedGenre, value))}
       />

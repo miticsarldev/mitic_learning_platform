@@ -2,41 +2,27 @@ import { useState } from "react";
 import axios from "axios";
 
 interface InfoLineProps {
-    Icon?: React.ComponentType<any>;
+    Icon?: React.ComponentType<React.SVGProps<SVGSVGElement>>;
     text?: string;
     title?: string;
     emptyCard?: string;
-    userId: string;  // ID de l'utilisateur à modifier
+    userId: string;
 }
 
-const InfoLine: React.FC<InfoLineProps> = ({
-    Icon,
-    text,
-    title,
-    emptyCard,
-    userId,
-}) => {
-    const [editableText, setEditableText] = useState<string>(text || "");
-    const [editableTitle, setEditableTitle] = useState<string>(title || "");
+const InfoLine: React.FC<InfoLineProps> = ({ Icon, text, title, emptyCard, userId }) => {
+    const [editableData, setEditableData] = useState({ text: text || "", title: title || "" });
     const [isEditing, setIsEditing] = useState<boolean>(false);
 
-    // Fonction de gestion de la mise à jour
     const handleUpdate = async () => {
         try {
-            const updatedData = {
-                text: editableText,
-                title: editableTitle,
-            };
-
-            const response = await axios.put(`/api/users/${userId}`, updatedData);
+            const response = await axios.put(`http://localhost:4444/api/users/${userId}`, editableData);
             console.log("Utilisateur mis à jour avec succès :", response.data);
-            setIsEditing(false);  // Arrêter l'édition après la mise à jour
-        } catch (error) {
-            console.error("Erreur lors de la mise à jour :", error);
+            setIsEditing(false);
+        } catch (error: any) {
+            console.error("Erreur lors de la mise à jour :", error.response?.data || error.message);
         }
     };
 
-    // Si seule emptyCard est fournie, on affiche un message centré
     if (emptyCard && !title && !text && !Icon) {
         return (
             <div>
@@ -53,31 +39,22 @@ const InfoLine: React.FC<InfoLineProps> = ({
             <div className="border-b border-gray-300 mt-4"></div>
             <div className="flex justify-between items-center mt-4">
                 {isEditing ? (
-                    // Formulaire d'édition
-                    <div className="flex-1 mr-2">
-                        <input
-                            type="text"
-                            className="text-lg text-gray-800 p-2 border border-gray-300 rounded"
-                            value={editableTitle}
-                            onChange={(e) => setEditableTitle(e.target.value)}
-                        />
-                    </div>
+                    <input
+                        type="text"
+                        className="flex-1 text-lg text-gray-800 p-2 border border-gray-300 rounded"
+                        value={editableData.title}
+                        onChange={(e) => setEditableData({ ...editableData, title: e.target.value })}
+                    />
                 ) : (
-                    title && (
-                        <div className="flex-1 mr-2">
-                            <h3 className="text-lg text-gray-800">{title}</h3>
-                        </div>
-                    )
+                    title && <h3 className="flex-1 text-lg text-gray-800">{title}</h3>
                 )}
 
                 {isEditing ? (
-                    <div className="flex-1 flex items-center gap-2">
-                        <textarea
-                            className="text-gray-500 italic p-2 border border-gray-300 rounded"
-                            value={editableText}
-                            onChange={(e) => setEditableText(e.target.value)}
-                        />
-                    </div>
+                    <textarea
+                        className="flex-1 text-gray-500 italic p-2 border border-gray-300 rounded"
+                        value={editableData.text}
+                        onChange={(e) => setEditableData({ ...editableData, text: e.target.value })}
+                    />
                 ) : (
                     text && (
                         <div className="flex-1 flex items-center gap-2">
@@ -87,23 +64,12 @@ const InfoLine: React.FC<InfoLineProps> = ({
                     )
                 )}
 
-                <div className="flex items-center">
-                    {isEditing ? (
-                        <button
-                            onClick={handleUpdate}
-                            className="bg-blue-500 text-white p-2 rounded"
-                        >
-                            Valider
-                        </button>
-                    ) : (
-                        <button
-                            onClick={() => setIsEditing(true)}
-                            className="bg-green-500 text-white p-2 rounded"
-                        >
-                            Modifier
-                        </button>
-                    )}
-                </div>
+                <button
+                    onClick={isEditing ? handleUpdate : () => setIsEditing(true)}
+                    className={`p-2 rounded ${isEditing ? "bg-blue-500" : "bg-green-500"} text-white`}
+                >
+                    {isEditing ? "Valider" : "Modifier"}
+                </button>
             </div>
         </div>
     );

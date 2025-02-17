@@ -1,4 +1,5 @@
 import * as React from "react";
+import Image from "next/image";
 
 export interface StudentCardProps {
   imageSrc: string;
@@ -19,11 +20,12 @@ export const NotificationCard: React.FC<StudentCardProps> = ({
     >
       <div className="flex gap-3 items-center px-5 py-3 rounded-2xl bg-white bg-opacity-90">
         {/* Image de l'icône */}
-        <img
-          loading="lazy"
+        <Image
           src={imageSrc}
           alt={`${title} icon`}
-          className="object-contain shrink-0 rounded-none aspect-square w-[40px]"
+          width={40}
+          height={40}
+          className="object-contain shrink-0 rounded-none"
         />
 
         {/* Conteneur texte */}
