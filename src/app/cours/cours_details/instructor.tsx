@@ -1,6 +1,17 @@
 import React from "react";
+import Image from "next/image";
 
-const Instructor = ({ instructor }: { instructor: any }) => {
+// Définition du type pour éviter l'utilisation de `any`
+interface InstructorProps {
+  instructor: {
+    firstname: string;
+    lastname: string;
+    phone: string;
+    email: string;
+  };
+}
+
+const Instructor: React.FC<InstructorProps> = ({ instructor }) => {
   return (
     <div className="bg-gray-50 py-10 px-6 md:px-20">
       <div className="flex items-center space-x-2 mb-6">
@@ -12,9 +23,12 @@ const Instructor = ({ instructor }: { instructor: any }) => {
         {/* Informations sur l'instructeur */}
         <div className="flex-1 ml-0 md:ml-8">
           <div className="flex items-center space-x-2">
-            <h3 className="text-xl font-bold text-[#25026B]">{`${instructor.firstname} ${instructor.lastname}`}</h3>
-            <img
-              className="w-5 h-5"
+            <h3 className="text-xl font-bold text-[#25026B]">
+              {instructor.firstname} {instructor.lastname}
+            </h3>
+            <Image
+              width={20}
+              height={20}
               src="https://cdn.animaapp.com/projects/66e43e8462936f6a78000b5b/releases/673dab1fd4f209a6937fcc8a/img/icon---filled---check-6.svg"
               alt="Check"
             />
@@ -32,49 +46,39 @@ const Instructor = ({ instructor }: { instructor: any }) => {
         <div className="flex-shrink-0 flex flex-col items-center md:items-start">
           {/* Statistiques alignées verticalement */}
           <div className="space-y-4">
-            <div className="flex items-center">
-              <img
-                src="https://cdn.animaapp.com/projects/66e43e8462936f6a78000b5b/releases/6746f29d9faa9b04bc700d2f/img/icon---filled--ratinngs-1.svg"
-                alt="Ratings"
-                className="w-6 h-6 mr-2"
-              />
-              <span>
-                <span className="font-bold">0</span> Avis favorables
-              </span>
-            </div>
-
-            <div className="flex items-center">
-              <img
-                src="https://cdn.animaapp.com/projects/66e43e8462936f6a78000b5b/releases/6746f29d9faa9b04bc700d2f/img/icon---filled--students-1.svg"
-                alt="Students"
-                className="w-6 h-6 mr-2"
-              />
-              <span>
-                <span className="font-bold">2</span> Étudiants
-              </span>
-            </div>
-
-            <div className="flex items-center">
-              <img
-                src="https://cdn.animaapp.com/projects/66e43e8462936f6a78000b5b/releases/6746f29d9faa9b04bc700d2f/img/icon---filled---video-6.svg"
-                alt="Courses"
-                className="w-6 h-6 mr-2"
-              />
-              <span>
-                <span className="font-bold">1</span> Cours
-              </span>
-            </div>
-
-            <div className="flex items-center">
-              <img
-                src="https://cdn.animaapp.com/projects/66e43e8462936f6a78000b5b/releases/6746f29d9faa9b04bc700d2f/img/icon---filled---star-3.svg"
-                alt="Rating"
-                className="w-6 h-6 mr-2"
-              />
-              <span>
-                <span className="font-bold">4.5</span> Évaluation
-              </span>
-            </div>
+            {[
+              {
+                src: "https://cdn.animaapp.com/projects/66e43e8462936f6a78000b5b/releases/6746f29d9faa9b04bc700d2f/img/icon---filled--ratinngs-1.svg",
+                alt: "Ratings",
+                value: "0",
+                label: "Avis favorables",
+              },
+              {
+                src: "https://cdn.animaapp.com/projects/66e43e8462936f6a78000b5b/releases/6746f29d9faa9b04bc700d2f/img/icon---filled--students-1.svg",
+                alt: "Students",
+                value: "2",
+                label: "Étudiants",
+              },
+              {
+                src: "https://cdn.animaapp.com/projects/66e43e8462936f6a78000b5b/releases/6746f29d9faa9b04bc700d2f/img/icon---filled---video-6.svg",
+                alt: "Courses",
+                value: "1",
+                label: "Cours",
+              },
+              {
+                src: "https://cdn.animaapp.com/projects/66e43e8462936f6a78000b5b/releases/6746f29d9faa9b04bc700d2f/img/icon---filled---star-3.svg",
+                alt: "Rating",
+                value: "4.5",
+                label: "Évaluation",
+              },
+            ].map(({ src, alt, value, label }) => (
+              <div key={alt} className="flex items-center">
+                <Image width={24} height={24} src={src} alt={alt} />
+                <span className="ml-2">
+                  <span className="font-bold">{value}</span> {label}
+                </span>
+              </div>
+            ))}
           </div>
         </div>
       </div>
