@@ -78,6 +78,8 @@ export default function ListeCours() {
     getCourses();
   }, []);
 
+  if (error) return <p>une erreur c'est produite {error}</p>
+
   return (
     <>
       <Navbar />
