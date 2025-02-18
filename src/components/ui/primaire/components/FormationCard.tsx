@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 
 interface FormationCardProps {
@@ -12,7 +13,7 @@ const FormationCard: React.FC<FormationCardProps> = ({ icon, title, description,
     <div className="bg-white rounded-lg shadow-md p-4 relative hover:scale-105 transition-transform duration-300">
       {/* Icône du cours */}
       <div className="absolute -top-6 left-4 bg-white rounded-full p-2 shadow-md">
-        <img src={icon} alt={title} className="w-12 h-12" />
+        <Image src={icon} alt={title} className="w-12 h-12" />
       </div>
 
       {/* Contenu principal */}

@@ -1,16 +1,17 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { CourseFilterZone } from "@/components/CourseFilterZone";
 import { FilterZone } from "@/components/FilterZone";
 import { CourseCard } from "@/components/ui/CourseCard";
 import FilterPopup from "@/components/ui/FilterPopup";
 import { Pagination } from "@/components/ui/Pagination";
-import { useState } from "react";
 import { PaintBucket, MonitorDot, Database, Briefcase } from "lucide-react";
 import { CategoryCard } from "@/components/ui/CategoryCard";
 import TestimonialCard from "@/components/ui/TestimonialCard";
 import Navbar from "@/components/navbar";
+import { ICourse } from "../types";
+import { fetchCourses } from "../services/courseService";
 
 type Testimonial = {
   name: string;
@@ -21,40 +22,11 @@ type Testimonial = {
 
 export default function ListeCours() {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const courses = [
-    {
-      image: "/images/course_card_image.jpg",
-      category: "Développement",
-      duration: "3 Mois",
-      title: "AWS Certified solutions Architect",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",
-      price: "7000 FCFA",
-      author: "Isac Traore",
-    },
-    {
-      image: "/images/course_card_image.jpg",
-      category: "Développement",
-      duration: "3 Mois",
-      title: "AWS Certified solutions Architect",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",
-      price: "7000 FCFA",
-      author: "Isac Traore",
-    },
-    {
-      image: "/images/course_card_image.jpg",
-      category: "Développement",
-      duration: "3 Mois",
-      title: "AWS Certified solutions Architect",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",
-      price: "7000 FCFA",
-      author: "Isac Traore",
-    },
-  ];
+  const [courses, setCourses] = useState<ICourse[]>([]); // Toutes les cours
+  const [filteredCourses, setFilteredCourses] = useState<ICourse[]>([]); // Cours filtrés
+  const [error, setError] = useState<string | null>(null);
 
-  const category = [
+  const categories = [
     {
       icon: <PaintBucket size={24} />,
       title: "Design",
@@ -69,7 +41,7 @@ export default function ListeCours() {
     },
     {
       icon: <Database size={24} />,
-      title: "Developement",
+      title: "Data Science",
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.",
     },
@@ -86,26 +58,47 @@ export default function ListeCours() {
       name: "Salimata Sanogo",
       email: "sali.hill@example.com",
       description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
       avatar: "/images/Capture d’écran 2024-11-21 162903.png",
     },
   ];
 
+  // Fetch initial data
+  useEffect(() => {
+    const getCourses = async () => {
+      try {
+        const data = await fetchCourses();
+        setCourses(data?.data);
+        setFilteredCourses(data?.data); // Initialement, tous les cours sont affichés
+      } catch (err: any) {
+        setError(err.message);
+      }
+    };
+
+    getCourses();
+  }, []);
+
   return (
     <>
       <Navbar />
-      <CourseFilterZone />
+      <CourseFilterZone
+        courses={courses} // Liste complète des cours
+        setFilteredCourses={setFilteredCourses} // Met à jour uniquement les cours filtrés
+      />
       <div className="grid min-h-screen lg:grid-cols-3 gap-6 mt-5">
         {/* Zone de filtre - visible uniquement sur écrans larges */}
         <div className="hidden lg:block lg:col-span-1 p-6">
-          <FilterZone />
+          <FilterZone
+            courses={courses}
+            setFilteredCourses={setFilteredCourses}
+          />
         </div>
 
         {/* Section des cours */}
         <div className="lg:col-span-2 p-6">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-2xl font-bold text-gray-900">
-              Métiers ({courses.length})
+              Métiers ({filteredCourses.length})
             </h2>
             {/* Bouton Filtre pour écrans petits */}
             <button
@@ -117,11 +110,12 @@ export default function ListeCours() {
           </div>
 
           {/* Grille des cartes */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {courses.map((card, index) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-center place-items-center">
+            {filteredCourses.map((card, index) => (
               <CourseCard key={index} {...card} />
             ))}
           </div>
+
 
           <Pagination totalPages={5} />
         </div>
@@ -135,10 +129,10 @@ export default function ListeCours() {
 
       <section className="py-7">
         <h2 className="text-2xl font-bold text-[#25026B] text-center mb-6">
-          Faites un choix parmi le top de nos métier !
+          Faites un choix parmi le top de nos métiers !
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto px-4">
-          {category.map((card, index) => (
+          {categories.map((card, index) => (
             <CategoryCard
               key={index}
               icon={card.icon}
@@ -152,15 +146,15 @@ export default function ListeCours() {
       <section className="py-10 bg-[#F4E9FF]">
         <div className="flex justify-evenly gap-10">
           <h2 className="text-2xl font-bold text-[#25026B] mb-6 text-start">
-            Recommander pour vous
+            Recommandé pour vous
           </h2>
           <p className="text-[#25026B] cursor-pointer hover:underline">
             Voir tout
           </p>
         </div>
-        <div className=" ">
+        <div className="">
           <div className="flex justify-center gap-10 flex-wrap">
-            {courses.map((card, index) => (
+            {filteredCourses.slice(0, 3).map((card, index) => (
               <CourseCard key={index} {...card} />
             ))}
           </div>
@@ -168,12 +162,9 @@ export default function ListeCours() {
       </section>
       <section className="py-12 px-6 bg-[#F4E9FF]">
         <div className="max-w-4xl mx-auto">
-          {/* Title */}
           <h2 className="text-2xl font-bold text-[#25026B] mb-8 text-start">
             Ce que nos étudiants ont à dire
           </h2>
-
-          {/* Testimonials */}
           <div>
             {testimonials.map((testimonial, index) => (
               <TestimonialCard key={index} {...testimonial} />

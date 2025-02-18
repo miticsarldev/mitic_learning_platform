@@ -1,5 +1,6 @@
 import * as React from "react";
 import { JoinButton } from "./JoinButton";
+import Image from "next/image"; // Importation du composant Image de Next.js
 
 export interface CourseCardProps {
   title: string;
@@ -17,11 +18,13 @@ export function NotificationCard2({
   return (
     <article className="flex flex-col px-4 py-3 w-full max-w-[280px] rounded-xl bg-white bg-opacity-90">
       <div className="flex gap-3 items-center">
-        {/* Image dynamique via props */}
-        <img
+        {/* Image dynamique via props avec Next.js Image */}
+        <Image
           src={imageSrc}
           alt="Course avatar"
           className="rounded-full h-10 w-10 object-cover"
+          width={40}  // Largeur de l'image
+          height={40} // Hauteur de l'image
           role="img"
           aria-label="Course avatar"
         />

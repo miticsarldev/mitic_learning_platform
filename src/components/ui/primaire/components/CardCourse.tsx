@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 
 interface CardCourseProps {
@@ -10,7 +11,7 @@ const CardCourse: React.FC<CardCourseProps> = ({ image, title, duration }) => {
   return (
     <div className="bg-white shadow-md rounded-lg overflow-hidden hover:scale-105 transition-transform duration-300 max-w-64 h-72">
       <div className="relative">
-        <img
+        <Image
           src={image}
           alt={title}
           className="w-full h-72 object-cover"

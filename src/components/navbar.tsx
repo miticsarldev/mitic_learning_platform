@@ -5,8 +5,14 @@ import Link from "next/link";
 import { BookOpen, Menu, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useAuthStore } from "@/store/authStore";
+import DropdownUser from "./DropdownUser";
 
 export default function Navbar() {
+  const { user } = useAuthStore();
+  console.log(user);
+  
+
   return (
     <header className="sticky max-w-screen-full px-20 mx-auto top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-14 items-center">
@@ -75,14 +81,19 @@ export default function Navbar() {
               </div>
             </form>
           </div>
-          <nav className="flex items-center">
-            <Button asChild variant="ghost" className="mr-2">
-              <Link href="/login">Se Connecter</Link>
-            </Button>
-            <Button asChild>
-              <Link href="/register">S&apos;inscrire</Link>
-            </Button>
-          </nav>
+          {
+            user ?
+              (<DropdownUser />)
+              : (
+                <nav className="flex items-center">
+                  <Button asChild variant="ghost" className="mr-2">
+                    <Link href="/login">Se Connecter</Link>
+                  </Button>
+                  <Button asChild>
+                    <Link href="/register">S&apos;inscrire</Link>
+                  </Button>
+                </nav>)
+          }
         </div>
       </div>
     </header>

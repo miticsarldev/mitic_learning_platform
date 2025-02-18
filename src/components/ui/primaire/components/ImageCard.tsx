@@ -1,3 +1,4 @@
+import Image from "next/image";
 import * as React from "react";
 
 interface ImageCardProps {
@@ -9,9 +10,9 @@ interface ImageCardProps {
 
 export const ImageCard: React.FC<ImageCardProps> = ({ imageSrc, title, duration, hasOverlay }) => {
     return (
-        <article className="flex flex-col w-[33%] max-md:ml-0 max-md:w-full rounded-2xl">
-            <div className="flex relative flex-col grow pt-96 min-h-[587px] max-md:pt-24 max-md:mt-10 max-md:max-w-full rounded-2xl">
-                <img
+        <article className="flex flex-col w-[33%] max-md:w-full max-md:px-3 max-md:py-4 rounded-2xl">
+            <div className="flex relative flex-col grow pt-96 min-h-[587px] max-md:pt-16 max-md:mt-5 max-md:max-w-full rounded-2xl">
+                <Image
                     loading="lazy"
                     src={imageSrc}
                     alt={title || "Gallery image"}

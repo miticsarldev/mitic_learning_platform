@@ -4,19 +4,39 @@ import React, { useState } from "react";
 const FAQs = () => {
   const faqs = [
     {
-      question: "À qui s'adresse ce cours ?",
+      question: "Qu'est-ce qu'une plateforme e-learning ?",
       answer:
-        "Ce cours s'adresse aux débutants en UX et design web ainsi qu'aux professionnels souhaitant approfondir leurs compétences.",
+        "Une plateforme e-learning est un espace en ligne permettant d’accéder à des cours, suivre des formations, et interagir avec des instructeurs ou d’autres étudiants.",
     },
     {
-      question: "Quels sont les prérequis ?",
+      question: "Quels types de cours sont disponibles ?",
       answer:
-        "Aucun prérequis n'est nécessaire, mais une connaissance de base en informatique est un plus.",
+        "Vous trouverez des cours variés couvrant des domaines tels que la programmation, le marketing, la gestion de projet, le développement personnel, et bien plus encore.",
     },
     {
-      question: "Combien de temps ai-je accès au cours ?",
+      question: "Dois-je suivre les cours à des horaires fixes ?",
       answer:
-        "Vous avez un accès à vie au cours une fois que vous l'avez acheté.",
+        "Non, nos cours sont accessibles en ligne 24/7. Vous pouvez apprendre à votre rythme selon votre disponibilité.",
+    },
+    {
+      question: "Puis-je obtenir un certificat après avoir terminé un cours ?",
+      answer:
+        "Oui, un certificat de complétion est délivré après avoir terminé un cours, ce qui peut être utile pour votre CV ou votre évolution professionnelle.",
+    },
+    {
+      question: "Quels sont les modes de paiement acceptés ?",
+      answer:
+        "Nous acceptons les paiements par carte bancaire, PayPal et parfois d'autres méthodes locales en fonction de votre pays.",
+    },
+    {
+      question: "Puis-je accéder aux cours sur mobile ?",
+      answer:
+        "Oui, notre plateforme est optimisée pour les mobiles, et certains cours sont également accessibles via une application dédiée.",
+    },
+    {
+      question: "Que faire si j’ai des questions sur un cours ?",
+      answer:
+        "Vous pouvez poser vos questions directement dans le forum du cours ou contacter l’instructeur via la messagerie intégrée.",
     },
   ];
 
@@ -25,13 +45,9 @@ const FAQs = () => {
 
   // Fonction pour gérer l'ouverture/fermeture d'une question
   const toggleFAQ = (index: number) => {
-    if (openIndexes.includes(index)) {
-      // Si déjà ouvert, on le ferme
-      setOpenIndexes(openIndexes.filter((i) => i !== index));
-    } else {
-      // Sinon, on l'ajoute aux questions ouvertes
-      setOpenIndexes([...openIndexes, index]);
-    }
+    setOpenIndexes((prev) =>
+      prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]
+    );
   };
 
   return (
@@ -45,7 +61,7 @@ const FAQs = () => {
       </div>
 
       <h2 className="text-2xl font-bold mb-8">
-        Vous avez encore des doutes ? Soyons plus clairs
+        Vous avez encore des questions ? Voici quelques réponses !
       </h2>
 
       {/* Section FAQ */}

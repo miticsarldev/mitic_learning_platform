@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay, EffectCoverflow } from "swiper/modules";
 import "swiper/swiper-bundle.css";
+import Image from "next/image";
 
 const Features: React.FC = () => {
   const images = [
@@ -40,17 +41,17 @@ const Features: React.FC = () => {
         {/* Titre */}
         <h2 className="text-3xl font-bold text-[#1A013F] mb-8">Nos Fonctionnalité</h2>
         <p className="mt-12 mx-auto text-2xl leading-10 text-center text-gray-500 max-md:mt-10 max-md:max-w-full">
-  Transformez votre manière d&apos;apprendre ! Plongez dans nos outils
-  interactifs et nos ressources riches qui vous accompagnent à chaque
-  étape.
-</p>
+          Transformez votre manière d&apos;apprendre ! Plongez dans nos outils
+          interactifs et nos ressources riches qui vous accompagnent à chaque
+          étape.
+        </p>
         {/* Swiper */}
         <Swiper
           modules={[Navigation, Pagination, Autoplay, EffectCoverflow]}
           spaceBetween={30}
           slidesPerView={3}
           navigation
-          pagination={{ clickable: true  }}
+          pagination={{ clickable: true }}
           autoplay={{ delay: 4000, disableOnInteraction: false }}
           effect="coverflow"
           coverflowEffect={{
@@ -74,7 +75,12 @@ const Features: React.FC = () => {
                 className={`relative rounded-lg shadow-lg overflow-hidden bg-white transform transition-transform duration-500`}
               >
                 {/* Image */}
-                <img
+                {/* <img
+                  src={image.src}
+                  alt={image.alt}
+                  className="w-full h-64 object-cover"
+                /> */}
+                <Image
                   src={image.src}
                   alt={image.alt}
                   className="w-full h-64 object-cover"

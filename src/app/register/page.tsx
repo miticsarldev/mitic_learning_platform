@@ -9,25 +9,54 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ChromeIcon as Google, Facebook, Instagram } from "lucide-react";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import { loginUser } from "@/utils/auth";
+import { useAuthStore } from "@/store/authStore";
+
 
 export default function RegisterPage() {
-  const [name, setName] = useState("");
-  const [login, setLogin] = useState("");
+  const [firstname, setFirstname] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [phone, setPhone] = useState("");
+  const [role, setRole] = useState("student");
   const [acceptTerms, setAcceptTerms] = useState(false);
+  const [error, setError] = useState("");
+  const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const login = useAuthStore((state) => state.login);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Registration submitted", {
-      name,
-      login,
-      password,
-      confirmPassword,
-      phone,
-      acceptTerms,
-    });
+    if (password !== confirmPassword) {
+      setError("Les mots de passe ne correspondent pas.");
+      return;
+    }
+    try {
+      const response = await axios.post("http://localhost:4444/api/register", {
+        firstname,
+        email,
+        username,
+        password,
+        phone,
+        role
+      });
+
+      const credential = {
+        email: email,
+        password: password
+      }
+
+
+      const { user, accessToken } = await loginUser(credential);
+      login(user, accessToken);
+      router.push(`/OTPVerification?email=${email}`);
+    } catch (err: any) {
+      setError(err.response?.data?.message || "Impossible de s'inscrire.");
+    }
   };
 
   return (
@@ -46,21 +75,33 @@ export default function RegisterPage() {
               <Input
                 id="name"
                 placeholder="Entrez votre nom"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                value={firstname}
+                onChange={(e) => setFirstname(e.target.value)}
                 required
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="login">Login</Label>
+              <Label htmlFor="login">E-Mail</Label>
               <Input
                 id="login"
                 placeholder="Entrez un login"
-                value={login}
-                onChange={(e) => setLogin(e.target.value)}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
               />
             </div>
+            <div className="space-y-2">
+              <Label htmlFor="username">Nom d'utilisateur</Label>
+              <Input
+                id="username"
+                type="username"
+                placeholder="Créer un nom d'utilisateur"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+              />
+            </div>
+
             <div className="space-y-2">
               <Label htmlFor="password">Mot de passe</Label>
               <Input

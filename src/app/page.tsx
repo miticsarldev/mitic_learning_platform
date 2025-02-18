@@ -1,16 +1,3 @@
-// import HeroSection from "@/components/hero-section";
-// import Navbar from "@/components/navbar";
-
-// export default function MainPage() {
-//   return (
-//     <div className="flex min-h-screen flex-col">
-//       <Navbar />
-//       <main className="flex-1 max-w-screen-xl mx-auto">
-//         <HeroSection />
-//       </main>
-//     </div>
-//   );
-// }
 
 "use client";
 import React from "react";
@@ -23,7 +10,14 @@ import FooterSection from "@/components/ui/footer/FooterSection";
 import { Gallery } from "@/components/ui/primaire/components/Gallery";
 import { LandingPage } from "@/components/ui/primaire/section/heroSection/LandingPageL";
 
+import { useAuthStore } from "@/store/authStore";
+
+
+
 export default function Landing() {
+  const { user, logout } = useAuthStore();
+  console.log(user);
+  
   return (
     <div>
       <Navbar />

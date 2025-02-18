@@ -1,65 +1,58 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import { GalleryRow } from "./GalleryRow";
+import { fetchCourses } from "@/app/services/courseService";
 
-interface ImageCardProps {
-    imageSrc: string;
-    title?: string;
+interface Course {
+    _id: string;
+    title: string;
+    description?: string;
+    path_image: string;
     duration?: string;
-    hasOverlay?: boolean;
+    price?: number;
+    isCertified?: boolean;
 }
 
 export const Gallery: React.FC = () => {
-    const firstRowCards: ImageCardProps[] = [
-        {
-            imageSrc: "https://cdn.builder.io/api/v1/image/assets/TEMP/54550e509178733c107e0b594d4a5a7a649ccd6f0375901e299d8042f5075047?placeholderIfAbsent=true&apiKey=3a2067aab35e451b9d08bcadda09cdd4",
-            title: "Comptabilité",
-            duration: "6mois",
-            hasOverlay: true
-        },
-        {
-            imageSrc: "https://cdn.builder.io/api/v1/image/assets/TEMP/2d8cce96b7b603fd9d3a0be02c8c3f232776533f03713a142e0e634bc449bd47?placeholderIfAbsent=true&apiKey=3a2067aab35e451b9d08bcadda09cdd4",
-            title: "Business plan",
-            duration: "6mois",
-            hasOverlay: true
-        },
-        {
-            imageSrc: "https://cdn.builder.io/api/v1/image/assets/TEMP/c59c15b633a0c17f12967bdc276449bec62f503f32d3faffacab61487a0eac0a?placeholderIfAbsent=true&apiKey=3a2067aab35e451b9d08bcadda09cdd4",
-            title: "Comptabilité",
-            duration: "6mois",
-            hasOverlay: true
-        }
-    ];
+    const [courses, setCourses] = useState<Course[][]>([]);
+    const DEFAULT_IMAGE = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXEiK9CyQy0VSMyiAhWrIMNfyafl-bblTFMQ&s"; // Image par défaut si nécessaire
 
-    const secondRowCards: ImageCardProps[] = [
-        {
-            imageSrc: "https://cdn.builder.io/api/v1/image/assets/TEMP/f9fd8444659af8f6f130f14a59bb46d2fce5fbf491bb022e4321606378ace15d?placeholderIfAbsent=true&apiKey=3a2067aab35e451b9d08bcadda09cdd4",
-            title: "Comptabilité",
-            duration: "6mois",
-            hasOverlay: true
-        },
-        {
-            imageSrc: "https://cdn.builder.io/api/v1/image/assets/TEMP/01f5ced5c560edb8e36762cf1bbe96532702a08db3575e628b8a58d38f106329?placeholderIfAbsent=true&apiKey=3a2067aab35e451b9d08bcadda09cdd4",
-            title: "Comptabilité",
-            duration: "6mois",
-            hasOverlay: true
-        },
-        {
-            imageSrc: "https://cdn.builder.io/api/v1/image/assets/TEMP/2acc3d258a5e391074ee138a2be4b8716abd562e70e4ec62c4c4ec482791cd1b?placeholderIfAbsent=true&apiKey=3a2067aab35e451b9d08bcadda09cdd4",
-            title: "Comptabilité",
-            duration: "6mois",
-            hasOverlay: true
-        }
-    ];
+    useEffect(() => {
+        const loadCourses = async () => {
+            try {
+                const allCourses = await fetchCourses();
+                console.log(allCourses);
+
+                const rows: Course[][] = [];
+                const processedCourses = allCourses?.data.map(course => ({
+                    ...course,
+                    path_image: course.path_image || DEFAULT_IMAGE // Assurer une image par défaut
+                }));
+
+                for (let i = 0; i < processedCourses.length; i += 3) {
+                    rows.push(processedCourses.slice(i, i + 3));
+                }
+                setCourses(rows);
+            } catch (error) {
+                console.error("Erreur lors du chargement des cours :", error);
+            }
+        };
+
+        loadCourses();
+    }, []);
 
     return (
         <main className="flex flex-col px-12 py-14 w-full bg-white rounded-3xl max-md:px-5 max-md:max-w-full">
             <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 text-gray-800">
                 Cours populaires
             </h2>
-            <GalleryRow cards={firstRowCards} />
-            <div className="mt-20 max-md:mt-10 max-md:mr-1 max-md:max-w-full">
-                <GalleryRow cards={secondRowCards} />
-            </div>
+            {courses.length > 0 && (
+                <GalleryRow cards={courses[0].map(course => ({
+                    imageSrc: course.path_image,
+                    title: course.title,
+                    duration: course.duration,
+                    hasOverlay: true
+                }))} />
+            )}
         </main>
     );
 };

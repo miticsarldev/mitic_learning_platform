@@ -14,25 +14,25 @@ const TestimonialCard: React.FC<TestimonialProps> = ({
     avatar,
 }) => {
     return (
-        <div className="flex items-center bg-white rounded-lg shadow-lg p-20">
+        <div className="flex flex-col md:flex-row items-center bg-white rounded-lg shadow-lg p-10 md:p-20 text-center md:text-left">
             {/* Avatar */}
-            <div className="flex-shrink-0 relative w-36 h-36">
-                <div className="absolute top-0 left-0 w-full h-full"></div>
+            <div className="flex-shrink-0 relative w-24 h-24 md:w-36 md:h-36">
                 <img
                     src={avatar}
                     alt={name}
-                    className="object-cover w-full h-full relative mx-auto"
+                    className="object-cover w-full h-full rounded-full"
                 />
             </div>
 
-            {/* Text Content */}
-            <div className="ml-8">
+            {/* Texte */}
+            <div className="mt-4 md:mt-0 md:ml-8 flex flex-col items-center md:items-start">
                 <h3 className="text-lg font-bold text-[#25026B]">{name}</h3>
-                <p className="text-sm text-gray-500 mb-4">{email}</p>
-                <p className="text-gray-600 leading-relaxed">{description}</p>
+                <p className="text-sm text-gray-500">{email}</p>
+                <p className="text-gray-600 leading-relaxed mt-2">{description}</p>
             </div>
         </div>
     );
 };
+
 
 export default TestimonialCard;

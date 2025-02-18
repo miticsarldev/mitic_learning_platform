@@ -1,4 +1,5 @@
 import { ChevronRightIcon, UsersIcon } from "lucide-react";
+import Image from "next/image";
 import React from "react";
 
 const ProfilePage = () => {
@@ -40,28 +41,31 @@ const ProfilePage = () => {
 
       {/* Main Content */}
       <div className="flex mt-8">
-        {/* Image Section (1/3 de la hauteur, collée à la card bleu ciel) */}
+        {/* Image Section */}
         <div className="flex items-center justify-center w-1/2">
           <div className="bg-blue-400 rounded-xl p-8 w-full h-3/4 flex items-center justify-center">
-            <img
-              src="/images/CaptureImage.png"
-              alt="Student"
-              className="rounded-lg max-w-[250px] max-h-[250px]"
-            />
+            <div className="relative w-[250px] h-[250px]">
+              <Image
+                src="/images/CaptureImage.png"
+                alt="Student"
+                layout="intrinsic"
+                width={250}
+                height={250}
+                objectFit="contain"
+                priority
+                placeholder="blur"
+                blurDataURL="/fallback-image.png"
+              />
+            </div>
           </div>
         </div>
 
-        {/* Cards Section (fond bleu ciel) */}
-        {/* Section des cartes */}
+        {/* Cards Section */}
         <div className="bg-sky-50 rounded-xl p-10 shadow-md w-1/2 flex flex-col gap-6">
           {/* Titre avec l'icône */}
           <div className="flex items-center justify-center gap-3 mb-6">
-            <UsersIcon className="h-8 w-8 text-blue-600" />{" "}
-            {/* Icône users avec taille augmentée */}
-            <h2 className="text-2xl font-bold text-gray-800">
-              Infos personnelles
-            </h2>{" "}
-            {/* Texte agrandi */}
+            <UsersIcon className="h-8 w-8 text-blue-600" />
+            <h2 className="text-2xl font-bold text-gray-800">Infos personnelles</h2>
           </div>
 
           {/* Cartes d'informations */}
@@ -83,23 +87,14 @@ const ProfilePage = () => {
   );
 };
 
-const InfoCard = ({
-  title,
-  description,
-}: {
-  title: string;
-  description: string;
-}) => {
+const InfoCard = ({ title, description }: { title: string; description: string }) => {
   return (
     <div className="bg-white p-6 rounded-lg shadow-md flex items-center justify-between">
       <div>
         <h2 className="text-lg font-bold">{title}</h2>
         <p className="text-gray-600">{description}</p>
       </div>
-      <button
-        onClick={() => console.log("Chevron cliqué")}
-        className="focus:outline-none"
-      >
+      <button onClick={() => console.log("Chevron cliqué")} className="focus:outline-none">
         <ChevronRightIcon className="h-6 w-6 text-gray-500 flex-shrink-0" />
       </button>
     </div>
