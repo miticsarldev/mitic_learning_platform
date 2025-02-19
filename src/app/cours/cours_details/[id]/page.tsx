@@ -57,9 +57,9 @@ export default function CoursDetailsPage({ params }: CoursDetailsPageProps) {
 
   // ✅ Création du tableau avec les vraies données
   const statsData = [
-    { value: `${courseDetails.course.duration || "N/A"} `, label: "Heures de cours" },
-    { value: `${courseDetails.lessons.length || 0}`, label: "Leçons" },
-    { value: `${enrollementsCount !== null ? enrollementsCount : 0}`, label: "Étudiants inscrits" },
+    { id : 1, value: `${courseDetails.course.duration || "N/A"} `, label: "Heures de cours" },
+    { id: 2, value: `${courseDetails.lessons.length || 0}`, label: "Leçons" },
+    { id: 3, value: `${enrollementsCount !== null ? enrollementsCount : 0}`, label: "Étudiants inscrits" },
   ];
 
   return (
