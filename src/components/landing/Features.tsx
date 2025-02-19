@@ -75,11 +75,6 @@ const Features: React.FC = () => {
                 className={`relative rounded-lg shadow-lg overflow-hidden bg-white transform transition-transform duration-500`}
               >
                 {/* Image */}
-                {/* <img
-                  src={image.src}
-                  alt={image.alt}
-                  className="w-full h-64 object-cover"
-                /> */}
                 <Image
                   src={image.src}
                   alt={image.alt}

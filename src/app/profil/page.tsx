@@ -27,7 +27,6 @@ interface User {
     __v?: number;
 }
 
-
 const ProfileCard = () => {
     const { user } = useAuthStore();
     const [isEditing, setIsEditing] = useState<boolean>(false);
@@ -56,18 +55,20 @@ const ProfileCard = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string>("");
 
+    const apiBaseUrl = "http://localhost:4444/api";
+
     // Récupération des données utilisateur
     useEffect(() => {
-        if (!user) return;
+        if (!user?.id) return;
         axios
-            .get(`http://localhost:4444/api/users/id/${user.id}`)
+            .get(`${apiBaseUrl}/users/id/${user.id}`)
             .then((res) => {
                 setUserCon(res.data);
                 setBackupUser(res.data);
                 setLoading(false);
             })
             .catch((err) => {
-                setError("Erreur de chargement des données." + err);
+                setError("Erreur de chargement des données: " + (err.response?.data?.message || err.message));
                 setLoading(false);
             });
     }, [user]);
@@ -84,16 +85,32 @@ const ProfileCard = () => {
         setIsEditing(false);
     };
 
-    const handleSave = () => {
-        axios
-            .put(`http://localhost:4444/api/users/${user?.id}`, userCon)
-            .then(() => {
-                setBackupUser(userCon);
-                setIsEditing(false);
-            })
-            .catch(() => {
-                setError("Erreur lors de la mise à jour.");
-            });
+    const handleSave = async () => {
+        try {
+            await axios.put(`${apiBaseUrl}/users/${user?.id}`, userCon);
+            setBackupUser(userCon);
+            setIsEditing(false);
+        } catch (err) {
+            setError("Erreur lors de la mise à jour: " + err);
+        }
+    };
+
+    const sentEmail = async () => {
+        if (!user?.id) {
+            setError("Utilisateur non authentifié.");
+            return;
+        }
+
+        setError("");
+        const link = `${window.location.origin}/reset-password?id=${user?.id}`;
+        try {
+            const response = await axios.post(`${apiBaseUrl}/send-reset-email`, { id: user?.id, link });
+            if (response.status === 200) {
+                alert("Email de modification envoyé à votre adresse avec succès !");
+            }
+        } catch (err) {
+            setError("Une erreur s'est produite: " + err);
+        }
     };
 
     const getInitials = (firstname?: string, lastname?: string) => {
@@ -101,24 +118,26 @@ const ProfileCard = () => {
         return `${firstname?.charAt(0) || ""}${lastname?.charAt(0) || ""}`.toUpperCase();
     };
 
+    const renderInputField = (key: string, value: string | undefined) => {
+        const formattedKey = key.replace(/([A-Z])/g, " $1").toLowerCase();
+
+        return isEditing ? (
+            <input
+                type="text"
+                name={key}
+                value={value || ""}
+                onChange={handleChange}
+                placeholder={`Enter ${formattedKey}`}
+                className={`border p-1 rounded-md ${isEditing ? "border-blue-500" : "border-gray-300"}`}
+                disabled={key === "email" || key === "username"}
+            />
+        ) : (
+            <span>{value}</span>
+        );
+    };
+
     if (loading) return <p className="text-center">Chargement...</p>;
     if (error) return <p className="text-red-500 text-center">{error}</p>;
-
-    const sentEmail = async () => {
-        setError("");
-
-        try {
-            const link = `${window.location.origin}/reset-password?id=${user?.id}`;
-            const id = user?.id;
-            const response = await axios.post("http://localhost:4444/api/send-reset-email", { id, link });
-
-            if (response.status === 200) {
-                alert("Email de modification envoyé à votre adresse avec succès !");
-            }
-        } catch (err) {
-            setError("Une erreur s'est produite." + err);
-        }
-    };
 
     return (
         <div className="flex min-h-screen flex-col">
@@ -168,33 +187,9 @@ const ProfileCard = () => {
                         transition={{ duration: 0.3 }}
                         className="mt-4 space-y-3"
                     >
-                        {Object.entries(userCon).map(([key, value]) => (
-                            key !== "password" &&
-                            key !== "role" &&
-                            key !== "status" &&
-                            key !== "isVerified" &&
-                            key !== "_id" &&
-                            key !== "createdAt" &&
-                            key !== "updatedAt" &&
-                            key !== "__v" && (
-                                <div key={key} className="flex justify-between">
-                                    <span className="font-medium capitalize">{key.replace(/([A-Z])/g, " $1")}:</span>
-                                    {isEditing ? (
-                                        <input
-                                            type="text"
-                                            name={key}
-                                            value={value as string}
-                                            onChange={handleChange}
-                                            placeholder={`Enter ${key.replace(/([A-Z])/g, " $1")}`}
-                                            className={`border p-1 rounded-md ${isEditing ? "border-blue-500" : "border-gray-300"}`}
-                                            disabled={key === "email" || key === "username"}
-                                        />
-                                    ) : (
-                                        <span>{value}</span>
-                                    )}
-                                </div>
-                            )
-                        ))}
+                        {Object.entries(userCon)
+                            .filter(([key]) => !["password", "role", "status", "isVerified", "_id", "createdAt", "updatedAt", "__v"].includes(key))
+                            .map(([key, value]) => renderInputField(key, value as string))}
                     </motion.div>
                 </div>
                 <button type="submit" className="w-full bg-[#490ac6c5] text-white p-2 rounded" onClick={sentEmail}>
