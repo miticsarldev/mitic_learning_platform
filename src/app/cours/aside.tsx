@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { FaArrowLeft, FaArrowRight, FaCheck } from "react-icons/fa";
 
 type Lesson = {
@@ -7,33 +7,36 @@ type Lesson = {
 };
 
 type SidebarProps = {
-  lessons: Lesson[]; // Remplace `any[]` par `Lesson[]`
-  currentLessonIndex: number; // Index de la leçon en cours
+  lessons: Lesson[];
+  currentLessonIndex: number;
 };
 
 const Sidebar: React.FC<SidebarProps> = ({ lessons, currentLessonIndex }) => {
   const [currentLesson, setCurrentLesson] = useState<Lesson | null>(null);
+  const lessonListRef = useRef<HTMLUListElement | null>(null);
 
   // Met à jour la leçon en cours si l'index change
   useEffect(() => {
-    if (lessons[currentLessonIndex]) {
-      setCurrentLesson(lessons[currentLessonIndex]);
-      console.log(currentLessonIndex);
-    } else {
-      setCurrentLesson(null); // Réinitialise si l'index est invalide
-    }
+    const lesson = lessons[currentLessonIndex];
+    setCurrentLesson(lesson || null); // Réinitialise si l'index est invalide
   }, [currentLessonIndex, lessons]);
+
+  // Fonction de défilement avec un intervalle spécifique
+  const handleScroll = (direction: "up" | "down") => {
+    const container = lessonListRef.current;
+    if (container) {
+      const scrollAmount = direction === "up" ? -100 : 100;
+      container.scrollBy({ top: scrollAmount, behavior: "smooth" });
+    }
+  };
 
   return (
     <div className="shadow-md p-4 rounded-lg relative h-max flex flex-col">
       {/* En-tête avec le titre et les flèches */}
-      <div className="flex items-center justify-between mb-4 bg-[#25026B] p-4">
+      <div className="flex items-center justify-between mb-4 bg-primary p-4">
         <button
           className="bg-gray-200 p-3 rounded-full shadow hover:bg-gray-300"
-          onClick={() => {
-            const container = document.getElementById("lessonList");
-            if (container) container.scrollBy({ top: -100, behavior: "smooth" });
-          }}
+          onClick={() => handleScroll("up")}
         >
           <FaArrowLeft />
         </button>
@@ -42,25 +45,26 @@ const Sidebar: React.FC<SidebarProps> = ({ lessons, currentLessonIndex }) => {
         </h3>
         <button
           className="bg-gray-200 p-3 rounded-full shadow hover:bg-gray-300"
-          onClick={() => {
-            const container = document.getElementById("lessonList");
-            if (container) container.scrollBy({ top: 100, behavior: "smooth" });
-          }}
+          onClick={() => handleScroll("down")}
         >
           <FaArrowRight />
         </button>
       </div>
 
       {/* Liste scrollable */}
-      <ul id="lessonList" className="space-y-2 overflow-y-auto no-scrollbar flex-grow">
+      <ul
+        ref={lessonListRef}
+        id="lessonList"
+        className="space-y-2 overflow-y-auto no-scrollbar flex-grow"
+      >
         {lessons.map((lesson, index) => (
           <li
             className={`flex items-center ${
-              index === currentLessonIndex ? "font-bold text-[#25026B]" : ""
+              index === currentLessonIndex ? "font-bold text-primary" : ""
             }`}
             key={lesson.id}
           >
-            <span className="bg-[#25026B] w-6 h-6 rounded-full flex items-center justify-center text-white mr-2">
+            <span className="bg-primary w-6 h-6 rounded-full flex items-center justify-center text-white mr-2">
               <FaCheck className="text-xs" />
             </span>
             {lesson.title}

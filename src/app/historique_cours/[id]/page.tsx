@@ -7,6 +7,7 @@ import axios from "axios";
 import Navbar from "@/components/navbar";
 import { useAuthStore } from "@/store/authStore";
 import Image from "next/image";
+import clsx from "clsx";
 
 interface Course {
     category: string;
@@ -75,12 +76,12 @@ const CourseHistory = () => {
                     const response = await axios.get<Enrollment[]>(`http://localhost:4444/api/enrollment/student/${userId}`);
 
                     const formattedCourses = response.data.map((enrollment: Enrollment) => ({
-                        category: "Développement", // Remplacer par la catégorie si disponible
+                        category: "Développement",
                         title: enrollment.course_id.title,
                         status: enrollment.status === "completed" ? "Cours terminé!" : "En cours",
                         startDate: new Date(enrollment.start_date).toLocaleDateString("fr-FR"),
                         image: enrollment.course_id.path_image,
-                        progress: enrollment.status === "completed" ? 100 : 50, // Progress selon l'API
+                        progress: enrollment.status === "completed" ? 100 : 50,
                     }));
                     setCourses(formattedCourses);
                 } catch (err) {
@@ -93,18 +94,28 @@ const CourseHistory = () => {
         }
     }, [userId]);
 
+    const filteredCourses = courses.filter(course => {
+        const isCategoryMatch = !selectedCategory || course.category === selectedCategory;
+        const isStatusMatch = selectedStatus === "Tous" ||
+            (selectedStatus === "Terminés" && course.progress === 100) ||
+            (selectedStatus === "En cours" && course.progress < 100);
+        return isCategoryMatch && isStatusMatch;
+    });
+
     return (
         <div className="flex min-h-screen flex-col">
             <Navbar />
             <div className="px-20 p-6">
                 <h1 className="text-2xl font-bold text-gray-800 mb-4">Cours suivis</h1>
 
-                {/* Sélecteurs de catégorie et de statut */}
                 <div className="flex gap-2 mb-6">
                     {["Développement", "Bureautique"].map((category) => (
                         <button
                             key={category}
-                            className={`px-4 py-2 rounded-full border ${selectedCategory === category ? "bg-[#1C1E53] text-white" : "bg-white text-gray-800 border-gray-300"}`}
+                            className={clsx("px-4 py-2 rounded-full border", {
+                                "bg-[#1C1E53] text-white": selectedCategory === category,
+                                "bg-white text-gray-800 border-gray-300": selectedCategory !== category,
+                            })}
                             onClick={() => setSelectedCategory(selectedCategory === category ? null : category)}
                         >
                             {category}
@@ -116,7 +127,10 @@ const CourseHistory = () => {
                     {["Tous", "Terminés", "En cours"].map((status) => (
                         <button
                             key={status}
-                            className={`px-4 py-2 rounded-full border ${selectedStatus === status ? "bg-[#1C1E53] text-white" : "bg-white text-gray-800 border-gray-300"}`}
+                            className={clsx("px-4 py-2 rounded-full border", {
+                                "bg-[#1C1E53] text-white": selectedStatus === status,
+                                "bg-white text-gray-800 border-gray-300": selectedStatus !== status,
+                            })}
                             onClick={() => setSelectedStatus(selectedStatus === status ? null : status)}
                         >
                             {status}
@@ -128,14 +142,9 @@ const CourseHistory = () => {
                 {error && <p className="text-red-500">{error}</p>}
 
                 <div className="grid gap-4">
-                    {courses
-                        .filter(course => !selectedCategory || course.category === selectedCategory)
-                        .filter(course => selectedStatus === "Tous" ||
-                            (selectedStatus === "Terminés" && course.progress === 100) ||
-                            (selectedStatus === "En cours" && course.progress < 100))
-                        .map((course, index) => (
-                            <CourseCard key={index} course={course} />
-                        ))}
+                    {filteredCourses.map((course) => (
+                        <CourseCard key={course.title} course={course} />
+                    ))}
                 </div>
             </div>
         </div>

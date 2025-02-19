@@ -1,8 +1,11 @@
 import React from "react";
 import { LessonDisplayProps } from "../types";
 
-const LessonDisplay : React.FC<LessonDisplayProps> = ({ lessons, lessonId })=> {
-  // Trouver la leçon correspondante à l'ID
+const LessonDisplay: React.FC<LessonDisplayProps> = ({ lessons, lessonId }) => {
+  if (!lessons || lessons.length === 0) {
+    return <p>Aucune leçon disponible</p>;
+  }
+
   const lesson = lessons.find((lesson) => lesson._id === lessonId);
 
   if (!lesson) {
@@ -31,7 +34,7 @@ const LessonDisplay : React.FC<LessonDisplayProps> = ({ lessons, lessonId })=> {
             <div className="relative mt-4">
               <img
                 src={section.path_image}
-                alt={section.title}
+                alt={section.title || "Image de la section"}
                 className="rounded-lg shadow-md w-full mx-auto"
               />
             </div>
