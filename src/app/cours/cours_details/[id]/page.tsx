@@ -12,6 +12,7 @@ import { useEffect, useState, useCallback } from "react";
 import { fetchCourseDetails } from "@/app/services/courseService";
 import { getEnrollementsCountByCourseId } from "@/app/services/enrollementService";
 import FooterSection from "@/components/ui/footer/FooterSection";
+import { Course, ICourse, InstructorInfo, Lesson } from "@/app/types";
 
 interface CoursDetailsPageProps {
   params: {
@@ -19,32 +20,9 @@ interface CoursDetailsPageProps {
   };
 }
 
-interface Lesson {
-  _id: string; // ✅ Correction ici
-  title: string;
-  duration: string;
-}
 
-interface InstructorInfo {
-  firstname: string;
-  lastname: string;
-  phone: string;
-  email: string;
-}
 
-interface Course {
-  title: string;
-  description: string;
-  rating: number;
-  reviewsCount: number;
-  price : number;
-  path_image: string;
-  course: {
-    duration: string;
-    created_by: InstructorInfo;
-  };
-  lessons: Lesson[];
-}
+
 
 export default function CoursDetailsPage({ params }: CoursDetailsPageProps) {
   const { id } = params;
