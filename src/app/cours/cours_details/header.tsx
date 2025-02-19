@@ -4,20 +4,10 @@ import { FaStar } from "react-icons/fa";
 import ConfirmationModal from "@/components/ConfirmationModal";
 import axios from "axios";
 import Image from "next/image";
+import { Course, ICourse } from "@/app/types";
 
 // Définition du type Course
-type Course = {
-  title: string;
-  description: string;
-  rating: number;
-  reviewsCount: number;
-  created_by?: {
-    firstname: string;
-    lastname: string;
-  };
-  price: number;
-  path_image: string;
-};
+
 
 // Type des props avec un cours optionnel
 type CourseProps = {

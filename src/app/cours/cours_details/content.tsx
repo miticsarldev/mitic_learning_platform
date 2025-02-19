@@ -1,20 +1,8 @@
 "use client";
+import { Lesson } from "@/app/types";
 import React, { useState } from "react";
 
-interface Section {
-  _id: string;
-  title: string;
-  description: string;
-}
-
-interface Lesson {
-  _id: string;
-  title: string;
-  duration: string;
-  sections?: Section[];
-}
-
-interface ContentProps {
+ type ContentProps = {
   lessons: Lesson[];
 }
 
