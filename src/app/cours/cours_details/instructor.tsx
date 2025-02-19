@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
+import { instructorStats } from "@/lib/constant";
 
-// Définition du type pour éviter l'utilisation de `any`
 interface InstructorProps {
   instructor: {
     firstname: string;
@@ -46,32 +46,7 @@ const Instructor: React.FC<InstructorProps> = ({ instructor }) => {
         <div className="flex-shrink-0 flex flex-col items-center md:items-start">
           {/* Statistiques alignées verticalement */}
           <div className="space-y-4">
-            {[
-              {
-                src: "https://cdn.animaapp.com/projects/66e43e8462936f6a78000b5b/releases/6746f29d9faa9b04bc700d2f/img/icon---filled--ratinngs-1.svg",
-                alt: "Ratings",
-                value: "0",
-                label: "Avis favorables",
-              },
-              {
-                src: "https://cdn.animaapp.com/projects/66e43e8462936f6a78000b5b/releases/6746f29d9faa9b04bc700d2f/img/icon---filled--students-1.svg",
-                alt: "Students",
-                value: "2",
-                label: "Étudiants",
-              },
-              {
-                src: "https://cdn.animaapp.com/projects/66e43e8462936f6a78000b5b/releases/6746f29d9faa9b04bc700d2f/img/icon---filled---video-6.svg",
-                alt: "Courses",
-                value: "1",
-                label: "Cours",
-              },
-              {
-                src: "https://cdn.animaapp.com/projects/66e43e8462936f6a78000b5b/releases/6746f29d9faa9b04bc700d2f/img/icon---filled---star-3.svg",
-                alt: "Rating",
-                value: "4.5",
-                label: "Évaluation",
-              },
-            ].map(({ src, alt, value, label }) => (
+            {instructorStats.map(({ src, alt, value, label }) => (
               <div key={alt} className="flex items-center">
                 <Image width={24} height={24} src={src} alt={alt} />
                 <span className="ml-2">

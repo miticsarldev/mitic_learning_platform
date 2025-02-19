@@ -68,3 +68,30 @@ export type LessonDisplayProps = {
     lessons: Lesson[] |  [];
     lessonId: string;
 };
+
+// interface Lesson {
+//     _id: string; // ✅ Correction ici
+//     title: string;
+//     duration: string;
+//   }
+  
+  export type  InstructorInfo = {
+    firstname: string;
+    lastname: string;
+    phone: string;
+    email: string;
+  }
+
+ export type  Course = {
+  title: string;
+  description: string;
+  rating: number;
+  reviewsCount: number;
+  price : number;
+  path_image: string;
+  course: {
+    duration: string;
+    created_by: InstructorInfo;
+  };
+  lessons: Lesson[];
+}
