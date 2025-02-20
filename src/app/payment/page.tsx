@@ -69,6 +69,7 @@ const PaymentPage = () => {
                                     src={operator.icon}
                                     alt={operator.name}
                                     className="w-18 h-18 object-cover rounded-lg"
+                                    fill
                                 />
                                 
                             </motion.div>

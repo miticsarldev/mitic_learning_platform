@@ -13,11 +13,15 @@ const ReseauxSociaux: React.FC = () => {
         <div className="flex justify-start space-x-4 mt-4">
             {socialLinks.map((social) => (
                 <a href={social.url} target="_blank" rel="noopener noreferrer" key={social.name}>
-                    <Image
-                        src={`/images/logo_${social.name}.png`}
-                        alt={`${social.name} icon`}
-                        className="w-6 h-6"
-                    />
+                    <div className="relative w-6 h-6">
+                        <Image
+                            src={`/images/logo_${social.name}.png`}
+                            alt={`${social.name} icon`}
+                            className="object-contain"
+                            fill
+                        />
+                    </div>
+
                 </a>
             ))}
         </div>

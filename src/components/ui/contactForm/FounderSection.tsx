@@ -21,6 +21,7 @@ const FounderSection: React.FC = () => {
             src="/images/user_profil.png"
             alt="Fondateur"
             className="w-48 h-48 rounded-full shadow-lg border-4 border-white"
+            fill
           />
           <motion.div
             animate={{ rotate: 360 }}

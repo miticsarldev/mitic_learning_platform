@@ -34,21 +34,22 @@ const StudentFeedback = () => {
     <div className="bg-[#490AC6] py-16 px-8">
       <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center md:items-start space-x-0 md:space-x-8">
         <div className="md:w-1/3">
-          <Image
-            loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/b0aa033756e746f9ae04e3e003be37d3/7b38cb8edd6084424d0c98a1f5fc95658ef88ebeca4cfcb3fefdc4548feb6abc?apiKey=b0aa033756e746f9ae04e3e003be37d3&"
-            alt="Image de l'instructeur"
-            className="object-contain rounded-none aspect-[0.7] w-full"
-          />
+          <div className="relative w-full aspect-[0.7]">
+            <Image
+              loading="lazy"
+              src="https://cdn.builder.io/api/v1/image/assets/b0aa033756e746f9ae04e3e003be37d3/7b38cb8edd6084424d0c98a1f5fc95658ef88ebeca4cfcb3fefdc4548feb6abc?apiKey=b0aa033756e746f9ae04e3e003be37d3&"
+              alt="Image de l'instructeur"
+              className="object-contain rounded-none"
+              fill
+            />
+          </div>
         </div>
 
         <div className="md:w-2/3 text-white">
           <h3 className="uppercase text-sm font-semibold tracking-wide text-[#B8A4F9] mb-3">
             Commentaires des étudiants
           </h3>
-          <h2 className="text-3xl md:text-4xl font-bold mb-8">
-            {feedbacks[currentFeedback].comment}
-          </h2>
+          
 
           <div className="relative p-8 bg-[#490AC6] shadow-lg rounded-lg">
             <div className="text-lg italic leading-relaxed text-center mb-6">

@@ -42,11 +42,15 @@ export const CourseCard: React.FC<CardProps> = ({
     <Link href={`/cours/cours_details/${_id}`} className="bg-white shadow-md rounded-lg overflow-hidden w-72">
       {/* Image */}
       <div className="relative">
-        <Image
-          src={path_image || "/placeholder-image.jpg"}
-          alt={title}
-          className="w-full h-40 object-cover"
-        />
+        <div className="relative w-full h-40">
+          <Image
+            src={path_image || "/placeholder-image.jpg"}
+            alt={title}
+            className="object-cover"
+            fill
+          />
+        </div>
+
         <div className="absolute top-2 right-2 flex space-x-1">
           {/* Étoiles */}
           {[...Array(3)].map((_, index) => (

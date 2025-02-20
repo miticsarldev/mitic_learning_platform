@@ -36,6 +36,7 @@ const CourseCard = ({ course }: { course: Course }) => {
                 src={course.image}
                 alt={course.title}
                 className="w-24 h-24 object-cover rounded-lg"
+                fill
             />
             <div className="flex-1">
                 <p className="text-sm font-semibold" style={{ color: "#1C1E53" }}>

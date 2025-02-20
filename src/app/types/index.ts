@@ -6,19 +6,35 @@ export type User = {
     firstname: string;
     lastname: string;
     username: string;
-    password: string;
     email: string;
-    role: Role;
+    role: string;
     dateOfBirth?: string;
     phone: string;
     address?: string;
     bio : string;
     studyLevel?: string;
-    status: boolean; 
     createdAt?: string;
     updatedAt?: string;
 };
 
+
+// interface User {
+//     id?: string;
+//     firstname: string;
+//     lastname: string;
+//     username: string;
+//     email: string;
+//     phone: string;
+//     address: string;
+//     dateOfBirth: string;
+//     bio: string;
+//     role: string;
+//     status?: string;
+//     isVerified?: boolean;
+//     createdAt?: string;
+//     updatedAt?: string;
+//     __v?: number;
+// }
 export interface ICourse {
     _id: string;
     title: string;

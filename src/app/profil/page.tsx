@@ -7,25 +7,9 @@ import { Edit, Save, X } from "lucide-react";
 import Navbar from "@/components/navbar";
 import FooterSection from "@/components/ui/footer/FooterSection";
 import { useAuthStore } from "@/store/authStore";
+import { User } from "../types";
 
 // Définition des types pour la structure des données utilisateur
-interface User {
-    id?: string;
-    firstname: string;
-    lastname: string;
-    username: string;
-    email: string;
-    phone: string;
-    address: string;
-    dateOfBirth: string;
-    bio: string;
-    role: string;
-    status?: string;
-    isVerified?: boolean;
-    createdAt?: string;
-    updatedAt?: string;
-    __v?: number;
-}
 
 const ProfileCard = () => {
     const { user } = useAuthStore();

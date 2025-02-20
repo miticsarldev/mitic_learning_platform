@@ -31,6 +31,7 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({ course, onClose, 
               alt={title}
               layout="fill"
               objectFit="cover"
+              fill
               className="rounded-lg shadow-md"
             />
           </div>

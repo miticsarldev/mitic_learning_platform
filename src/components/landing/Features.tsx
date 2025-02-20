@@ -74,12 +74,15 @@ const Features: React.FC = () => {
               <div
                 className={`relative rounded-lg shadow-lg overflow-hidden bg-white transform transition-transform duration-500`}
               >
-                {/* Image */}
-                <Image
-                  src={image.src}
-                  alt={image.alt}
-                  className="w-full h-64 object-cover"
-                />
+                <div className="w-full h-64 relative">
+                  <Image
+                    loading="lazy"
+                    src={image.src}
+                    alt={image.alt || "Gallery image"}
+                    className="object-cover rounded-2xl"
+                    fill
+                  />
+                </div>
 
                 {/* Texte en superposition */}
                 <div

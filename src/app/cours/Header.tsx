@@ -8,7 +8,7 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ courseName, duration, level, instructor }) => (
-  <header className="bg-primary text-white py-8 px-4" role="banner">
+  <header className="bg-[#1C1E53] text-white py-8 px-4" role="banner">
     <div className="max-w-7xl mx-auto">
       <nav className="text-sm text-gray-300 mb-4" aria-label="breadcrumb">
         Accueil &gt; Cours &gt; {courseName}

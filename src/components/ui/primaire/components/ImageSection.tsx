@@ -12,6 +12,7 @@ const ImageSection: React.FC<ImageProps> = ({ imageUrl, alt }) => {
             src={imageUrl}
             alt={alt}
             className="rounded-xl shadow-lg object-cover w-[300px] md:w-[600px]"
+            fill
         />
     );
 };

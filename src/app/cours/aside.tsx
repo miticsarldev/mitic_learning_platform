@@ -31,9 +31,9 @@ const Sidebar: React.FC<SidebarProps> = ({ lessons, currentLessonIndex }) => {
   };
 
   return (
-    <div className="shadow-md p-4 rounded-lg relative h-max flex flex-col">
+    <div className="shadow-md p-4 rounded-lg relative h-max flex flex-col ">
       {/* En-tête avec le titre et les flèches */}
-      <div className="flex items-center justify-between mb-4 bg-primary p-4">
+      <div className="flex items-center justify-between mb-4  p-4 bg-[#1C1E53]">
         <button
           className="bg-gray-200 p-3 rounded-full shadow hover:bg-gray-300"
           onClick={() => handleScroll("up")}
@@ -64,7 +64,7 @@ const Sidebar: React.FC<SidebarProps> = ({ lessons, currentLessonIndex }) => {
             }`}
             key={lesson.id}
           >
-            <span className="bg-primary w-6 h-6 rounded-full flex items-center justify-center text-white mr-2">
+            <span className="bg-[#1C1E53] w-6 h-6 rounded-full flex items-center justify-center text-white mr-2">
               <FaCheck className="text-xs" />
             </span>
             {lesson.title}
