@@ -1,4 +1,3 @@
-
 "use client";
 import React from "react";
 import { StatisticsContainer } from "@/components/landing/Chiffres";
@@ -15,7 +14,7 @@ import { useAuthStore } from "@/store/authStore";
 
 
 export default function Landing() {
-  const { user, logout } = useAuthStore();
+  const { user } = useAuthStore();
   console.log(user);
   
   return (

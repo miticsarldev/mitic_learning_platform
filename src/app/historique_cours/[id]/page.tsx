@@ -5,26 +5,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle, faCircle } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import Navbar from "@/components/navbar";
-import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/authStore";
-import { logoutUser } from "@/utils/auth";
+import Image from "next/image";
+import clsx from "clsx";
+import { Enrollment, HistoriqueCourse, ICourse } from "@/app/types";
 
-interface Course {
-    category: string;
-    title: string;
-    status: string;
-    startDate: string;
-    image: string;
-    progress: number;
-}
 
-interface Enrollment {
-    course_id: { title: string; path_image: string };
-    status: string;
-    start_date: string;
-}
-
-const CourseCard = ({ course }: { course: Course }) => {
+const CourseCard = ({ course }: { course: HistoriqueCourse }) => {
     return (
         <motion.div
             className="flex items-start gap-4 p-4 bg-white shadow-md rounded-2xl"
@@ -32,10 +19,11 @@ const CourseCard = ({ course }: { course: Course }) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
         >
-            <img
+            <Image
                 src={course.image}
                 alt={course.title}
                 className="w-24 h-24 object-cover rounded-lg"
+                fill
             />
             <div className="flex-1">
                 <p className="text-sm font-semibold" style={{ color: "#1C1E53" }}>
@@ -54,12 +42,12 @@ const CourseCard = ({ course }: { course: Course }) => {
 };
 
 const CourseHistory = () => {
-    const [courses, setCourses] = useState<Course[]>([]);
+    const [courses, setCourses] = useState<HistoriqueCourse[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string>("");
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
     const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
-    const { user, logout } = useAuthStore();
+    const { user } = useAuthStore();
     const [userId, setUserId] = useState<string | null>(user ? user.id : null);
 
     useEffect(() => {
@@ -74,19 +62,18 @@ const CourseHistory = () => {
                 try {
                     setLoading(true);
                     const response = await axios.get<Enrollment[]>(`http://localhost:4444/api/enrollment/student/${userId}`);
-                    const progressResponse = await axios.get(`http://localhost:4444/progress/student/${userId}`);
 
                     const formattedCourses = response.data.map((enrollment: Enrollment) => ({
-                        category: "Développement", // Remplacer par la catégorie si disponible
+                        category: "Développement",
                         title: enrollment.course_id.title,
                         status: enrollment.status === "completed" ? "Cours terminé!" : "En cours",
                         startDate: new Date(enrollment.start_date).toLocaleDateString("fr-FR"),
                         image: enrollment.course_id.path_image,
-                        progress: enrollment.status === "completed" ? 100 : 50, // Progress selon l'API
+                        progress: enrollment.status === "completed" ? 100 : 50,
                     }));
                     setCourses(formattedCourses);
                 } catch (err) {
-                    setError("Vous n'êtes inscrit à aucun cours - Allez sur la liste des cours");
+                    setError("Vous n'êtes inscrit à aucun cours - Allez sur la liste des cours" + err);
                 } finally {
                     setLoading(false);
                 }
@@ -95,18 +82,28 @@ const CourseHistory = () => {
         }
     }, [userId]);
 
+    const filteredCourses = courses.filter(course => {
+        const isCategoryMatch = !selectedCategory || course.category === selectedCategory;
+        const isStatusMatch = selectedStatus === "Tous" ||
+            (selectedStatus === "Terminés" && course.progress === 100) ||
+            (selectedStatus === "En cours" && course.progress < 100);
+        return isCategoryMatch && isStatusMatch;
+    });
+
     return (
         <div className="flex min-h-screen flex-col">
             <Navbar />
             <div className="px-20 p-6">
                 <h1 className="text-2xl font-bold text-gray-800 mb-4">Cours suivis</h1>
 
-                {/* Sélecteurs de catégorie et de statut */}
                 <div className="flex gap-2 mb-6">
                     {["Développement", "Bureautique"].map((category) => (
                         <button
                             key={category}
-                            className={`px-4 py-2 rounded-full border ${selectedCategory === category ? "bg-[#1C1E53] text-white" : "bg-white text-gray-800 border-gray-300"}`}
+                            className={clsx("px-4 py-2 rounded-full border", {
+                                "bg-[#1C1E53] text-white": selectedCategory === category,
+                                "bg-white text-gray-800 border-gray-300": selectedCategory !== category,
+                            })}
                             onClick={() => setSelectedCategory(selectedCategory === category ? null : category)}
                         >
                             {category}
@@ -118,7 +115,10 @@ const CourseHistory = () => {
                     {["Tous", "Terminés", "En cours"].map((status) => (
                         <button
                             key={status}
-                            className={`px-4 py-2 rounded-full border ${selectedStatus === status ? "bg-[#1C1E53] text-white" : "bg-white text-gray-800 border-gray-300"}`}
+                            className={clsx("px-4 py-2 rounded-full border", {
+                                "bg-[#1C1E53] text-white": selectedStatus === status,
+                                "bg-white text-gray-800 border-gray-300": selectedStatus !== status,
+                            })}
                             onClick={() => setSelectedStatus(selectedStatus === status ? null : status)}
                         >
                             {status}
@@ -130,14 +130,9 @@ const CourseHistory = () => {
                 {error && <p className="text-red-500">{error}</p>}
 
                 <div className="grid gap-4">
-                    {courses
-                        .filter(course => !selectedCategory || course.category === selectedCategory)
-                        .filter(course => selectedStatus === "Tous" ||
-                            (selectedStatus === "Terminés" && course.progress === 100) ||
-                            (selectedStatus === "En cours" && course.progress < 100))
-                        .map((course, index) => (
-                            <CourseCard key={index} course={course} />
-                        ))}
+                    {filteredCourses.map((course) => (
+                        <CourseCard key={course.title} course={course} />
+                    ))}
                 </div>
             </div>
         </div>
