@@ -22,7 +22,7 @@ export default function RegisterPage() {
   const [username, setUsername] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [phone, setPhone] = useState("");
-  const [role, setRole] = useState("student");
+  const [role] = useState("student");
   const [acceptTerms, setAcceptTerms] = useState(false);
   const [error, setError] = useState("");
   const router = useRouter();
@@ -45,14 +45,14 @@ export default function RegisterPage() {
         role
       });
 
-      const credential = {
-        email: email,
-        password: password
+      if (response) {
+        const credential = {
+          email: email,
+          password: password
+        }
+        const { user, accessToken } = await loginUser(credential);
+        login(user, accessToken);
       }
-
-
-      const { user, accessToken } = await loginUser(credential);
-      login(user, accessToken);
       router.push(`/OTPVerification?email=${email}`);
     } catch (err: any) {
       setError(err.response?.data?.message || "Impossible de s'inscrire.");
@@ -69,6 +69,7 @@ export default function RegisterPage() {
               Entrez vos informations et créer un compte
             </p>
           </div>
+          {error && <p className="text-red-500 mt-2">{error}</p>}
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="name">Nom</Label>
