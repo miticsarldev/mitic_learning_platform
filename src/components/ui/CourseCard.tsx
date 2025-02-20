@@ -71,7 +71,7 @@ export const CourseCard: React.FC<CardProps> = ({
           </span>
           <span className="flex items-center space-x-1">
             <Timer className="w-4 h-4" />
-            <span>{duration || "Indisponible"}</span>
+            <span>{duration || "Indisponible"} h</span>
           </span>
         </div>
 

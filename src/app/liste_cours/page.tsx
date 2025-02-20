@@ -25,6 +25,7 @@ export default function ListeCours() {
   const [courses, setCourses] = useState<ICourse[]>([]);
   const [filteredCourses, setFilteredCourses] = useState<ICourse[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [paginatedCourses, setPaginatedCourses] = useState<ICourse[]>([]);
 
   const categories = [
     { icon: <PaintBucket size={24} />, title: "Design", description: "Lorem ipsum dolor sit amet." },
@@ -43,7 +44,9 @@ export default function ListeCours() {
         const response = await fetchCourses();
         if (response?.data) {
           setCourses(response.data);
+          // Définir filteredCourses uniquement après un premier rendu ou filtre
           setFilteredCourses(response.data);
+          setPaginatedCourses(response.data.slice(0, 6));
         } else {
           throw new Error("Structure de données inattendue");
         }
@@ -54,6 +57,11 @@ export default function ListeCours() {
 
     getCourses();
   }, []);
+
+  // Éviter de filtrer immédiatement
+  useEffect(() => {
+    setFilteredCourses(courses);  // Appliquer un filtrage seulement après que l'utilisateur interagit
+  }, [courses]);
 
   if (error) return (
     <div>
@@ -80,11 +88,11 @@ export default function ListeCours() {
             </button>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-center place-items-center">
-            {filteredCourses.map((card) => (
+            {paginatedCourses.map((card) => (
               <CourseCard key={card._id} {...card} />
             ))}
           </div>
-          <Pagination totalPages={5} />
+          <Pagination courses={filteredCourses} setCourses={setPaginatedCourses} />
         </div>
         <FilterPopup isOpen={isFilterOpen} onClose={() => setIsFilterOpen(false)} />
       </div>
