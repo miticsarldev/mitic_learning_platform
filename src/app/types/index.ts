@@ -65,6 +65,6 @@ export type Lesson = {
 };
 
 export type LessonDisplayProps = {
-    lessons: Lesson[];
+    lessons: Lesson[] |  [];
     lessonId: string;
 };
