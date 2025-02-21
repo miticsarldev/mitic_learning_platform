@@ -85,3 +85,11 @@ export type LessonDisplayProps = {
     lessons: Lesson[];
     lessonId: string;
 };
+
+
+export type Testimonial = {
+    name: string;
+    email: string;
+    description: string;
+    avatar: string;
+  };

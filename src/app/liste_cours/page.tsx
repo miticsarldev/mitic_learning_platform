@@ -10,15 +10,10 @@ import { PaintBucket, MonitorDot, Database, Briefcase } from "lucide-react";
 import { CategoryCard } from "@/components/ui/CategoryCard";
 import TestimonialCard from "@/components/ui/TestimonialCard";
 import Navbar from "@/components/navbar";
-import { ICourse } from "../types";
+import { ICourse, Testimonial } from "../types";
 import { fetchCourses } from "../services/courseService";
 
-type Testimonial = {
-  name: string;
-  email: string;
-  description: string;
-  avatar: string;
-};
+
 
 export default function ListeCours() {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
