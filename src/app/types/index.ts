@@ -13,7 +13,7 @@ export type User = {
     phone: string;
     address?: string;
     studyLevel?: string;
-    status: boolean; 
+    status: boolean;
     createdAt?: string;
     updatedAt?: string;
 };
@@ -65,8 +65,11 @@ export type Lesson = {
 };
 
 export type LessonDisplayProps = {
-    lessons: Lesson[];
+    lessons: Lesson[] |  [];
     lessonId: string;
+    _id: string;
+    title: string;
+    description: string;
 };
 
 export type Testimonial = {
@@ -75,3 +78,17 @@ export type Testimonial = {
     description: string;
     avatar: string;
   };
+
+ export type Course = {
+    title: string;
+    description: string;
+    rating: number;
+    reviewsCount: number;
+    created_by?: {
+      firstname: string;
+      lastname: string;
+    };
+    price: number;
+    path_image: string;
+  };
+
