@@ -64,6 +64,22 @@ export type Lesson = {
 };
 
 export type LessonDisplayProps = {
-    lessons: Lesson[];
+    lessons: Lesson[] |  [];
     lessonId: string;
+    _id: string;
+    title: string;
+    description: string;
 };
+
+ export type Course = {
+    title: string;
+    description: string;
+    rating: number;
+    reviewsCount: number;
+    created_by?: {
+      firstname: string;
+      lastname: string;
+    };
+    price: number;
+    path_image: string;
+  };

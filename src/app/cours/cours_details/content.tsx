@@ -1,10 +1,15 @@
-"use client"; // Indique que ce composant doit être rendu côté client
+"use client";
+import { Lesson } from "@/app/types";
 import React, { useState } from "react";
 
-const Content: React.FC<{ lessons: any[] }> = ({ lessons }) => {
+ type ContentProps = {
+  lessons: Lesson[];
+}
+
+const Content: React.FC<ContentProps> = ({ lessons }) => {
   const [expandedLesson, setExpandedLesson] = useState<string | null>(null);
 
-  const toggleLesson = (id: string | null) => {
+  const toggleLesson = (id: string) => {
     setExpandedLesson(expandedLesson === id ? null : id);
   };
 
@@ -15,6 +20,7 @@ const Content: React.FC<{ lessons: any[] }> = ({ lessons }) => {
         <span className="w-6 h-0.5 bg-[#490AC6]"></span>
         <h1 className="text-xl font-bold text-[#25026B]">Contenu</h1>
       </div>
+
       <div className="max-w-7xl mx-auto">
         <h2 className="text-2xl font-bold text-[#25026B] mb-4">
           Nos cours sont un mélange équilibré de vidéos et d’articles
@@ -25,45 +31,32 @@ const Content: React.FC<{ lessons: any[] }> = ({ lessons }) => {
 
         {/* Lessons List */}
         <div className="space-y-4">
-          {lessons.map((lesson: any) => (
-            <div
-              key={lesson._id}
-              className="border rounded-lg overflow-hidden shadow-sm"
-            >
+          {lessons.map(({ _id, title, duration, sections = [] }) => (
+            <div key={_id} className="border rounded-lg overflow-hidden shadow-sm">
               <div
                 className="flex justify-between items-center bg-white p-4 cursor-pointer"
-                onClick={() => toggleLesson(lesson._id)}
+                onClick={() => toggleLesson(_id)}
               >
                 <div>
-                  <h3 className="font-bold text-[#25026B]">{lesson.title}</h3>
-                  <p className="text-gray-500">
-                    {lesson.sections?.length || 0} Sections • {lesson.duration}
-                  </p>
+                  <h3 className="font-bold text-[#25026B]">{title}</h3>
+                  <p className="text-gray-500">{sections.length} Sections • {duration}</p>
                 </div>
                 <button>
-                  {expandedLesson === lesson._id ? (
-                    <span className="text-[#490AC6]">-</span>
-                  ) : (
-                    <span className="text-[#490AC6]">+</span>
-                  )}
+                  <span className="text-[#490AC6]">{expandedLesson === _id ? "-" : "+"}</span>
                 </button>
               </div>
-              {expandedLesson === lesson._id && (
+
+              {expandedLesson === _id && (
                 <div className="bg-gray-50 p-4">
-                  {lesson.sections && lesson.sections.length > 0 ? (
+                  {sections.length > 0 ? (
                     <ul className="space-y-2">
-                      {lesson.sections.map((section: any) => (
-                        <li
-                          key={section._id}
-                          className="flex justify-between items-center text-gray-700"
-                        >
+                      {sections.map(({ _id, title, description }) => (
+                        <li key={_id} className="flex justify-between items-center text-gray-700">
                           <div className="flex items-center space-x-2">
                             <span className="text-[#490AC6]">📄</span>
-                            <span>{section.title}</span>
+                            <span>{title}</span>
                           </div>
-                          <span className="text-gray-500">
-                            {section.description}
-                          </span>
+                          <span className="text-gray-500">{description}</span>
                         </li>
                       ))}
                     </ul>

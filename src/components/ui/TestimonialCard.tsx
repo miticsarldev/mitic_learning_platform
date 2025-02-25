@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 
 type TestimonialProps = {
@@ -17,7 +18,7 @@ const TestimonialCard: React.FC<TestimonialProps> = ({
         <div className="flex flex-col md:flex-row items-center bg-white rounded-lg shadow-lg p-10 md:p-20 text-center md:text-left">
             {/* Avatar */}
             <div className="flex-shrink-0 relative w-24 h-24 md:w-36 md:h-36">
-                <img
+                <Image
                     src={avatar}
                     alt={name}
                     className="object-cover w-full h-full rounded-full"
