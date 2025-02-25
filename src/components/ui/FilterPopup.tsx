@@ -1,12 +1,16 @@
 import React from 'react';
 import { FilterZone } from '../FilterZone';
+import { CourseFilterZoneTest } from '../CourseFilterZoneTest';
+import { ICourse } from '@/app/types';
 
 type filterprops = {
-    onClose: () => void;
-    isOpen: boolean;
+  onClose: () => void;
+  isOpen: boolean;
+  courses: ICourse[];
+  setFilteredCourses: React.Dispatch<React.SetStateAction<ICourse[]>>;
 }
 
-const FilterPopup: React.FC<filterprops> = ({ isOpen, onClose }) => {
+const FilterPopup: React.FC<filterprops> = ({ isOpen, onClose, courses, setFilteredCourses }) => {
   if (!isOpen) return null;
 
   return (
@@ -14,14 +18,14 @@ const FilterPopup: React.FC<filterprops> = ({ isOpen, onClose }) => {
       <div className="bg-white w-11/12 max-w-md p-6 rounded-lg shadow-lg">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-bold text-gray-900">Filtres</h2>
-          <button 
-            onClick={onClose} 
+          <button
+            onClick={onClose}
             className="text-gray-600 hover:text-gray-900 font-bold text-xl"
           >
             &times;
           </button>
         </div>
-        <FilterZone />
+        <CourseFilterZoneTest courses={courses} setFilteredCourses={setFilteredCourses}/>
       </div>
     </div>
   );
