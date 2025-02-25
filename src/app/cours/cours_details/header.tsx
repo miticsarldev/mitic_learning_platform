@@ -4,7 +4,13 @@ import { Button } from "@/components/ui/button";
 import { FaStar } from "react-icons/fa";
 import ConfirmationModal from "@/components/ConfirmationModal";
 import axios from "axios";
+import Image from "next/image";
+import { Course, ICourse } from "@/app/types";
 
+// Définition du type Course
+
+
+// Type des props avec un cours optionnel
 type CourseProps = {
   course: any;
 };
@@ -15,7 +21,12 @@ const Header: React.FC<CourseProps> = ({ course }) => {
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
+  const confirmPurchase = () => {
+    handlePayment();
+  };
+
   const handlePayment = async () => {
+    if (!course) return;
     try {
       const response = await axios.post("http://localhost:4444/api/orange-money/pay", {
         amount: course.course?.price,
@@ -27,6 +38,13 @@ const Header: React.FC<CourseProps> = ({ course }) => {
         if (typeof window !== "undefined") {
           window.location.href = response.data.payment_url;
         }
+        amount: course.price,
+        phone: "22382863206",
+        orderId: `ORDER-${Date.now()}`,
+      });
+
+      if (response.data && response.data.payment_url) {
+        window.location.href = response.data.payment_url;
       } else {
         alert("Erreur lors du paiement");
       }
@@ -85,9 +103,9 @@ const Header: React.FC<CourseProps> = ({ course }) => {
       </div>
 
       {/* Popup de confirmation d'achat */}
-      {isModalOpen && (
+      {isModalOpen && course && (
         <ConfirmationModal
-          course={course.course}
+          course={course}
           onClose={closeModal}
           onConfirm={handlePayment}
         />

@@ -1,12 +1,14 @@
 "use client"
+import { Lesson } from "@/app/types";
 import React, { useState } from "react";
 import { FileText } from "lucide-react"; // Pour remplacer l'emoji
 import { Lesson } from "@/app/types";
 
 const Content: React.FC<{ lessons: Lesson[] }> = ({ lessons }) => {
+
   const [expandedLesson, setExpandedLesson] = useState<string | null>(null);
 
-  const toggleLesson = (id: string | null) => {
+  const toggleLesson = (id: string) => {
     setExpandedLesson(expandedLesson === id ? null : id);
   };
 
@@ -17,6 +19,7 @@ const Content: React.FC<{ lessons: Lesson[] }> = ({ lessons }) => {
         <span className="w-6 h-0.5 bg-[#490AC6]"></span>
         <h1 className="text-xl font-bold text-[#25026B]">Contenu</h1>
       </div>
+
       <div className="max-w-7xl mx-auto">
         <h2 className="text-2xl font-bold text-[#25026B] mb-4">
           Nos cours sont un mélange équilibré de vidéos et d’articles

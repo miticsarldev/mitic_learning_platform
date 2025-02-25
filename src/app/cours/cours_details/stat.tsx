@@ -12,6 +12,8 @@ type StatsProps = {
 
 const Stats: React.FC<StatsProps> = ({ data = [] }) => {
   if (!data.length) {
+  data: StatItem[];
+};
     return <p className="text-center text-gray-500">Aucune statistique disponible.</p>;
   }
 

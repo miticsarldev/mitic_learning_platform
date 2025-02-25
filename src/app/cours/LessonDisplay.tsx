@@ -1,5 +1,6 @@
 import React from "react";
 import { LessonDisplayProps } from "../types";
+import Image from "next/image";
 
 const LessonDisplay : React.FC<LessonDisplayProps> = ({ lessons, lessonId })=> {
   // Trouver la leçon correspondante à l'ID
@@ -29,7 +30,7 @@ const LessonDisplay : React.FC<LessonDisplayProps> = ({ lessons, lessonId })=> {
           {/* Image ou vidéo */}
           {section.path_image && (
             <div className="relative mt-4">
-              <img
+              <Image
                 src={section.path_image}
                 alt={section.title}
                 className="rounded-lg shadow-md w-full mx-auto"
