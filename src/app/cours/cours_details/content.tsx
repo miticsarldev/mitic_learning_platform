@@ -1,12 +1,11 @@
-"use client";
+"use client"
 import { Lesson } from "@/app/types";
 import React, { useState } from "react";
+import { FileText } from "lucide-react"; // Pour remplacer l'emoji
+import { Lesson } from "@/app/types";
 
- type ContentProps = {
-  lessons: Lesson[];
-}
+const Content: React.FC<{ lessons: Lesson[] }> = ({ lessons }) => {
 
-const Content: React.FC<ContentProps> = ({ lessons }) => {
   const [expandedLesson, setExpandedLesson] = useState<string | null>(null);
 
   const toggleLesson = (id: string) => {
@@ -31,42 +30,56 @@ const Content: React.FC<ContentProps> = ({ lessons }) => {
 
         {/* Lessons List */}
         <div className="space-y-4">
-          {lessons.map(({ _id, title, duration, sections = [] }) => (
-            <div key={_id} className="border rounded-lg overflow-hidden shadow-sm">
-              <div
-                className="flex justify-between items-center bg-white p-4 cursor-pointer"
-                onClick={() => toggleLesson(_id)}
-              >
-                <div>
-                  <h3 className="font-bold text-[#25026B]">{title}</h3>
-                  <p className="text-gray-500">{sections.length} Sections • {duration}</p>
+          {lessons.map((lesson) =>
+            lesson._id ? (
+              <div key={lesson._id} className="border rounded-lg overflow-hidden shadow-sm">
+                <div
+                  className="flex justify-between items-center bg-white p-4 cursor-pointer"
+                  onClick={() => toggleLesson(lesson._id)}
+                >
+                  <div>
+                    <h3 className="font-bold text-[#25026B]">{lesson.title}</h3>
+                    <p className="text-gray-500">
+                      {lesson.sections?.length || 0} Sections • {lesson.duration || "N/A"}
+                    </p>
+                  </div>
+                  <button>
+                    {expandedLesson === lesson._id ? (
+                      <span className="text-[#490AC6]">-</span>
+                    ) : (
+                      <span className="text-[#490AC6]">+</span>
+                    )}
+                  </button>
                 </div>
-                <button>
-                  <span className="text-[#490AC6]">{expandedLesson === _id ? "-" : "+"}</span>
-                </button>
+                {expandedLesson === lesson._id && (
+                  <div className="bg-gray-50 p-4">
+                    {lesson.sections && lesson.sections.length > 0 ? (
+                      <ul className="space-y-2">
+                        {lesson.sections.map((section) =>
+                          section._id ? (
+                            <li
+                              key={section._id}
+                              className="flex justify-between items-center text-gray-700"
+                            >
+                              <div className="flex items-center space-x-2">
+                                <FileText className="text-[#490AC6]" size={18} />
+                                <span>{section.title}</span>
+                              </div>
+                              <span className="text-gray-500">
+                                {section.description || "Pas de description"}
+                              </span>
+                            </li>
+                          ) : null
+                        )}
+                      </ul>
+                    ) : (
+                      <p className="text-gray-500">Aucune section disponible</p>
+                    )}
+                  </div>
+                )}
               </div>
-
-              {expandedLesson === _id && (
-                <div className="bg-gray-50 p-4">
-                  {sections.length > 0 ? (
-                    <ul className="space-y-2">
-                      {sections.map(({ _id, title, description }) => (
-                        <li key={_id} className="flex justify-between items-center text-gray-700">
-                          <div className="flex items-center space-x-2">
-                            <span className="text-[#490AC6]">📄</span>
-                            <span>{title}</span>
-                          </div>
-                          <span className="text-gray-500">{description}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  ) : (
-                    <p className="text-gray-500">Aucune section disponible</p>
-                  )}
-                </div>
-              )}
-            </div>
-          ))}
+            ) : null
+          )}
         </div>
       </div>
     </div>

@@ -4,10 +4,10 @@ import { instructorStats } from "@/lib/constant";
 
 interface InstructorProps {
   instructor: {
-    firstname: string;
-    lastname: string;
-    phone: string;
-    email: string;
+    firstname?: string;
+    lastname?: string;
+    phone?: string;
+    email?: string;
   };
 }
 
@@ -21,10 +21,10 @@ const Instructor: React.FC<InstructorProps> = ({ instructor }) => {
 
       <div className="flex flex-row gap-5 md:flex-row items-start bg-white shadow-lg rounded-lg p-6">
         {/* Informations sur l'instructeur */}
-        <div className="flex-1 ml-0 md:ml-8">
+        <div className="flex-1">
           <div className="flex items-center space-x-2">
             <h3 className="text-xl font-bold text-[#25026B]">
-              {instructor.firstname} {instructor.lastname}
+              {instructor?.firstname ?? "Prénom"} {instructor?.lastname ?? "Nom"}
             </h3>
             <Image
               width={20}
@@ -35,9 +35,9 @@ const Instructor: React.FC<InstructorProps> = ({ instructor }) => {
           </div>
 
           <p className="text-gray-700 mt-2">
-            {instructor.phone} • {instructor.email}
+            {instructor?.phone ?? "N° inconnu"} • {instructor?.email ?? "Email inconnu"}
           </p>
-          <p className="text-gray-500 mt-4">
+          <p className="text-gray-500 mt-4 w-full">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
           </p>
         </div>
@@ -57,6 +57,18 @@ const Instructor: React.FC<InstructorProps> = ({ instructor }) => {
           </div>
         </div>
       </div>
+    </div>
+  );
+};
+
+// Composant réutilisable pour les statistiques
+const StatItem: React.FC<{ src: string; value: string; label: string }> = ({ src, value, label }) => {
+  return (
+    <div className="flex items-center">
+      <Image width={24} height={24} src={src} alt={label} className="mr-2" />
+      <span>
+        <span className="font-bold">{value}</span> {label}
+      </span>
     </div>
   );
 };
