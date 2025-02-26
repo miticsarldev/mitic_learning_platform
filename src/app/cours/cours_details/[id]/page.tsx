@@ -8,65 +8,64 @@ import Content from "../content";
 import Instructor from "../instructor";
 import StudentFeedback from "../studentFeedBack";
 import FAQs from "../faq";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { fetchCourseDetails } from "@/app/services/courseService";
 import { getEnrollementsCountByCourseId } from "@/app/services/enrollementService";
 import FooterSection from "@/components/ui/footer/FooterSection";
+import { Course, ICourse, InstructorInfo, Lesson } from "@/app/types";
 
 interface CoursDetailsPageProps {
   params: {
-    id: string; // ID récupéré depuis l'URL
+    id: string;
   };
 }
 
 export default function CoursDetailsPage({ params }: CoursDetailsPageProps) {
   const { id } = params;
-  const [courseDetails, setCourseDetails] = useState<any>(null);
+  const [courseDetails, setCourseDetails] = useState<Course | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [enrollementsCount, setEnrollementsCount] = useState<number | null>(null);
+  const [enrollementsCount, setEnrollementsCount] = useState<number>(0);
 
-  const fetchEnrollementsCount = async () => {
+  const fetchEnrollementsCount = useCallback(async () => {
     try {
       const count = await getEnrollementsCountByCourseId(id);
       setEnrollementsCount(count);
-    } catch (err) {
+    } catch {
       setError("Erreur lors du chargement des inscriptions.");
     }
-  };
+  }, [id]);
 
-  const getDetails = async () => {
+  const getDetails = useCallback(async () => {
     try {
       setLoading(true);
       const data = await fetchCourseDetails(id);
       setCourseDetails(data);
-    } catch (err: any) {
-      setError(err.message);
+    } catch (error) {
+      setError("Erreur lors du chargement des détails du cours.");
     } finally {
       setLoading(false);
     }
-  };
+  }, [id]);
 
   useEffect(() => {
     getDetails();
     fetchEnrollementsCount();
-  }, [id]);
+  }, [getDetails, fetchEnrollementsCount]);
 
   if (loading) return <p>Chargement...</p>;
   if (error) return <p>Erreur : {error}</p>;
+  if (!courseDetails) return <p>Aucun détail de cours trouvé.</p>;
 
-  // ✅ Création du tableau avec les vraies données
   const statsData = [
-    { value: `${courseDetails.course.duration || "N/A"} `, label: "Heures de cours" },
-    { value: `${courseDetails.lessons.length || 0}`, label: "Leçons" },
-    { value: `${enrollementsCount !== null ? enrollementsCount : 0}`, label: "Étudiants inscrits" },
+    { id : 1, value: `${courseDetails.course.duration || "N/A"} `, label: "Heures de cours" },
+    { id: 2, value: `${courseDetails.lessons.length || 0}`, label: "Leçons" },
+    { id: 3, value: `${enrollementsCount !== null ? enrollementsCount : 0}`, label: "Étudiants inscrits" },
   ];
-
   return (
     <div className="flex min-h-screen flex-col">
       <Navbar />
       <Header course={courseDetails} />
-      {/* ✅ Passage des données réelles à Stats */}
       <Stats data={statsData} />
       <SecondaryNavBar />
       <Details />
