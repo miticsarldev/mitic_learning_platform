@@ -15,7 +15,7 @@ import { useAuthStore } from "@/store/authStore";
 
 
 export default function Landing() {
-  const { user, logout } = useAuthStore();
+  const { user } = useAuthStore();
   console.log(user);
   
   return (

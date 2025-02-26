@@ -18,7 +18,6 @@ const Instructor: React.FC<InstructorProps> = ({ instructor }) => {
         <span className="w-6 h-0.5 bg-[#490AC6]"></span>
         <h1 className="text-lg md:text-2xl font-bold text-[#25026B]">Professeurs</h1>
       </div>
-
       <div className="flex flex-col md:flex-row gap-4 md:gap-5 items-center md:items-start bg-white shadow-lg rounded-lg p-4 md:p-6">
         {/* Infos de l'instructeur */}
         <div className="flex-1 text-center md:text-left">
@@ -64,6 +63,7 @@ const Instructor: React.FC<InstructorProps> = ({ instructor }) => {
             value="4.5"
             label="Évaluation"
           />
+
         </div>
       </div>
     </div>

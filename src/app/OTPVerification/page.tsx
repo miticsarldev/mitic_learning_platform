@@ -4,15 +4,25 @@ import axios from "axios";
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
+// Déclaration d'un type pour l'objet erreur afin de ne pas utiliser 'any'
+interface AxiosError {
+  response?: {
+    data: {
+      message: string;
+    };
+  };
+}
+
 const VerifyOTP = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const email = searchParams.get("email"); // Récupération de l'email depuis l'URL
-  const [otp, setOtp] = useState("");
-  const [error, setError] = useState("");
+  const email = searchParams.get("email"); 
+  const [otp, setOtp] = useState<string>(""); 
+  const [error, setError] = useState<string>(""); 
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     if (!email) {
       setError("Email introuvable !");
       return;
@@ -21,8 +31,9 @@ const VerifyOTP = () => {
     try {
       await axios.post("http://localhost:4444/api/verify-otp", { email, otp });
       router.push("/acceuil_college");
-    } catch (err: any) {
-      setError(err.response?.data?.message || "Code OTP invalide");
+    } catch (err) {
+      const error = err as AxiosError; // Type assertion pour l'erreur
+      setError(error.response?.data?.message || "Code OTP invalide");
     }
   };
 

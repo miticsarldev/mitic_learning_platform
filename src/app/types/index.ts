@@ -91,8 +91,11 @@ export interface DetailLesson {
 
 
 export type LessonDisplayProps = {
-    lessons: Lesson[];
+    lessons: Lesson[] |  [];
     lessonId: string;
+    _id: string;
+    title: string;
+    description: string;
 };
 
 
@@ -102,3 +105,4 @@ export type Testimonial = {
     description: string;
     avatar: string;
 };
+

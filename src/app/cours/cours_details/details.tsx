@@ -85,6 +85,7 @@ const Details: React.FC<DetailsProps> = ({ lessons }) => {
             Couvre à peu près tout ce que vous devez savoir sur l’UX
           </h2>
           <p className="text-base md:text-lg text-gray-700 mb-4 md:mb-6">
+
             Lorem ipsum dolor sit amet, consectetur adipiscing elit...
           </p>
 
@@ -121,7 +122,6 @@ const Details: React.FC<DetailsProps> = ({ lessons }) => {
               </div>
             </div>
           ))}
-
           {/* Bouton Télécharger */}
           <div className="mt-4 md:mt-6">
             <button

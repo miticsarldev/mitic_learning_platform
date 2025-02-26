@@ -6,7 +6,7 @@ import { Lesson } from "@/app/types";
 const Content: React.FC<{ lessons: Lesson[] }> = ({ lessons }) => {
   const [expandedLesson, setExpandedLesson] = useState<string | null>(null);
 
-  const toggleLesson = (id: string | null) => {
+  const toggleLesson = (id: string) => {
     setExpandedLesson(expandedLesson === id ? null : id);
   };
 
