@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 
 const operators = [
@@ -64,7 +65,7 @@ const PaymentPage = () => {
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
                             >
-                                <img
+                                <Image
                                     src={operator.icon}
                                     alt={operator.name}
                                     className="w-18 h-18 object-cover rounded-lg"

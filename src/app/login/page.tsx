@@ -1,17 +1,13 @@
-/* eslint-disable react/react-in-jsx-scope */
 "use client";
 
 import Link from "next/link";
 import Image from "next/image";
-import { ChangeEvent, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ChromeIcon as Google, Facebook, Instagram } from "lucide-react";
-import { useDispatch } from "react-redux";
-import axiosInstance from "../services/axiosInstance";
-import { setUser } from "../redux/userSlice";
 import { useAuthStore } from "@/store/authStore";
 import { loginUser } from "@/utils/auth";
 import { useRouter } from "next/navigation";
@@ -38,7 +34,7 @@ export default function LoginPage() {
       login(user, accessToken);
       router.push("/"); // Redirection après connexion
     } catch (err) {
-      setErrorMessage("Email ou mot de passe incorrect");
+      setErrorMessage("Email ou mot de passe incorrect"+ err);
     }
   };
 

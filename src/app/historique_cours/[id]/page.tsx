@@ -5,9 +5,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle, faCircle } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import Navbar from "@/components/navbar";
-import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/authStore";
-import { logoutUser } from "@/utils/auth";
+import Image from "next/image";
 
 interface Course {
     category: string;
@@ -32,7 +31,7 @@ const CourseCard = ({ course }: { course: Course }) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
         >
-            <img
+            <Image
                 src={course.image}
                 alt={course.title}
                 className="w-24 h-24 object-cover rounded-lg"
@@ -59,7 +58,7 @@ const CourseHistory = () => {
     const [error, setError] = useState<string>("");
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
     const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
-    const { user, logout } = useAuthStore();
+    const { user } = useAuthStore();
     const [userId, setUserId] = useState<string | null>(user ? user.id : null);
 
     useEffect(() => {
@@ -74,7 +73,6 @@ const CourseHistory = () => {
                 try {
                     setLoading(true);
                     const response = await axios.get<Enrollment[]>(`http://localhost:4444/api/enrollment/student/${userId}`);
-                    const progressResponse = await axios.get(`http://localhost:4444/progress/student/${userId}`);
 
                     const formattedCourses = response.data.map((enrollment: Enrollment) => ({
                         category: "Développement", // Remplacer par la catégorie si disponible
@@ -86,7 +84,7 @@ const CourseHistory = () => {
                     }));
                     setCourses(formattedCourses);
                 } catch (err) {
-                    setError("Vous n'êtes inscrit à aucun cours - Allez sur la liste des cours");
+                    setError("Vous n'êtes inscrit à aucun cours - Allez sur la liste des cours" + err);
                 } finally {
                     setLoading(false);
                 }

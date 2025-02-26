@@ -1,26 +1,29 @@
 import React from "react";
 
 type StatItem = {
-  value: number | string; // Accepte des nombres et des chaînes de caractères
+  id: number; // Ajout d'un ID unique au lieu de l'index
+  value: number | string;
   label: string;
 };
 
 type StatsProps = {
-  data: StatItem[];
+  data?: StatItem[]; // Le tableau est optionnel pour éviter les erreurs
 };
 
-const Stats: React.FC<StatsProps> = ({ data }) => {
-  if (!data || data.length === 0) {
+const Stats: React.FC<StatsProps> = ({ data = [] }) => {
+  if (!data.length) {
+  data: StatItem[];
+};
     return <p className="text-center text-gray-500">Aucune statistique disponible.</p>;
   }
 
   return (
     <div className="bg-gray-100 py-6">
       <div className="max-w-7xl mx-auto flex justify-around text-center">
-        {data.map(({ value, label }, index) => (
-          <div key={index} className="flex flex-col">
-            <span className="text-2xl font-bold text-[#25026B]">{value}</span>
-            <span className="text-gray-600">{label}</span>
+        {data.map((stat) => (
+          <div key={stat.id} className="flex flex-col">
+            <span className="text-2xl font-bold text-[#25026B]">{stat.value}</span>
+            <span className="text-gray-600">{stat.label}</span>
           </div>
         ))}
       </div>

@@ -20,10 +20,6 @@ interface CoursDetailsPageProps {
   };
 }
 
-
-
-
-
 export default function CoursDetailsPage({ params }: CoursDetailsPageProps) {
   const { id } = params;
   const [courseDetails, setCourseDetails] = useState<Course | null>(null);
@@ -62,11 +58,10 @@ export default function CoursDetailsPage({ params }: CoursDetailsPageProps) {
   if (!courseDetails) return <p>Aucun détail de cours trouvé.</p>;
 
   const statsData = [
-    { value: courseDetails.course.duration || "N/A", label: "Heures de cours" },
-    { value: courseDetails.lessons.length, label: "Leçons" },
-    { value: enrollementsCount, label: "Étudiants inscrits" },
+    { id : 1, value: `${courseDetails.course.duration || "N/A"} `, label: "Heures de cours" },
+    { id: 2, value: `${courseDetails.lessons.length || 0}`, label: "Leçons" },
+    { id: 3, value: `${enrollementsCount !== null ? enrollementsCount : 0}`, label: "Étudiants inscrits" },
   ];
-
   return (
     <div className="flex min-h-screen flex-col">
       <Navbar />
