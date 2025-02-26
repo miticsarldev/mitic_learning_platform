@@ -1,5 +1,4 @@
 import React from 'react';
-import { FilterZone } from '../FilterZone';
 import { CourseFilterZoneTest } from '../CourseFilterZoneTest';
 import { ICourse } from '@/app/types';
 

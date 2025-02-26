@@ -18,8 +18,8 @@ const InfoLine: React.FC<InfoLineProps> = ({ Icon, text, title, emptyCard, userI
             const response = await axios.put(`http://localhost:4444/api/users/${userId}`, editableData);
             console.log("Utilisateur mis à jour avec succès :", response.data);
             setIsEditing(false);
-        } catch (error: any) {
-            console.error("Erreur lors de la mise à jour :", error.response?.data || error.message);
+        } catch (error) {
+            console.error("Erreur lors de la mise à jour : " + error);
         }
     };
 

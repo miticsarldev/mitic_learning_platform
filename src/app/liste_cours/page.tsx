@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import { CourseFilterZone } from "@/components/CourseFilterZone";
-import { FilterZone } from "@/components/FilterZone";
 import { CourseCard } from "@/components/ui/CourseCard";
 import FilterPopup from "@/components/ui/FilterPopup";
 import { Pagination } from "@/components/ui/Pagination";
@@ -46,8 +45,8 @@ export default function ListeCours() {
         } else {
           throw new Error("Structure de données inattendue");
         }
-      } catch (err: any) {
-        setError(err.message || "Une erreur est survenue");
+      } catch (error) {
+        setError("Une erreur est survenue " + error);
       }
     };
 
