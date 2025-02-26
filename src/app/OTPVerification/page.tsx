@@ -16,9 +16,9 @@ interface AxiosError {
 const VerifyOTP = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const email = searchParams.get("email");
-  const [otp, setOtp] = useState<string>("");
-  const [error, setError] = useState<string>("");
+  const email = searchParams.get("email"); 
+  const [otp, setOtp] = useState<string>(""); 
+  const [error, setError] = useState<string>(""); 
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

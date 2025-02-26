@@ -1,18 +1,17 @@
 "use client";
-
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useRouter, useSearchParams } from "next/navigation"; // Ajoutez useSearchParams
+import { useRouter, useSearchParams } from "next/navigation";
 
 const ResetForm = () => {
     const router = useRouter();
-    const searchParams = useSearchParams();  // Utilisation de useSearchParams
-    const id = searchParams.get("id");  // Accéder au paramètre 'id' dans l'URL
+    const searchParams = useSearchParams();
+    const id = searchParams.get("id");  
 
-    const [newPassword, setNewPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
-    const [success, setSuccess] = useState(false);
-    const [error, setError] = useState("");
+    const [newPassword, setNewPassword] = useState<string>("");
+    const [confirmPassword, setConfirmPassword] = useState<string>("");
+    const [success, setSuccess] = useState<boolean>(false);
+    const [error, setError] = useState<string>("");
 
     useEffect(() => {
         if (!id) {
@@ -22,14 +21,22 @@ const ResetForm = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setError("");
+        setError("");  // Réinitialisation de l'erreur avant chaque soumission
 
+        // Vérification si les mots de passe correspondent
         if (newPassword !== confirmPassword) {
             setError("Les mots de passe ne correspondent pas.");
             return;
         }
 
+        // Vérification de la présence de l'ID avant de soumettre
+        if (!id) {
+            setError("ID utilisateur manquant.");
+            return;
+        }
+
         try {
+            // Requête POST pour réinitialiser le mot de passe
             const response = await axios.post("http://localhost:4444/api/reset-password", {
                 id,
                 newPassword,
@@ -39,8 +46,9 @@ const ResetForm = () => {
                 setSuccess(true);
                 setTimeout(() => router.push("/"), 2000);
             }
-        } catch (err: any) {
-            setError(err.response?.data?.message || "Une erreur s'est produite.");
+        } catch (err) {
+            // Gestion de l'erreur Axios
+            setError( "Une erreur s'est produite." + err);
         }
     };
 

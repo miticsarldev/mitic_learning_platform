@@ -11,6 +11,7 @@ import clsx from "clsx";
 import { Enrollment, HistoriqueCourse, ICourse } from "@/app/types";
 
 
+
 const CourseCard = ({ course }: { course: HistoriqueCourse }) => {
     return (
         <motion.div
