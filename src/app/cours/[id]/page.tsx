@@ -1,14 +1,11 @@
 "use client"
 import React, { useEffect, useState } from "react";
-import { FaHome, FaTrophy } from "react-icons/fa";
 import Aside from "../aside";
 import Navbar from "@/components/navbar";
 import Header from "../Header";
 import ProgressBar from "../ProgressBar";
 import { fetchCourseDetails } from "@/app/services/courseService";
 import LessonDisplay from "../LessonDisplay";
-import { Lesson } from '../../types/index';
-import { getEnrollementsCountByCourseId } from "@/app/services/enrollementService";
 import FooterSection from "@/components/ui/footer/FooterSection";
 
 interface CoursDetailsPageProps {
@@ -20,8 +17,7 @@ interface CoursDetailsPageProps {
 const CourseDetails = ({ params }: CoursDetailsPageProps) => {
   const [visibleComments, setVisibleComments] = useState(2);
   const [progress, setProgress] = useState(0);
-  const [selectedLessonIndex, setSelectedLessonIndex] = useState<number>(0); // L'index de la leçon sélectionnée
-  const [onprogress, setOnProgress] = useState<number | null>(null);
+  const [selectedLessonIndex, setSelectedLessonIndex] = useState<number>(0); 
 
   const comments = [
     {
@@ -47,17 +43,14 @@ const CourseDetails = ({ params }: CoursDetailsPageProps) => {
   const [courseDetails, setCourseDetails] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-
-
-
   const getDetails = async () => {
     try {
       setLoading(true);
       const data = await fetchCourseDetails(id);
       setCourseDetails(data);
       setSelectedLessonIndex(0); // Par défaut, on commence à la première leçon
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      setError("Une erreur c'est produite" + error);
     } finally {
       setLoading(false);
     }

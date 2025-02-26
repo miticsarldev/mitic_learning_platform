@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Lesson, Section } from "../types";
 
 const API_URL = "http://localhost:4444/api/course";
 
@@ -19,9 +20,9 @@ interface Course {
 }
 
 // Définition du type pour les détails du cours
-interface CourseDetails extends Course {
-    lessons?: any[];  // Remplace "any" par un type plus précis si possible
-    sections?: any[];
+export interface CourseDetails extends Course {
+    lessons?: Lesson[];  // Remplace "any" par un type plus précis si possible
+    sections?: Section[];
 }
 
 export const fetchCourses = async (): Promise<Course[]> => {

@@ -4,9 +4,10 @@ import { Button } from "@/components/ui/button";
 import { FaStar } from "react-icons/fa";
 import ConfirmationModal from "@/components/ConfirmationModal";
 import axios from "axios";
+import { ICourse } from "@/app/types";
 
 type CourseProps = {
-  course: any;
+  course: ICourse;
 };
 
 const Header: React.FC<CourseProps> = ({ course }) => {
@@ -18,7 +19,7 @@ const Header: React.FC<CourseProps> = ({ course }) => {
   const handlePayment = async () => {
     try {
       const response = await axios.post("http://localhost:4444/api/orange-money/pay", {
-        amount: course.course?.price,
+        amount: course.price,
         phone: "22382863206",
         orderId: `ORDER-${Date.now()}`
       });
@@ -36,7 +37,7 @@ const Header: React.FC<CourseProps> = ({ course }) => {
     }
   };
 
-  const { title, description, rating, reviewsCount, created_by, price, path_image } = course.course || {};
+  const { title, description, rating, reviewsCount, created_by, price, path_image } = course|| {};
 
   return (
     <header className="bg-[#490AC6] text-white p-8 min-h-[250px] sm:min-h-[350px] md:min-h-[450px] lg:min-h-[500px]">
@@ -87,7 +88,7 @@ const Header: React.FC<CourseProps> = ({ course }) => {
       {/* Popup de confirmation d'achat */}
       {isModalOpen && (
         <ConfirmationModal
-          course={course.course}
+          course={course}
           onClose={closeModal}
           onConfirm={handlePayment}
         />

@@ -1,16 +1,17 @@
 import React from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import { ICourse } from "@/app/types";
 
-interface Course {
-  title: string;
-  description: string;
-  price: number;
-  path_image: string;
-}
+// interface Course {
+//   title: string;
+//   description: string;
+//   price: number;
+//   path_image: string;
+// }
 
 interface ConfirmationModalProps {
-  course: Course;
+  course: ICourse;
   onClose: () => void;
   onConfirm: () => void;
 }

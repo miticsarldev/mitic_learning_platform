@@ -8,11 +8,12 @@ import Content from "../content";
 import Instructor from "../instructor";
 import StudentFeedback from "../studentFeedBack";
 import FAQs from "../faq";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { fetchCourseDetails } from "@/app/services/courseService";
 import { getEnrollementsCountByCourseId } from "@/app/services/enrollementService";
 import FooterSection from "@/components/ui/footer/FooterSection";
-import { Lesson, LessonDisplayProps } from "@/app/types";
+import { LessonDisplayProps } from "@/app/types";
+import { AxiosError } from "axios";
 
 interface CoursDetailsPageProps {
   params: {
@@ -29,50 +30,50 @@ export default function CoursDetailsPage({ params }: CoursDetailsPageProps) {
   const [formatedLesson, setFormatedLesson] = useState<{ title: string; description: string; sections: string[] }[]>([]);
 
 
-  const fetchEnrollementsCount = async () => {
+  const fetchEnrollementsCount = useCallback(async () => {
     try {
       const count = await getEnrollementsCountByCourseId(id);
-      setEnrollementsCount(count);
-    } catch (err) {
+      setEnrollementsCount(count || 0);
+    } catch (error) {
+      console.error("Erreur lors du chargement des inscriptions :", error);
       setError("Erreur lors du chargement des inscriptions.");
     }
-  };
+  }, [id]);
 
-  const getDetails = async () => {
+  const getDetails = useCallback(async () => {
     try {
       setLoading(true);
       const data = await fetchCourseDetails(id);
       setCourseDetails(data);
-      console.log('le cours' + data);
-
-    } catch (err: any) {
-      setError(err.message);
+    } catch (error) {
+      console.error("Erreur lors du chargement des détails du cours :", error);
+      setError("Impossible de charger les détails du cours.");
     } finally {
       setLoading(false);
     }
-  };
+  }, [id]);
 
-  const formatLessons = (data: LessonDisplayProps) => {
-    return data.lessons.map(lesson => ({
+  const formatLessons = useCallback((data: LessonDisplayProps) => {
+    return data.lessons.map((lesson) => ({
       title: lesson.title,
       description: lesson.description,
-      sections: lesson.sections.map(section => section.title),
+      sections: lesson.sections.map((section) => section.title),
     }));
-  };
+  }, []);
 
 
   useEffect(() => {
     getDetails();
     fetchEnrollementsCount();
-  }, [id]);
+  }, [getDetails, fetchEnrollementsCount]);
 
 
   useEffect(() => {
-    if (courseDetails && courseDetails.lessons) {
+    if (courseDetails?.lessons) {
       setFormatedLesson(formatLessons(courseDetails));
     }
-  }, [courseDetails]);
-  
+  }, [courseDetails, formatLessons]);
+
 
   if (loading) return <p>Chargement...</p>;
   if (error) return <p>Erreur : {error}</p>;

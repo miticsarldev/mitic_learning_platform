@@ -45,6 +45,8 @@ export interface ICourse {
     isCertified?: boolean;
     duration: string; //nombre d'heure
     status?: boolean;
+    rating : number;
+    reviewsCount: number;
     created_by: {
         firstname: string;
         lastname: string;
