@@ -17,11 +17,15 @@ const FounderSection: React.FC = () => {
           transition={{ duration: 0.8 }}
           className="relative flex-shrink-0"
         >
-          <Image
-            src="/images/user_profil.png"
-            alt="Fondateur"
-            className="w-48 h-48 rounded-full shadow-lg border-4 border-white"
-          />
+          <div className="flex justify-center items-center p-4 bg-gray-100 rounded-lg shadow-md">
+            <Image
+              src="/images/user_profil.png"
+              alt="Fondateur"
+              className="w-48 h-48 rounded-full shadow-lg border-4 border-white"
+              fill
+            />
+          </div>
+
           <motion.div
             animate={{ rotate: 360 }}
             transition={{
@@ -49,14 +53,14 @@ const FounderSection: React.FC = () => {
             SADIO SY
           </h2>
           <p className="text-gray-700 mt-4 leading-relaxed">
-            « Quand j'étais adolescente, je rêvais qu'étudier à l'école serait
+            « Quand j'étais adolescente, je rêvais qu'étudier à école serait
             comme ça. Je me demande comment jouer à des jeux informatiques. J'ai
             grandi et créé une école qui me manquait alors. School Management -
             concepteur de plateforme éducative flexible, où les parents gèrent
-            l'emploi du temps, et nous réfléchissons à chaque leçon. »
+            emploi du temps, et nous réfléchissons à chaque lecon. »
           </p>
           <p className="text-gray-700 mt-4 leading-relaxed">
-            Nos formateurs deviennent non seulement des mentors pour l'enfant,
+            Nos formateurs deviennent non seulement des mentors pour lenfant,
             mais des fidèles amis qui le guident et le soutiennent.
           </p>
         </motion.div>

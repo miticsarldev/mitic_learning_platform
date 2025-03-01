@@ -1,19 +1,18 @@
 export type Mode = "add" | "modify" | "delete";
-export type Role = "administrateur" | "enseignant" | "etudiant" | "parent";
+export type Role = "student" | "teacher" | "admin" 
 
 export type User = {
     _id?: string;
     firstname: string;
     lastname: string;
     username: string;
-    password: string;
     email: string;
-    role: Role;
+    role: string;
     dateOfBirth?: string;
     phone: string;
     address?: string;
+    bio : string;
     studyLevel?: string;
-    status: boolean;
     createdAt?: string;
     updatedAt?: string;
 };
