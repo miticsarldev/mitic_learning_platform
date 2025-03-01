@@ -15,6 +15,7 @@ const CardCourse: React.FC<CardCourseProps> = ({ image, title, duration }) => {
           src={image}
           alt={title}
           className="w-full h-72 object-cover"
+          fill
         />
         <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/70 via-black/30 to-transparent p-2 text-white pb-10">
           <h3 className="text-lg font-semibold">{title}</h3>

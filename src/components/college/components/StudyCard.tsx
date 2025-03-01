@@ -1,3 +1,4 @@
+
 import React from "react";
 import Image from "next/image";
 
@@ -18,6 +19,7 @@ const StudyCard: React.FC<StudyCardProps> = ({ title, description, image }) => {
                     layout="fill" // Permet de s'adapter au conteneur
                     objectFit="contain" // Garde l'image bien proportionnée
                     priority // Charge l'image plus rapidement si nécessaire
+                    fill
                 />
             </div>
 

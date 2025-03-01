@@ -71,6 +71,13 @@ export type LessonDisplayProps = {
     description: string;
 };
 
+export type Testimonial = {
+    name: string;
+    email: string;
+    description: string;
+    avatar: string;
+  };
+
  export type Course = {
     title: string;
     description: string;
@@ -83,3 +90,4 @@ export type LessonDisplayProps = {
     price: number;
     path_image: string;
   };
+
