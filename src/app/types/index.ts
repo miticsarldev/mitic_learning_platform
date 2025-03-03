@@ -1,6 +1,7 @@
 export type Mode = "add" | "modify" | "delete";
 export type Role = "student" | "teacher" | "admin"
 
+
 export type User = {
     _id?: string;
     firstname: string;
@@ -105,4 +106,23 @@ export type Testimonial = {
     description: string;
     avatar: string;
 };
+export type Testimonial = {
+    name: string;
+    email: string;
+    description: string;
+    avatar: string;
+  };
+
+ export type Course = {
+    title: string;
+    description: string;
+    rating: number;
+    reviewsCount: number;
+    created_by?: {
+      firstname: string;
+      lastname: string;
+    };
+    price: number;
+    path_image: string;
+  };
 
