@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import { CourseFilterZone } from "@/components/CourseFilterZone";
-import { FilterZone } from "@/components/FilterZone";
 import { CourseCard } from "@/components/ui/CourseCard";
 import FilterPopup from "@/components/ui/FilterPopup";
 import { Pagination } from "@/components/ui/Pagination";
@@ -12,6 +11,7 @@ import TestimonialCard from "@/components/ui/TestimonialCard";
 import Navbar from "@/components/navbar";
 import { ICourse, Testimonial } from "../types";
 import { fetchCourses } from "../services/courseService";
+import { CourseFilterZoneTest } from "@/components/CourseFilterZoneTest";
 
 
 
@@ -72,7 +72,7 @@ export default function ListeCours() {
       <CourseFilterZone courses={courses} setFilteredCourses={setFilteredCourses} />
       <div className="grid min-h-screen lg:grid-cols-3 gap-6 mt-5">
         <div className="hidden lg:block lg:col-span-1 p-6">
-          <FilterZone courses={courses} setFilteredCourses={setFilteredCourses} />
+          <CourseFilterZoneTest courses={courses} setFilteredCourses={setFilteredCourses} />
         </div>
         <div className="lg:col-span-2 p-6">
           <div className="flex justify-between items-center mb-6">
@@ -90,7 +90,7 @@ export default function ListeCours() {
           </div>
           <Pagination courses={filteredCourses} setCourses={setPaginatedCourses} />
         </div>
-        <FilterPopup isOpen={isFilterOpen} onClose={() => setIsFilterOpen(false)} />
+        <FilterPopup isOpen={isFilterOpen} onClose={() => setIsFilterOpen(false)} courses={courses} setFilteredCourses={setFilteredCourses} />
       </div>
       <section className="py-7">
         <h2 className="text-2xl font-bold text-[#25026B] text-center mb-6">
@@ -128,3 +128,4 @@ export default function ListeCours() {
     </>
   );
 }
+

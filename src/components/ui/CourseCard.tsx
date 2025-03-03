@@ -40,7 +40,10 @@ export const CourseCard: React.FC<CardProps> = ({
   created_by,
 }) => {
   return (
-    <Link href={`/cours/cours_details/${_id}`} className="bg-white shadow-md rounded-lg overflow-hidden w-72">
+    <Link
+      href={`/cours/cours_details/${_id}`}
+      className="bg-white shadow-md rounded-lg overflow-hidden w-72"
+    >
       {/* Image */}
       <div className="relative">
         <div className="relative w-full h-40">
@@ -81,11 +84,10 @@ export const CourseCard: React.FC<CardProps> = ({
           {title}
         </Link>
 
-        {/* Description */}
-        <p className="text-sm text-gray-600 my-2 line-clamp-4">
+        {/* Description avec hauteur fixe */}
+        <p className="text-sm text-gray-600 my-2 h-20 overflow-hidden line-clamp-4">
           {description || "Aucune description disponible."}
         </p>
-
 
         {/* Auteur et Prix */}
         <div className="flex justify-between items-center text-gray-700 mt-4">
