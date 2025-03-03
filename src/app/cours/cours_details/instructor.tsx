@@ -1,6 +1,5 @@
 import React from "react";
 import Image from "next/image";
-import { instructorStats } from "@/lib/constant";
 
 interface InstructorProps {
   instructor: {
@@ -13,48 +12,58 @@ interface InstructorProps {
 
 const Instructor: React.FC<InstructorProps> = ({ instructor }) => {
   return (
-    <div className="bg-gray-50 py-10 px-6 md:px-20">
-      <div className="flex items-center space-x-2 mb-6">
+    <div className="bg-gray-50 py-8 px-4 md:py-10 md:px-20">
+      {/* Titre */}
+      <div className="flex items-center space-x-2 mb-4 md:mb-6">
         <span className="w-6 h-0.5 bg-[#490AC6]"></span>
-        <h1 className="text-xl font-bold text-[#25026B]">Professeurs</h1>
+        <h1 className="text-lg md:text-2xl font-bold text-[#25026B]">Professeurs</h1>
       </div>
-
-      <div className="flex flex-row gap-5 md:flex-row items-start bg-white shadow-lg rounded-lg p-6">
-        {/* Informations sur l'instructeur */}
-        <div className="flex-1">
-          <div className="flex items-center space-x-2">
-            <h3 className="text-xl font-bold text-[#25026B]">
+      <div className="flex flex-col md:flex-row gap-4 md:gap-5 items-center md:items-start bg-white shadow-lg rounded-lg p-4 md:p-6">
+        {/* Infos de l'instructeur */}
+        <div className="flex-1 text-center md:text-left">
+          <div className="flex items-center justify-center md:justify-start space-x-2">
+            <h3 className="text-lg md:text-xl font-bold text-[#25026B]">
               {instructor?.firstname ?? "Prénom"} {instructor?.lastname ?? "Nom"}
             </h3>
             <Image
-              width={20}
-              height={20}
+              width={16}
+              height={16}
               src="https://cdn.animaapp.com/projects/66e43e8462936f6a78000b5b/releases/673dab1fd4f209a6937fcc8a/img/icon---filled---check-6.svg"
               alt="Check"
             />
           </div>
 
-          <p className="text-gray-700 mt-2">
+          <p className="text-gray-700 text-sm md:text-base mt-1">
             {instructor?.phone ?? "N° inconnu"} • {instructor?.email ?? "Email inconnu"}
           </p>
-          <p className="text-gray-500 mt-4 w-full">
+          <p className="text-gray-500 text-sm md:text-base mt-2">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
           </p>
         </div>
 
-        {/* Photo de l'instructeur et statistiques */}
-        <div className="flex-shrink-0 flex flex-col items-center md:items-start">
-          {/* Statistiques alignées verticalement */}
-          <div className="space-y-4">
-            {instructorStats.map(({ src, alt, value, label }) => (
-              <div key={alt} className="flex items-center">
-                <Image width={24} height={24} src={src} alt={alt} />
-                <span className="ml-2">
-                  <span className="font-bold">{value}</span> {label}
-                </span>
-              </div>
-            ))}
-          </div>
+        {/* Photo et statistiques */}
+        <div className="flex-shrink-0 flex flex-wrap justify-center md:justify-start gap-3 md:gap-4">
+          <StatItem
+            src="https://cdn.animaapp.com/projects/66e43e8462936f6a78000b5b/releases/6746f29d9faa9b04bc700d2f/img/icon---filled--ratinngs-1.svg"
+            value="0"
+            label="Avis favorables"
+          />
+          <StatItem
+            src="https://cdn.animaapp.com/projects/66e43e8462936f6a78000b5b/releases/6746f29d9faa9b04bc700d2f/img/icon---filled--students-1.svg"
+            value="2"
+            label="Étudiants"
+          />
+          <StatItem
+            src="https://cdn.animaapp.com/projects/66e43e8462936f6a78000b5b/releases/6746f29d9faa9b04bc700d2f/img/icon---filled---video-6.svg"
+            value="1"
+            label="Cours"
+          />
+          <StatItem
+            src="https://cdn.animaapp.com/projects/66e43e8462936f6a78000b5b/releases/6746f29d9faa9b04bc700d2f/img/icon---filled---star-3.svg"
+            value="4.5"
+            label="Évaluation"
+          />
+
         </div>
       </div>
     </div>
@@ -64,9 +73,9 @@ const Instructor: React.FC<InstructorProps> = ({ instructor }) => {
 // Composant réutilisable pour les statistiques
 const StatItem: React.FC<{ src: string; value: string; label: string }> = ({ src, value, label }) => {
   return (
-    <div className="flex items-center">
-      <Image width={24} height={24} src={src} alt={label} className="mr-2" />
-      <span>
+    <div className="flex items-center space-x-1">
+      <Image width={20} height={20} src={src} alt={label} />
+      <span className="text-sm md:text-base">
         <span className="font-bold">{value}</span> {label}
       </span>
     </div>

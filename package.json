@@ -22,6 +22,7 @@
     "clsx": "^2.1.1",
     "framer-motion": "^11.11.17",
     "import-fresh": "^3.3.0",
+    "jspdf": "^3.0.0",
     "learning_platform": "file:",
     "lucide-react": "^0.460.0",
     "next": "14.2.18",
