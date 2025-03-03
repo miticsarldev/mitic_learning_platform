@@ -99,6 +99,7 @@ export const Pagination: React.FC<PaginationProps> = ({ courses, setCourses }) =
         )
       )}
 
+
       {/* Bouton Suivant */}
       <button
         onClick={handleNext}

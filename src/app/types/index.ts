@@ -1,19 +1,18 @@
 export type Mode = "add" | "modify" | "delete";
-export type Role = "administrateur" | "enseignant" | "etudiant" | "parent";
+export type Role = "student" | "teacher" | "admin" 
 
 export type User = {
     _id?: string;
     firstname: string;
     lastname: string;
     username: string;
-    password: string;
     email: string;
-    role: Role;
+    role: string;
     dateOfBirth?: string;
     phone: string;
     address?: string;
+    bio : string;
     studyLevel?: string;
-    status: boolean;
     createdAt?: string;
     updatedAt?: string;
 };
@@ -72,6 +71,13 @@ export type LessonDisplayProps = {
     description: string;
 };
 
+export type Testimonial = {
+    name: string;
+    email: string;
+    description: string;
+    avatar: string;
+  };
+
  export type Course = {
     title: string;
     description: string;
@@ -84,3 +90,4 @@ export type LessonDisplayProps = {
     price: number;
     path_image: string;
   };
+

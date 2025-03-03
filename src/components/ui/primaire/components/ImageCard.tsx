@@ -16,8 +16,11 @@ export const ImageCard: React.FC<ImageCardProps> = ({ imageSrc, title, duration,
                     loading="lazy"
                     src={imageSrc}
                     alt={title || "Gallery image"}
-                    className="object-cover absolute inset-0 size-full rounded-2xl"
+                    className="object-cover absolute inset-0 w-full h-full rounded-2xl"
+                    width={500}  // Tu peux remplacer par une valeur par défaut
+                    height={300} // Pareil ici
                 />
+
                 {hasOverlay && (
                     <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/70 via-black/30 to-transparent p-2 text-white pb-10 rounded-2xl">
                         <h2 className="text-2xl text-gray-200">{title}</h2>

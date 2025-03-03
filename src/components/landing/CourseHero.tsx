@@ -37,18 +37,23 @@ export const CourseHero: React.FC<CourseHeroProps> = ({
           </div>
 
           <div className="flex flex-col ml-5 w-[43%] max-md:ml-0 max-md:w-full">
-           
-            <Image
-              src={imageSrc}
-              alt={imageAlt}
-              role="img"
-              aria-label="Course Hero"
-              className="object-contain grow w-full aspect-[0.94] max-md:mt-10 max-md:max-w-full"
-              loading="lazy"
-            />
+
+            <div className="relative w-full aspect-[0.94] max-md:mt-10 max-md:max-w-full">
+              <Image
+                src={imageSrc}
+                alt={imageAlt}
+                role="img"
+                aria-label="Course Hero"
+                className="object-contain"
+                loading="lazy"
+                fill
+              />
+            </div>
+
           </div>
         </div>
       </div>
     </div>
   );
 };
+
