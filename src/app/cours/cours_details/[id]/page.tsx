@@ -1,3 +1,4 @@
+
 "use client";
 import Navbar from "@/components/navbar";
 import Header from "../header";
@@ -12,7 +13,8 @@ import { useEffect, useState, useCallback } from "react";
 import { fetchCourseDetails } from "@/app/services/courseService";
 import { getEnrollementsCountByCourseId } from "@/app/services/enrollementService";
 import FooterSection from "@/components/ui/footer/FooterSection";
-import { Course, ICourse, InstructorInfo, Lesson } from "@/app/types";
+import { Lesson, LessonDisplayProps } from "@/app/types";
+
 
 interface CoursDetailsPageProps {
   params: {
@@ -25,7 +27,10 @@ export default function CoursDetailsPage({ params }: CoursDetailsPageProps) {
   const [courseDetails, setCourseDetails] = useState<Course | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [enrollementsCount, setEnrollementsCount] = useState<number>(0);
+  const [enrollementsCount, setEnrollementsCount] = useState<number | null>(null);
+  const [formatedLesson, setFormatedLesson] = useState<{ title: string; description: string; sections: string[] }[]>([]);
+
+
 
   const fetchEnrollementsCount = useCallback(async () => {
     try {
@@ -41,34 +46,54 @@ export default function CoursDetailsPage({ params }: CoursDetailsPageProps) {
       setLoading(true);
       const data = await fetchCourseDetails(id);
       setCourseDetails(data);
-    } catch (error) {
-      setError("Erreur lors du chargement des détails du cours.");
+      console.log('le cours' + data);
+    } catch (err: any) {
+      setError(err.message);
+
     } finally {
       setLoading(false);
     }
   }, [id]);
+
+  const formatLessons = (data: LessonDisplayProps) => {
+    return data.lessons.map(lesson => ({
+      title: lesson.title,
+      description: lesson.description,
+      sections: lesson.sections.map(section => section.title),
+    }));
+  };
+
 
   useEffect(() => {
     getDetails();
     fetchEnrollementsCount();
   }, [getDetails, fetchEnrollementsCount]);
 
+
+  useEffect(() => {
+    if (courseDetails && courseDetails.lessons) {
+      setFormatedLesson(formatLessons(courseDetails));
+    }
+  }, [courseDetails]);
+  
+
   if (loading) return <p>Chargement...</p>;
   if (error) return <p>Erreur : {error}</p>;
   if (!courseDetails) return <p>Aucun détail de cours trouvé.</p>;
 
   const statsData = [
-    { id : 1, value: `${courseDetails.course.duration || "N/A"} `, label: "Heures de cours" },
+    { id: 1, value: `${courseDetails.course.duration || "N/A"} `, label: "Heures de cours" },
     { id: 2, value: `${courseDetails.lessons.length || 0}`, label: "Leçons" },
     { id: 3, value: `${enrollementsCount !== null ? enrollementsCount : 0}`, label: "Étudiants inscrits" },
   ];
+
   return (
     <div className="flex min-h-screen flex-col">
       <Navbar />
       <Header course={courseDetails} />
       <Stats data={statsData} />
       <SecondaryNavBar />
-      <Details />
+      <Details lessons={formatedLesson} />
       <Content lessons={courseDetails.lessons} />
       <Instructor instructor={courseDetails.course.created_by} />
       <StudentFeedback />
