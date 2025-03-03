@@ -99,6 +99,20 @@ export type LessonDisplayProps = {
     description: string;
 };
 
+export interface Enrollment {
+    course_id: { title: string; path_image: string };
+    status: string;
+    start_date: string;
+}
+
+export interface HistoriqueCourse {
+    category: string;
+    title: string;
+    status: string;
+    startDate: string;
+    image: string;
+    progress: number;
+}
 
 export type Testimonial = {
     name: string;
@@ -125,4 +139,3 @@ export type Testimonial = {
     price: number;
     path_image: string;
   };
-
