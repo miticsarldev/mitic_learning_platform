@@ -1,5 +1,6 @@
 import React from "react";
 import { LessonDisplayProps } from "../types";
+import Image from "next/image";
 
 const LessonDisplay: React.FC<LessonDisplayProps> = ({ lessons, lessonId }) => {
   if (!lessons || lessons.length === 0) {
@@ -32,11 +33,15 @@ const LessonDisplay: React.FC<LessonDisplayProps> = ({ lessons, lessonId }) => {
           {/* Image ou vidéo */}
           {section.path_image && (
             <div className="relative mt-4">
-              <img
-                src={section.path_image}
-                alt={section.title || "Image de la section"}
-                className="rounded-lg shadow-md w-full mx-auto"
-              />
+              <div className="relative w-full h-64"> {/* Ajuste la hauteur selon tes besoins */}
+                <Image
+                  src={section.path_image}
+                  alt={section.title || "Image de la section"}
+                  layout="fill"
+                  objectFit="cover" // Ajuste l'image pour couvrir entièrement la div
+                  className="rounded-lg shadow-md"
+                />
+              </div>
             </div>
           )}
           {section.path_video && (

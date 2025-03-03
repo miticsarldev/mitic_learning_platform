@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { ChevronRight, ChevronLeft } from "lucide-react";
 import { ICourse } from "@/app/types";
 
@@ -12,11 +12,16 @@ export const Pagination: React.FC<PaginationProps> = ({ courses, setCourses }) =
   const totalPages = Math.ceil(courses.length / itemsPerPage);
   const [currentPage, setCurrentPage] = useState(1);
 
+  // Mémorisation de setCourses pour éviter qu'il ne change entre chaque rendu
+  const updateCourses = useCallback((paginatedCourses: ICourse[]) => {
+    setCourses(paginatedCourses);
+  }, [setCourses]);
+
   useEffect(() => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const paginatedCourses = courses.slice(startIndex, startIndex + itemsPerPage);
-    setCourses(paginatedCourses);
-  }, [currentPage, courses]);
+    updateCourses(paginatedCourses);
+  }, [currentPage, courses, updateCourses]);
 
   const handleNext = () => {
     if (currentPage < totalPages) {
@@ -36,7 +41,7 @@ export const Pagination: React.FC<PaginationProps> = ({ courses, setCourses }) =
 
   const getPageNumbers = () => {
     const pages = [];
-    const visiblePages = 2; // Nombre de pages visibles autour de la page actuelle
+    const visiblePages = 2;
 
     if (totalPages <= 6) {
       return Array.from({ length: totalPages }, (_, index) => index + 1);
@@ -68,11 +73,10 @@ export const Pagination: React.FC<PaginationProps> = ({ courses, setCourses }) =
       <button
         onClick={handlePrevious}
         disabled={currentPage === 1}
-        className={`px-2 py-1 border rounded ${
-          currentPage === 1
+        className={`px-2 py-1 border rounded ${currentPage === 1
             ? "bg-gray-300 text-gray-500 cursor-not-allowed"
             : "bg-white text-gray-700 hover:bg-gray-100"
-        }`}
+          }`}
       >
         <ChevronLeft className="w-5 h-5" />
       </button>
@@ -87,11 +91,10 @@ export const Pagination: React.FC<PaginationProps> = ({ courses, setCourses }) =
           <button
             key={index}
             onClick={() => handlePageClick(Number(page))}
-            className={`px-3 py-1 border rounded ${
-              currentPage === page
+            className={`px-3 py-1 border rounded ${currentPage === page
                 ? "bg-[#25026B] text-white font-semibold"
                 : "bg-white text-gray-700 hover:bg-gray-100"
-            }`}
+              }`}
           >
             {page}
           </button>
@@ -102,11 +105,10 @@ export const Pagination: React.FC<PaginationProps> = ({ courses, setCourses }) =
       <button
         onClick={handleNext}
         disabled={currentPage === totalPages}
-        className={`px-2 py-1 border rounded ${
-          currentPage === totalPages
+        className={`px-2 py-1 border rounded ${currentPage === totalPages
             ? "bg-gray-300 text-gray-500 cursor-not-allowed"
             : "bg-white text-gray-700 hover:bg-gray-100"
-        }`}
+          }`}
       >
         <ChevronRight className="w-5 h-5" />
       </button>

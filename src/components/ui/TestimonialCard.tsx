@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 
 type TestimonialProps = {
@@ -17,11 +18,15 @@ const TestimonialCard: React.FC<TestimonialProps> = ({
         <div className="flex flex-col md:flex-row items-center bg-white rounded-lg shadow-lg p-10 md:p-20 text-center md:text-left">
             {/* Avatar */}
             <div className="flex-shrink-0 relative w-24 h-24 md:w-36 md:h-36">
-                <img
-                    src={avatar}
-                    alt={name}
-                    className="object-cover w-full h-full rounded-full"
-                />
+                <div className="relative w-full h-full rounded-full overflow-hidden">
+                    <Image
+                        src={avatar}
+                        alt={name}
+                        layout="fill" // Utilisation de 'fill' pour remplir la div
+                        objectFit="cover" // Couvre l'espace de la div tout en préservant les proportions
+                        className="rounded-full" // On garde la bordure arrondie
+                    />
+                </div>
             </div>
 
             {/* Texte */}
