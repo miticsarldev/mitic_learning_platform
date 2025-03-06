@@ -5,8 +5,6 @@ import { SearchBar } from "./ui/SearchBar";
 import { FilterDropdown } from "./ui/FilterDropdown";
 import { ICourse } from "@/app/types";
 
-
-
 interface Category {
   _id: string;
   name: string;
@@ -26,6 +24,7 @@ export const CourseFilterZone: React.FC<CourseFilterZoneProps> = ({
   const [categories, setCategories] = useState<Category[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedFilter, setSelectedFilter] = useState<string | null>(null);
+  const [showAllCategories, setShowAllCategories] = useState(false); // Etat pour afficher plus de catégories
 
   // Charger les catégories depuis la BDD
   useEffect(() => {
@@ -71,11 +70,8 @@ export const CourseFilterZone: React.FC<CourseFilterZoneProps> = ({
       filteredCourses = [...filteredCourses].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
     }
 
-
     // Mettre à jour la liste filtrée
     setFilteredCourses(filteredCourses);
-    console.log(filteredCourses);
-
   }, [activeCategory, searchQuery, selectedFilter, courses, setFilteredCourses]);
 
   return (
@@ -92,14 +88,26 @@ export const CourseFilterZone: React.FC<CourseFilterZoneProps> = ({
       <div className="relative z-10 flex flex-col items-center space-y-6">
         {/* Boutons de catégorie */}
         <div className="flex flex-wrap gap-4 justify-center">
-          {categories.map((category) => (
-            <CategoryButton
-              key={category._id}
-              label={category.name}
-              isActive={activeCategory === category._id}
-              onClick={() => setActiveCategory(category._id)}
-            />
-          ))}
+          <div className="max-h-40 overflow-y-auto flex flex-wrap gap-4 justify-center">
+            {/* Limiter à 6 catégories visibles et ajouter un "Voir plus" */}
+            {categories.slice(0, showAllCategories ? categories.length : 6).map((category) => (
+              <CategoryButton
+                key={category._id}
+                label={category.name}
+                isActive={activeCategory === category._id}
+                onClick={() => setActiveCategory(category._id)}
+              />
+            ))}
+          </div>
+          {/* Voir plus / Voir moins */}
+          {categories.length > 6 && (
+            <button
+              onClick={() => setShowAllCategories(!showAllCategories)}
+              className="text-blue-600 text-sm mt-2"
+            >
+              {showAllCategories ? "Voir moins" : "Voir plus"}
+            </button>
+          )}
         </div>
 
         {/* Barre de recherche */}
