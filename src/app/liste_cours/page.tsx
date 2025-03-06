@@ -9,18 +9,18 @@ import { PaintBucket, MonitorDot, Database, Briefcase } from "lucide-react";
 import { CategoryCard } from "@/components/ui/CategoryCard";
 import TestimonialCard from "@/components/ui/TestimonialCard";
 import Navbar from "@/components/navbar";
-import { ICourse, Testimonial } from "../types";
+import { CourseDetails,  Testimonial } from "../types";
 import { fetchCourses } from "../services/courseService";
 import { CourseFilterZoneTest } from "@/components/CourseFilterZoneTest";
 
-
+// Définir le type de la réponse de l'API
 
 export default function ListeCours() {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const [courses, setCourses] = useState<ICourse[]>([]);
-  const [filteredCourses, setFilteredCourses] = useState<ICourse[]>([]);
+  const [courses, setCourses] = useState<CourseDetails[]>([]);
+  const [filteredCourses, setFilteredCourses] = useState<CourseDetails[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const [paginatedCourses, setPaginatedCourses] = useState<ICourse[]>([]);
+  const [paginatedCourses, setPaginatedCourses] = useState<CourseDetails[]>([]);
 
   const categories = [
     { icon: <PaintBucket size={24} />, title: "Design", description: "Lorem ipsum dolor sit amet." },
@@ -36,15 +36,17 @@ export default function ListeCours() {
   useEffect(() => {
     const getCourses = async () => {
       try {
-        const response = await fetchCourses();
-        if (response?.data) {
-          setCourses(response.data);
-          // Définir filteredCourses uniquement après un premier rendu ou filtre
-          setFilteredCourses(response.data);
-          setPaginatedCourses(response.data.slice(0, 6));
-        } else {
-          throw new Error("Structure de données inattendue");
-        }
+        // fetchCourses retourne directement un tableau de CourseDetails[]
+        const responses = await fetchCourses();
+
+        // Tu affectes simplement le tableau directement
+        setCourses(responses);
+
+        // Définir filteredCourses uniquement après un premier rendu ou filtre
+        setFilteredCourses(responses);
+
+        // Paginer les résultats, ici je suppose que responses est un tableau
+        setPaginatedCourses(responses.slice(0, 6));
       } catch {
         setError("Une erreur est survenue");
       }
@@ -52,6 +54,7 @@ export default function ListeCours() {
 
     getCourses();
   }, []);
+
 
   // Éviter de filtrer immédiatement
   useEffect(() => {

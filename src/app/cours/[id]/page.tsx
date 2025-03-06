@@ -7,6 +7,7 @@ import ProgressBar from "../ProgressBar";
 import { fetchCourseDetails } from "@/app/services/courseService";
 import LessonDisplay from "../LessonDisplay";
 import FooterSection from "@/components/ui/footer/FooterSection";
+import { CourseDetailsResponse } from "@/app/types";
 
 interface CoursDetailsPageProps {
   params: {
@@ -40,7 +41,7 @@ const CourseDetails = ({ params }: CoursDetailsPageProps) => {
   };
 
   const { id } = params;
-  const [courseDetails, setCourseDetails] = useState<any>(null);
+  const [courseDetails, setCourseDetails] = useState<CourseDetailsResponse | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -52,8 +53,8 @@ const CourseDetails = ({ params }: CoursDetailsPageProps) => {
       const data = await fetchCourseDetails(id);
       setCourseDetails(data);
       setSelectedLessonIndex(0); // Par défaut, on commence à la première leçon
-    } catch (err: any) {
-      setError(err.message);
+    } catch{
+      setError("Erreur lors du chargement des détails du cours");
     } finally {
       setLoading(false);
     }
@@ -64,7 +65,7 @@ const CourseDetails = ({ params }: CoursDetailsPageProps) => {
   }, [id]);
 
   const handleNextLesson = () => {
-    if (selectedLessonIndex < courseDetails.lessons.length - 1) {
+    if (courseDetails ? courseDetails.lessons.length : 0 > selectedLessonIndex + 1) {
       setSelectedLessonIndex(selectedLessonIndex + 1);
     }
   };
@@ -95,10 +96,10 @@ const CourseDetails = ({ params }: CoursDetailsPageProps) => {
       <Navbar />
       <div className="min-h-screen bg-white">
         <Header
-          courseName={courseDetails.course.title}
-          duration={courseDetails.course.duration}
-          level={courseDetails.course.studyLevel_id?.name}
-          instructor={`${courseDetails.course.created_by.firstname} ${courseDetails.course.created_by.lastname}`}
+          courseName={courseDetails ? courseDetails.course.title : "Titre du cours"}
+          duration={courseDetails ? courseDetails.course.duration : "N/A"}
+          level={courseDetails ? courseDetails.course.studyLevel_id.name : "N/A"}
+          instructor={courseDetails ? `${courseDetails.course.created_by.firstname} ${courseDetails.course.created_by.lastname}` : "Non défini"}
         />
         {/* Main Content */}
         <main className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-6 py-8 px-4">
@@ -106,10 +107,10 @@ const CourseDetails = ({ params }: CoursDetailsPageProps) => {
           <div className="md:col-span-4">
             <ProgressBar progress={progress} /> {/* Ajout de la barre de progression */}
             {
-              courseDetails?.path_video && (
+              courseDetails?.course.path_video && (
                 <div className="relative mt-7">
                   <video controls className="rounded-lg shadow-md w-full max-w-3xl mx-auto">
-                    <source src={courseDetails?.path_video} type="video/mp4" />
+                    <source src={courseDetails?.course.path_video} type="video/mp4" />
                     Votre navigateur ne supporte pas la lecture de vidéos.
                   </video>
                 </div>
@@ -122,13 +123,13 @@ const CourseDetails = ({ params }: CoursDetailsPageProps) => {
           <div className="md:col-span-3">
             <div className="p-6">
               <LessonDisplay
-                lessons={courseDetails.lessons}
-                lessonId={courseDetails.lessons[selectedLessonIndex]._id}
+                lessons={courseDetails ? courseDetails.lessons : []}
+                lessonId={courseDetails ? courseDetails.lessons[selectedLessonIndex]._id : ""}
               />
             </div>
           </div>
           <div className="md:col-span-1">
-            <Aside lessons={courseDetails.lessons} currentLessonIndex={selectedLessonIndex} />
+            <Aside lessons={courseDetails ? courseDetails.lessons : []} currentLessonIndex={selectedLessonIndex} />
           </div>
         </main>
 

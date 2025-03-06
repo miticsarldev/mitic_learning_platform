@@ -1,11 +1,11 @@
 
 import React, { useState, useEffect } from "react";
 import { ChevronRight, ChevronLeft } from "lucide-react";
-import { ICourse } from "@/app/types";
+import { CourseDetails } from "@/app/types";
 
 type PaginationProps = {
-  courses: ICourse[];
-  setCourses: (courses: ICourse[]) => void;
+  courses: CourseDetails[];
+  setCourses: (courses: CourseDetails[]) => void;
 };
 
 export const Pagination: React.FC<PaginationProps> = ({ courses, setCourses }) => {

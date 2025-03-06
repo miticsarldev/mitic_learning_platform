@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { FaArrowLeft, FaArrowRight, FaCheck } from "react-icons/fa";
+import { Lesson } from "../types";
 
-type Lesson = {
-  id: string;
-  title: string;
-};
+
 
 type SidebarProps = {
   lessons: Lesson[]; // Remplace `any[]` par `Lesson[]`
@@ -58,7 +56,7 @@ const Sidebar: React.FC<SidebarProps> = ({ lessons, currentLessonIndex }) => {
             className={`flex items-center ${
               index === currentLessonIndex ? "font-bold text-[#25026B]" : ""
             }`}
-            key={lesson.id}
+            key={lesson._id}
           >
             <span className="bg-[#25026B] w-6 h-6 rounded-full flex items-center justify-center text-white mr-2">
               <FaCheck className="text-xs" />

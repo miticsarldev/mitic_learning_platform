@@ -1,12 +1,12 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { ICourse } from "@/app/types";
+import { CourseDetails } from "@/app/types";
 import { CheckboxGroup } from "./ui/CheckboxGroup";
 
 interface FilterProps {
-    courses: ICourse[];
-    setFilteredCourses: React.Dispatch<React.SetStateAction<ICourse[]>>;
+    courses: CourseDetails[];
+    setFilteredCourses: React.Dispatch<React.SetStateAction<CourseDetails[]>>;
 }
 
 const CourseFilterZoneTest: React.FC<FilterProps> = ({ courses, setFilteredCourses }) => {

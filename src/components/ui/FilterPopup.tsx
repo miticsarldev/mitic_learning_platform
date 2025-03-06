@@ -1,13 +1,13 @@
 
 import React from 'react';
 import { CourseFilterZoneTest } from '../CourseFilterZoneTest';
-import { ICourse } from '@/app/types';
+import { CourseDetails } from '@/app/types';
 
 type filterprops = {
   onClose: () => void;
   isOpen: boolean;
-  courses: ICourse[];
-  setFilteredCourses: React.Dispatch<React.SetStateAction<ICourse[]>>;
+  courses: CourseDetails[];
+  setFilteredCourses: React.Dispatch<React.SetStateAction<CourseDetails[]>>;
 }
 
 const FilterPopup: React.FC<filterprops> = ({ isOpen, onClose, courses, setFilteredCourses }) => {

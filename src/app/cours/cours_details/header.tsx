@@ -4,13 +4,13 @@ import { Button } from "@/components/ui/button";
 import { FaStar } from "react-icons/fa";
 import ConfirmationModal from "@/components/ConfirmationModal";
 import axios from "axios";
-import { CourseHeader } from "@/app/types";
+import { CourseDetailsResponse } from "@/app/types";
 
 
 
 // Type des props avec un cours optionnel
 type CourseProps = {
-  course: CourseHeader;
+  course: CourseDetailsResponse;
 };
 
 const Header: React.FC<CourseProps> = ({ course }) => {
@@ -42,7 +42,7 @@ const Header: React.FC<CourseProps> = ({ course }) => {
   };
   
 
-  const { title, description, rating, reviewsCount, created_by, price, path_image } = course.course || {};
+  const { title, description,  created_by, price, path_image } = course.course || {};
 
   return (
     <header className="bg-[#490AC6] text-white p-8 min-h-[250px] sm:min-h-[350px] md:min-h-[450px] lg:min-h-[500px]">
@@ -54,8 +54,6 @@ const Header: React.FC<CourseProps> = ({ course }) => {
           <div className="flex items-center space-x-4">
             <div className="flex items-center space-x-2">
               <FaStar className="text-yellow-400" />
-              <span className="text-lg font-semibold">{rating || "N/A"}</span>
-              <span className="text-sm">({reviewsCount || "0"} Avis)</span>
             </div>
             <span className="text-sm">
               • Publié par <strong>{created_by ? `${created_by.firstname} ${created_by.lastname}` : "Non Défini"}</strong>
