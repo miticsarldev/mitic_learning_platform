@@ -103,12 +103,15 @@ export default function ListeCours() {
         </div>
       </section>
       <section className="py-10 bg-[#F4E9FF]">
-        <div className="flex justify-evenly gap-10">
-          <h2 className="text-2xl font-bold text-[#25026B] mb-6 text-start">
+        <div className="flex flex-col sm:flex-row justify-between sm:justify-evenly gap-10 sm:gap-6">
+          <h2 className="text-2xl font-bold text-[#25026B] mb-4 sm:mb-0 sm:text-left text-center">
             Recommandé pour vous
           </h2>
-          <p className="text-[#25026B] cursor-pointer hover:underline">Voir tout</p>
+          <p className="text-[#25026B] cursor-pointer hover:underline text-center sm:text-left">
+            Voir tout
+          </p>
         </div>
+
         <div className="flex justify-center gap-10 flex-wrap">
           {filteredCourses.slice(0, 3).map((card, index) => (
             <CourseCard key={index} {...card} />
@@ -117,9 +120,10 @@ export default function ListeCours() {
       </section>
       <section className="py-12 px-6 bg-[#F4E9FF]">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-2xl font-bold text-[#25026B] mb-8 text-start">
+          <h2 className="text-2xl sm:text-xl font-bold text-[#25026B] mb-4 sm:mb-8 text-center sm:text-start">
             Ce que nos étudiants ont à dire
           </h2>
+
           {testimonials.map((testimonial, index) => (
             <TestimonialCard key={index} {...testimonial} />
           ))}

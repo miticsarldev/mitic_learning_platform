@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { CourseDetails } from "@/app/types";
+
 import { CheckboxGroup } from "./ui/CheckboxGroup";
 
 interface FilterProps {
@@ -108,14 +109,7 @@ const CourseFilterZoneTest: React.FC<FilterProps> = ({ courses, setFilteredCours
                         onChange={(e) => setDurationRange([parseInt(e.target.value), durationRange[1]])}
                         className="w-full accent-[#25026B]"
                     />
-                    {/* <input
-                        type="range"
-                        min={0}
-                        max={100}
-                        value={durationRange[1]}
-                        onChange={(e) => setDurationRange([durationRange[0], parseInt(e.target.value)])}
-                        className="w-full accent-[#25026B]"
-                    /> */}
+                   
                     <p>{durationRange[0]} - {durationRange[1]} heures</p>
                 </div>
 
