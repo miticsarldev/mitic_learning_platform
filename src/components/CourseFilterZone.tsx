@@ -1,9 +1,10 @@
+//src/components/CourseFilterZone.tsx
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { CategoryButton } from "./ui/CategoryButton";
 import { SearchBar } from "./ui/SearchBar";
 import { FilterDropdown } from "./ui/FilterDropdown";
-import { ICourse } from "@/app/types";
+import { CourseDetails } from "@/app/types";
 
 
 
@@ -14,8 +15,8 @@ interface Category {
 }
 
 interface CourseFilterZoneProps {
-  courses: ICourse[];
-  setFilteredCourses: (courses: ICourse[]) => void;
+  courses: CourseDetails[];
+  setFilteredCourses: (courses: CourseDetails[]) => void;
 }
 
 export const CourseFilterZone: React.FC<CourseFilterZoneProps> = ({
