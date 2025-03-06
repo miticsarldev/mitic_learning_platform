@@ -1,3 +1,5 @@
+
+//src/app/historique_cours/[id]/page.tsx
 "use client";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
@@ -8,7 +10,7 @@ import Navbar from "@/components/navbar";
 import { useAuthStore } from "@/store/authStore";
 import Image from "next/image";
 import clsx from "clsx";
-import { Enrollment, HistoriqueCourse, ICourse } from "@/app/types";
+import { Enrollment, HistoriqueCourse } from "@/app/types";
 
 
 
