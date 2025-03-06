@@ -13,7 +13,7 @@ import { useEffect, useState, useCallback } from "react";
 import { fetchCourseDetails } from "@/app/services/courseService";
 import { getEnrollementsCountByCourseId } from "@/app/services/enrollementService";
 import FooterSection from "@/components/ui/footer/FooterSection";
-import { Lesson, LessonDisplayProps } from "@/app/types";
+import {  LessonDisplayProps } from "@/app/types";
 
 
 interface CoursDetailsPageProps {
@@ -24,7 +24,7 @@ interface CoursDetailsPageProps {
 
 export default function CoursDetailsPage({ params }: CoursDetailsPageProps) {
   const { id } = params;
-  const [courseDetails, setCourseDetails] = useState<Course | null>(null);
+  const [courseDetails, setCourseDetails] = useState<any | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [enrollementsCount, setEnrollementsCount] = useState<number | null>(null);

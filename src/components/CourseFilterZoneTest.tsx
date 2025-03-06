@@ -1,7 +1,6 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useMediaQuery } from "react-responsive"; // Pour détecter la taille de l'écran
 import { ICourse } from "@/app/types";
 import { CheckboxGroup } from "./ui/CheckboxGroup";
 
@@ -18,7 +17,6 @@ const CourseFilterZoneTest: React.FC<FilterProps> = ({ courses, setFilteredCours
     const [categories, setCategories] = useState<{ _id: string; name: string }[]>([]); // Liste des catégories avec _id
     const [studyLevels, setStudyLevels] = useState<{ _id: string; name: string }[]>([]); // Liste des niveaux d'étude avec _id
 
-    const isMobile = useMediaQuery({ query: "(max-width: 1024px)" });
 
     // Charger les catégories et les niveaux d'études via Axios
     useEffect(() => {

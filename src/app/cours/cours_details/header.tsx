@@ -4,10 +4,7 @@ import { Button } from "@/components/ui/button";
 import { FaStar } from "react-icons/fa";
 import ConfirmationModal from "@/components/ConfirmationModal";
 import axios from "axios";
-import Image from "next/image";
-import { Course, ICourse } from "@/app/types";
 
-// Définition du type Course
 
 
 // Type des props avec un cours optionnel
@@ -21,9 +18,7 @@ const Header: React.FC<CourseProps> = ({ course }) => {
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
-  const confirmPurchase = () => {
-    handlePayment();
-  };
+ 
 
   const handlePayment = async () => {
     if (!course) return;
@@ -33,17 +28,8 @@ const Header: React.FC<CourseProps> = ({ course }) => {
         phone: "22382863206",
         orderId: `ORDER-${Date.now()}`
       });
-
-      if (response.data?.payment_url) {
-        if (typeof window !== "undefined") {
-          window.location.href = response.data.payment_url;
-        }
-        amount: course.price,
-        phone: "22382863206",
-        orderId: `ORDER-${Date.now()}`,
-      });
-
-      if (response.data && response.data.payment_url) {
+  
+      if (response.data?.payment_url && typeof window !== "undefined") {
         window.location.href = response.data.payment_url;
       } else {
         alert("Erreur lors du paiement");
@@ -53,6 +39,7 @@ const Header: React.FC<CourseProps> = ({ course }) => {
       alert("Échec du paiement");
     }
   };
+  
 
   const { title, description, rating, reviewsCount, created_by, price, path_image } = course.course || {};
 

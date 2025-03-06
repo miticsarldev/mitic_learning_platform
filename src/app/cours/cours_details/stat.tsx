@@ -1,19 +1,17 @@
 import React from "react";
 
 type StatItem = {
-  id: number; // Ajout d'un ID unique au lieu de l'index
+  id: number;
   value: number | string;
   label: string;
 };
 
 type StatsProps = {
-  data?: StatItem[]; // Le tableau est optionnel pour éviter les erreurs
+  data?: StatItem[];
 };
 
 const Stats: React.FC<StatsProps> = ({ data = [] }) => {
   if (!data.length) {
-  data: StatItem[];
-};
     return <p className="text-center text-gray-500">Aucune statistique disponible.</p>;
   }
 
@@ -30,5 +28,6 @@ const Stats: React.FC<StatsProps> = ({ data = [] }) => {
     </div>
   );
 };
+
 
 export default Stats;
