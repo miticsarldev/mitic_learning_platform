@@ -4,12 +4,13 @@ import { Button } from "@/components/ui/button";
 import { FaStar } from "react-icons/fa";
 import ConfirmationModal from "@/components/ConfirmationModal";
 import axios from "axios";
+import { CourseHeader } from "@/app/types";
 
 
 
 // Type des props avec un cours optionnel
 type CourseProps = {
-  course: any;
+  course: CourseHeader;
 };
 
 const Header: React.FC<CourseProps> = ({ course }) => {
@@ -92,7 +93,7 @@ const Header: React.FC<CourseProps> = ({ course }) => {
       {/* Popup de confirmation d'achat */}
       {isModalOpen && course && (
         <ConfirmationModal
-          course={course}
+          course={course.course}
           onClose={closeModal}
           onConfirm={handlePayment}
         />

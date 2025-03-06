@@ -92,7 +92,7 @@ export interface DetailLesson {
 
 
 export type LessonDisplayProps = {
-    lessons: Lesson[] |  [];
+    lessons: Lesson[] | [];
     lessonId: string;
     _id: string;
     title: string;
@@ -120,22 +120,33 @@ export type Testimonial = {
     description: string;
     avatar: string;
 };
-export type Testimonial = {
-    name: string;
-    email: string;
-    description: string;
-    avatar: string;
-  };
-
- export type Course = {
+export type Course = {
     title: string;
     description: string;
     rating: number;
     reviewsCount: number;
     created_by?: {
-      firstname: string;
-      lastname: string;
+        firstname: string;
+        lastname: string;
     };
     price: number;
     path_image: string;
-  };
+};
+
+export type CourseHeader = {
+    course: {
+        title: string;
+        description: string;
+        rating: number;
+        reviewsCount: number;
+        created_by: {
+            firstname: string;
+            lastname: string;
+        };
+        price: number;
+        path_image: string;
+    };
+};
+
+
+

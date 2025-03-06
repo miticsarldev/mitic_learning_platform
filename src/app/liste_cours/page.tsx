@@ -45,8 +45,8 @@ export default function ListeCours() {
         } else {
           throw new Error("Structure de données inattendue");
         }
-      } catch (err: any) {
-        setError(err.message || "Une erreur est survenue");
+      } catch {
+        setError("Une erreur est survenue");
       }
     };
 
