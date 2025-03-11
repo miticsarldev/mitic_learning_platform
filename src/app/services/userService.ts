@@ -1,4 +1,5 @@
-import axios, { AxiosError } from "axios";
+//src/app/services/userService.ts
+import axios from "axios";
 
 const API_URL = "http://localhost:4444/api";
 

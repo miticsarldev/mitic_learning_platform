@@ -1,18 +1,17 @@
+//src/app/cours/cours_details/header.tsx
 import React, { useState } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { FaStar } from "react-icons/fa";
 import ConfirmationModal from "@/components/ConfirmationModal";
 import axios from "axios";
-import Image from "next/image";
-import { Course, ICourse } from "@/app/types";
+import { CourseDetailsResponse } from "@/app/types";
 
-// Définition du type Course
 
 
 // Type des props avec un cours optionnel
 type CourseProps = {
-  course: any;
+  course: CourseDetailsResponse;
 };
 
 const Header: React.FC<CourseProps> = ({ course }) => {
@@ -21,9 +20,7 @@ const Header: React.FC<CourseProps> = ({ course }) => {
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
-  const confirmPurchase = () => {
-    handlePayment();
-  };
+ 
 
   const handlePayment = async () => {
     if (!course) return;
@@ -33,17 +30,8 @@ const Header: React.FC<CourseProps> = ({ course }) => {
         phone: "22382863206",
         orderId: `ORDER-${Date.now()}`
       });
-
-      if (response.data?.payment_url) {
-        if (typeof window !== "undefined") {
-          window.location.href = response.data.payment_url;
-        }
-        amount: course.price,
-        phone: "22382863206",
-        orderId: `ORDER-${Date.now()}`,
-      });
-
-      if (response.data && response.data.payment_url) {
+  
+      if (response.data?.payment_url && typeof window !== "undefined") {
         window.location.href = response.data.payment_url;
       } else {
         alert("Erreur lors du paiement");
@@ -53,8 +41,9 @@ const Header: React.FC<CourseProps> = ({ course }) => {
       alert("Échec du paiement");
     }
   };
+  
 
-  const { title, description, rating, reviewsCount, created_by, price, path_image } = course.course || {};
+  const { title, description,  created_by, price, path_image } = course.course || {};
 
   return (
     <header className="bg-[#490AC6] text-white p-8 min-h-[250px] sm:min-h-[350px] md:min-h-[450px] lg:min-h-[500px]">
@@ -66,8 +55,6 @@ const Header: React.FC<CourseProps> = ({ course }) => {
           <div className="flex items-center space-x-4">
             <div className="flex items-center space-x-2">
               <FaStar className="text-yellow-400" />
-              <span className="text-lg font-semibold">{rating || "N/A"}</span>
-              <span className="text-sm">({reviewsCount || "0"} Avis)</span>
             </div>
             <span className="text-sm">
               • Publié par <strong>{created_by ? `${created_by.firstname} ${created_by.lastname}` : "Non Défini"}</strong>
@@ -105,7 +92,7 @@ const Header: React.FC<CourseProps> = ({ course }) => {
       {/* Popup de confirmation d'achat */}
       {isModalOpen && course && (
         <ConfirmationModal
-          course={course}
+          course={course.course}
           onClose={closeModal}
           onConfirm={handlePayment}
         />

@@ -1,8 +1,9 @@
 import axios from "axios";
+import { CourseDetails, CourseDetailsResponse } from "../types";
 
 const API_URL = "http://localhost:4444/api/course";
 
-interface Course {
+export interface Course {
     _id: string;
     title: string;
     description?: string;
@@ -19,14 +20,12 @@ interface Course {
 }
 
 // Définition du type pour les détails du cours
-interface CourseDetails extends Course {
-    lessons?: any[];  // Remplace "any" par un type plus précis si possible
-    sections?: any[];
-}
 
-export const fetchCourses = async (): Promise<Course[]> => {
+
+
+export const fetchCourses = async (): Promise<CourseDetails[]> => {
     try {
-        const response = await axios.get<Course[]>(API_URL);
+        const response = await axios.get<CourseDetails[]>(API_URL);
         return response.data;
     } catch (error) {
         console.error("Erreur lors de la récupération des cours :", error);
@@ -39,13 +38,13 @@ export const fetchCourses = async (): Promise<Course[]> => {
  * @param courseId - L'ID du cours à récupérer
  * @returns Les détails du cours, y compris ses leçons et sections
  */
-export const fetchCourseDetails = async (courseId: string): Promise<CourseDetails> => {
+export const fetchCourseDetails = async (courseId: string): Promise<CourseDetailsResponse> => {
     try {
         // Construire l'URL de l'API avec le courseId
         const url = `${API_URL}/getCourseAllInfo/${courseId}`;
 
         // Faire une requête GET vers le backend
-        const response = await axios.get<CourseDetails>(url);
+        const response = await axios.get<CourseDetailsResponse>(url);
 
         // Retourner les données de la réponse
         return response.data;

@@ -1,4 +1,4 @@
-
+//src/app/cours/cours_details/[id]/page.tsx
 "use client";
 import Navbar from "@/components/navbar";
 import Header from "../header";
@@ -10,10 +10,10 @@ import Instructor from "../instructor";
 import StudentFeedback from "../studentFeedBack";
 import FAQs from "../faq";
 import { useEffect, useState, useCallback } from "react";
-import { fetchCourseDetails } from "@/app/services/courseService";
+import {  fetchCourseDetails } from "@/app/services/courseService";
 import { getEnrollementsCountByCourseId } from "@/app/services/enrollementService";
 import FooterSection from "@/components/ui/footer/FooterSection";
-import { Lesson, LessonDisplayProps } from "@/app/types";
+import {  CourseDetailsResponse, Lesson } from "@/app/types";
 
 
 interface CoursDetailsPageProps {
@@ -24,7 +24,7 @@ interface CoursDetailsPageProps {
 
 export default function CoursDetailsPage({ params }: CoursDetailsPageProps) {
   const { id } = params;
-  const [courseDetails, setCourseDetails] = useState<Course | null>(null);
+  const [courseDetails, setCourseDetails] = useState<CourseDetailsResponse | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [enrollementsCount, setEnrollementsCount] = useState<number | null>(null);
@@ -47,21 +47,23 @@ export default function CoursDetailsPage({ params }: CoursDetailsPageProps) {
       const data = await fetchCourseDetails(id);
       setCourseDetails(data);
       console.log('le cours' + data);
-    } catch (err: any) {
-      setError(err.message);
+    } catch{
+      setError('Erreur lors du chargement des détails du cours');
 
     } finally {
       setLoading(false);
     }
   }, [id]);
 
-  const formatLessons = (data: LessonDisplayProps) => {
-    return data.lessons.map(lesson => ({
+
+  const formatLessons = (data: CourseDetailsResponse) => {
+    return data.lessons.map((lesson: Lesson) => ({
       title: lesson.title,
       description: lesson.description,
-      sections: lesson.sections.map(section => section.title),
+      sections: lesson.sections.map((section) => section.title),
     }));
   };
+  
 
 
   useEffect(() => {
@@ -102,3 +104,4 @@ export default function CoursDetailsPage({ params }: CoursDetailsPageProps) {
     </div>
   );
 }
+
