@@ -23,7 +23,7 @@ export const Gallery: React.FC = () => {
                 console.log(allCourses);
 
                 const rows: Course[][] = [];
-                const processedCourses = allCourses?.data.map(course => ({
+                const processedCourses = allCourses.map(course => ({
                     ...course,
                     path_image: course.path_image || DEFAULT_IMAGE // Assurer une image par défaut
                 }));

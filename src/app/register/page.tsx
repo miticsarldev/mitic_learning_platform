@@ -1,3 +1,4 @@
+//src/app/register/page.tsx
 "use client";
 
 import Link from "next/link";
@@ -54,8 +55,8 @@ export default function RegisterPage() {
         login(user, accessToken);
       }
       router.push(`/OTPVerification?email=${email}`);
-    } catch (err: any) {
-      setError(err.response?.data?.message || "Impossible de s'inscrire.");
+    } catch{
+      setError("Impossible de s'inscrire.");
     }
   };
 
@@ -210,3 +211,5 @@ export default function RegisterPage() {
     </div>
   );
 }
+
+
