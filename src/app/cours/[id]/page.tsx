@@ -1,5 +1,7 @@
-"use client"
-import React, { useEffect, useState } from "react";
+/* eslint-disable @next/next/no-img-element */
+
+"use client";
+import React, { useCallback, useEffect, useState } from "react";
 import Aside from "../aside";
 import Navbar from "@/components/navbar";
 import Header from "../Header";
@@ -10,7 +12,7 @@ import FooterSection from "@/components/ui/footer/FooterSection";
 
 interface CoursDetailsPageProps {
   params: {
-    id: string; // ID récupéré depuis l'URL
+    id: string;
   };
 }
 
@@ -40,28 +42,28 @@ const CourseDetails = ({ params }: CoursDetailsPageProps) => {
   };
 
   const { id } = params;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [courseDetails, setCourseDetails] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-
-
-  const getDetails = async () => {
+  const getDetails = useCallback(async () => {
     try {
       setLoading(true);
       const data = await fetchCourseDetails(id);
       setCourseDetails(data);
       setSelectedLessonIndex(0); // Par défaut, on commence à la première leçon
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setError(err.message);
     } finally {
       setLoading(false);
     }
-  };
+  }, [id, setCourseDetails]);
 
   useEffect(() => {
     getDetails();
-  }, [id]);
+  }, [id, getDetails]);
 
   const handleNextLesson = () => {
     if (selectedLessonIndex < courseDetails.lessons.length - 1) {
@@ -75,20 +77,18 @@ const CourseDetails = ({ params }: CoursDetailsPageProps) => {
     }
   };
 
-  //gerer la progression 
+  //gerer la progression
   useEffect(() => {
     if (courseDetails && courseDetails.lessons.length > 0) {
-      const progressPercentage = (selectedLessonIndex / (courseDetails.lessons.length - 1)) * 100;
+      const progressPercentage =
+        (selectedLessonIndex / (courseDetails.lessons.length - 1)) * 100;
       setProgress(progressPercentage);
       console.log("Progress Updated:", progressPercentage); // Vérifie si la valeur change
     }
   }, [selectedLessonIndex, courseDetails]);
 
-
-
   if (loading) return <p>Chargement...</p>;
   if (error) return <p>Erreur : {error}</p>;
-
 
   return (
     <>
@@ -104,18 +104,19 @@ const CourseDetails = ({ params }: CoursDetailsPageProps) => {
         <main className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-6 py-8 px-4">
           {/* Vidéo seule sur une ligne */}
           <div className="md:col-span-4">
-            <ProgressBar progress={progress} /> {/* Ajout de la barre de progression */}
-            {
-              courseDetails?.path_video && (
-                <div className="relative mt-7">
-                  <video controls className="rounded-lg shadow-md w-full max-w-3xl mx-auto">
-                    <source src={courseDetails?.path_video} type="video/mp4" />
-                    Votre navigateur ne supporte pas la lecture de vidéos.
-                  </video>
-                </div>
-              )
-            }
-
+            <ProgressBar progress={progress} />{" "}
+            {/* Ajout de la barre de progression */}
+            {courseDetails?.path_video && (
+              <div className="relative mt-7">
+                <video
+                  controls
+                  className="rounded-lg shadow-md w-full max-w-3xl mx-auto"
+                >
+                  <source src={courseDetails?.path_video} type="video/mp4" />
+                  Votre navigateur ne supporte pas la lecture de vidéos.
+                </video>
+              </div>
+            )}
           </div>
 
           {/* Texte de la leçon et sidebar côte à côte */}
@@ -128,10 +129,12 @@ const CourseDetails = ({ params }: CoursDetailsPageProps) => {
             </div>
           </div>
           <div className="md:col-span-1">
-            <Aside lessons={courseDetails.lessons} currentLessonIndex={selectedLessonIndex} />
+            <Aside
+              lessons={courseDetails.lessons}
+              currentLessonIndex={selectedLessonIndex}
+            />
           </div>
         </main>
-
 
         {/* Footer Section */}
         <section className="bg-white shadow-md py-6 px-4">
@@ -155,7 +158,9 @@ const CourseDetails = ({ params }: CoursDetailsPageProps) => {
 
         {/* Comment Section */}
         <section className="max-w-4xl mx-auto py-8 px-4">
-          <h3 className="text-2xl font-semibold mb-6">{comments.length} Commentaires</h3>
+          <h3 className="text-2xl font-semibold mb-6">
+            {comments.length} Commentaires
+          </h3>
           {/* Zone d'ajout de commentaire */}
           <div className="flex items-start mb-8">
             <div className="mr-4">
@@ -207,7 +212,9 @@ const CourseDetails = ({ params }: CoursDetailsPageProps) => {
                     {comment.time}
                   </p>
                   <p className="text-gray-800">{comment.text}</p>
-                  <button className="mt-2 text-sm text-[#1C1E53]">répondre</button>
+                  <button className="mt-2 text-sm text-[#1C1E53]">
+                    répondre
+                  </button>
                 </div>
               </div>
             ))}

@@ -1,6 +1,5 @@
 //src/components/ui/Pagination.tsx
 
-
 import React, { useState, useEffect } from "react";
 import { ChevronRight, ChevronLeft } from "lucide-react";
 import { CourseDetails } from "@/app/types";
@@ -10,16 +9,22 @@ type PaginationProps = {
   setCourses: (courses: CourseDetails[]) => void;
 };
 
-export const Pagination: React.FC<PaginationProps> = ({ courses, setCourses }) => {
+export const Pagination: React.FC<PaginationProps> = ({
+  courses,
+  setCourses,
+}) => {
   const itemsPerPage = 6;
   const totalPages = Math.ceil(courses.length / itemsPerPage);
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     const startIndex = (currentPage - 1) * itemsPerPage;
-    const paginatedCourses = courses.slice(startIndex, startIndex + itemsPerPage);
+    const paginatedCourses = courses.slice(
+      startIndex,
+      startIndex + itemsPerPage
+    );
     setCourses(paginatedCourses);
-  }, [currentPage, courses]);
+  }, [currentPage, courses, setCourses]);
 
   const handleNext = () => {
     if (currentPage < totalPages) {
@@ -100,7 +105,6 @@ export const Pagination: React.FC<PaginationProps> = ({ courses, setCourses }) =
           </button>
         )
       )}
-
 
       {/* Bouton Suivant */}
       <button
