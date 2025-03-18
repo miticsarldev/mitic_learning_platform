@@ -25,13 +25,14 @@ export interface Course {
 
 export const fetchCourses = async (): Promise<CourseDetails[]> => {
     try {
-        const response = await axios.get<CourseDetails[]>(API_URL);
-        return response.data;
+        const response = await axios.get<{ data: CourseDetails[] }>(API_URL);
+        return response.data.data; // On extrait correctement le tableau des cours
     } catch (error) {
         console.error("Erreur lors de la récupération des cours :", error);
         throw new Error("Impossible de récupérer les cours.");
     }
 };
+
 
 /**
  * Service pour récupérer les détails d'un cours

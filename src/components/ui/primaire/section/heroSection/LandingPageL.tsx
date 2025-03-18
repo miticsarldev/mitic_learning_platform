@@ -10,15 +10,13 @@ export const LandingPage: React.FC = () => {
     <header className="flex flex-col rounded-none">
       <div className="flex relative flex-col items-center px-20 pt-9 pb-2.5 w-full min-h-0 max-md:px-5 max-md:max-w-full">
         {/* Image de fond */}
-        <div className="relative w-full h-full">
-          <Image
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/c0570893bdf86d2d831598bbd46bad586d3dd798d1e90817a184ec26ea8bde7d?placeholderIfAbsent=true&apiKey=3a2067aab35e451b9d08bcadda09cdd4"
-            alt=""
-            fill
-            className="object-cover z-0"
-            priority={false} // Équivaut à loading="lazy"
-          />
-        </div>
+        <div
+          className="absolute inset-0 w-full h-full bg-cover bg-center z-0"
+          style={{
+            backgroundImage: "url('https://cdn.builder.io/api/v1/image/assets/TEMP/c0570893bdf86d2d831598bbd46bad586d3dd798d1e90817a184ec26ea8bde7d?apiKey=3a2067aab35e451b9d08bcadda09cdd4')",
+          }}
+        ></div>
+
         <div className="flex relative flex-col w-full max-w-[1665px] max-md:max-w-full z-10">
 
           <main className="flex flex-wrap gap-10 mt-48 ml-5 w-full max-w-[1638px] max-md:mt-10 max-md:mr-2 max-md:max-w-full">
@@ -34,7 +32,7 @@ export const LandingPage: React.FC = () => {
 
                 {/* Section avec image */}
                 <section className="flex flex-col ml-5 w-6/12 max-md:w-full max-md:ml-0">
-                  <div className="relative w-full aspect-[0.9] max-md:w-3/4 max-md:mx-auto flex-grow">
+                  <div className="relative w-full aspect-[0.9] max-md:w-3/4 max-md:mx-auto flex-grow -translate-y-5">
                     <Image
                       src="https://cdn.builder.io/api/v1/image/assets/TEMP/2c027d6b4d803487dec3e2aef313d1b9bcb5bbe52b79a3bfb6782703d3ede79d?placeholderIfAbsent=true&apiKey=3a2067aab35e451b9d08bcadda09cdd4"
                       alt=""
