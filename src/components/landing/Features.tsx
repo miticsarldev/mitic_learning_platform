@@ -36,7 +36,7 @@ const Features: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (
-    <section className="bg-white py-12">
+    <section className="bg-gray-100 py-12">
       <div className="max-w-6xl mx-auto text-center">
         {/* Titre */}
         <h2 className="text-3xl font-bold text-[#1A013F] mb-8">Nos Fonctionnalité</h2>

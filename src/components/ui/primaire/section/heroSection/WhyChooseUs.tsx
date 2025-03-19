@@ -30,7 +30,7 @@ export default function WhyChooseUs() {
                         transition={{ duration: 0.5, delay: index * 0.2 }}
                         viewport={{ once: true }}
                     >
-                        <feature.icon className="text-blue-500 w-12 h-12 flex-shrink-0" />
+                        <feature.icon className="text-[#1A013F] w-12 h-12 flex-shrink-0" />
                         <div>
                             <h3 className="text-xl font-semibold">{feature.title}</h3>
                             <p className="text-gray-600 mt-2">{feature.desc}</p>
