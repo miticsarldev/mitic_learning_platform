@@ -1,46 +1,45 @@
 import axios from "axios";
 
-const BASE_URL = "https://api.orange.com"; //  l'URL de l'API Orange Money
-const API_KEY = "WPORqoApYNJgujeHfpUm9M0ECesGEb3Z"; // À récupérer dans ton compte Orange Money
-const MERCHANT_KEY = "101018"; // À récupérer
+const BASE_URL = "https://api.orange.com";
+const API_KEY = "WPORqoApYNJgujeHfpUm9M0ECesGEb3Z"; 
+const CLIENT_SECRET = "LnnDs2QmxeNB2z1C5UfVv2DnqG2EytprMun09F4srA78"; 
+const MERCHANT_KEY = "101018"; 
 
 // Fonction pour obtenir le token d'authentification
 export const getAccessToken = async () => {
     try {
         const response = await axios.post(
             `${BASE_URL}/oauth/v3/token`,
-            new URLSearchParams({
-                grant_type: "client_credentials",
-            }),
+            new URLSearchParams({ grant_type: "client_credentials" }),
             {
                 headers: {
-                    Authorization: `Basic ${btoa(`${API_KEY}:${MERCHANT_KEY}`)}`,
+                    Authorization: `Basic ${btoa(`${API_KEY}:${CLIENT_SECRET}`)}`, // Correction ici
                     "Content-Type": "application/x-www-form-urlencoded",
                 },
             }
         );
         return response.data.access_token;
-    } catch (error) {
-        console.error("Erreur lors de la récupération du token :", error);
+    } catch (error: any) {
+        console.error("Erreur lors de la récupération du token :", error.response?.data || error.message);
         throw error;
     }
 };
 
 // Fonction pour initier un paiement
-export const initiatePayment = async (amount: number) => {
+export const initiatePayment = async (amount: number, phoneNumber: string) => {
     try {
         const token = await getAccessToken();
         const response = await axios.post(
             `${BASE_URL}/orange-money-webpay/initiate-payment`,
             {
                 amount,
-                currency: "OMUV",
-                order_id: `ORDER_${Date.now()}`, // ID de commande unique
-                return_url: "https://tonapp.com/paiement-reussi", // URL de retour en cas de succès
-                cancel_url: "https://tonapp.com/paiement-annule", // URL en cas d'annulation
-                notif_url: "https://tonapp.com/webhook-orange-money", // URL pour les notifications de paiement
+                currency: "OMUV", 
+                order_id: `ORDER_${Date.now()}`,
+                return_url: "https://tonapp.com/paiement-reussi",
+                cancel_url: "https://tonapp.com/paiement-annule",
+                notif_url: "https://tonapp.com/webhook-orange-money",
                 lang: "fr",
-                payer_phone_number: "+22382863206", 
+                payer_phone_number: phoneNumber, 
             },
             {
                 headers: {
@@ -49,9 +48,9 @@ export const initiatePayment = async (amount: number) => {
                 },
             }
         );
-        return response.data; // Retourne les infos du paiement (URL, ID de transaction, etc.)
-    } catch (error) {
-        console.error("Erreur lors de l'initiation du paiement :", error);
+        return response.data;
+    } catch (error: any) {
+        console.error("Erreur lors de l'initiation du paiement :", error.response?.data || error.message);
         throw error;
     }
 };
@@ -68,9 +67,9 @@ export const checkPaymentStatus = async (orderId: string) => {
                 },
             }
         );
-        return response.data; // Retourne le statut du paiement
-    } catch (error) {
-        console.error("Erreur lors de la vérification du paiement :", error);
+        return response.data;
+    } catch (error: any) {
+        console.error("Erreur lors de la vérification du paiement :", error.response?.data || error.message);
         throw error;
     }
 };

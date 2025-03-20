@@ -1,90 +1,131 @@
 "use client";
-import { useState } from "react";
-import { motion } from "framer-motion";
-import Image from "next/image";
+import React, { useState } from "react";
+import { initiatePayment, checkPaymentStatus } from "../services/orangeMoneyService";
 
+const Payment: React.FC = () => {
+  const [amount, setAmount] = useState<number>(0);
+  const [phoneNumber, setPhoneNumber] = useState<string>("");
+  const [paymentUrl, setPaymentUrl] = useState<string>("");
+  const [orderId, setOrderId] = useState<string>("");
+  const [status, setStatus] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
 
-const operators = [
-    { name: "Orange Money", icon: "https://yop.l-frii.com/wp-content/uploads/2023/03/Orange-Money-recrute-pour-ce-poste-03-Mars-2023.png", color: "bg-orange-500" },
-];
+  const handlePayment = async () => {
+    setLoading(true);
+    setError("");
 
-const PaymentPage = () => {
-    const [selectedOperator, setSelectedOperator] = useState<string | null>(null);
-    const [formData, setFormData] = useState({
-        phoneNumber: "",
-        amount: "",
-    });
+    if (!amount || amount <= 0) {
+      setError("Veuillez entrer un montant valide.");
+      setLoading(false);
+      return;
+    }
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setFormData((prev) => ({ ...prev, [name]: value }));
-    };
+    if (!phoneNumber.match(/^(\+223|00223|0)[0-9]{8}$/)) {
+      setError("Veuillez entrer un numéro Orange Money valide.");
+      setLoading(false);
+      return;
+    }
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        alert(`Paiement de ${formData.amount} via ${selectedOperator}`);
-    };
+    try {
+      const response = await initiatePayment(amount, phoneNumber);
+      setPaymentUrl(response.payment_url);
+      setOrderId(response.order_id);
+    } catch (err) {
+      console.error("Erreur lors du paiement :", err);
+      setError("Une erreur est survenue lors du paiement.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    return (
-        <div className="p-6 max-w-md mx-auto">
-            <h1 className="text-2xl font-bold text-gray-800 mb-6">Paiement Mobile Money</h1>
-            <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
-                    <label className="block text-gray-700 text-sm mb-1">Numéro de téléphone</label>
-                    <input
-                        type="text"
-                        name="phoneNumber"
-                        value={formData.phoneNumber}
-                        onChange={handleChange}
-                        className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-                        placeholder="Entrez votre numéro"
-                    />
-                </div>
-                <div>
-                    <label className="block text-gray-700 text-sm mb-1">Montant</label>
-                    <input
-                        type="number"
-                        name="amount"
-                        value={formData.amount}
-                        onChange={handleChange}
-                        className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-                        placeholder="Entrez le montant"
-                    />
-                </div>
-                <div>
-                    <label className="block text-gray-700 text-sm mb-2">Sélectionnez un opérateur</label>
-                    <div className="flex gap-4">
-                        {operators.map((operator) => (
-                            <motion.div
-                                key={operator.name}
-                                className={`flex items-center gap-2 px-4 py-2 rounded-lg cursor-pointer w-20 h-20 shadow-md ${selectedOperator === operator.name
-                                    ? "ring-2 [#1C1E53]"
-                                    : ""
-                                    } white`}
-                                onClick={() => setSelectedOperator(operator.name)}
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
-                            >
-                                <Image
-                                    src={operator.icon}
-                                    alt={operator.name}
-                                    className="w-18 h-18 object-cover rounded-lg"
-                                />
-                                
-                            </motion.div>
-                        ))}
-                    </div>
-                </div>
-                <button
-                    type="submit"
-                    className="w-full bg-[#1C1E53] text-white py-2 rounded-lg font-semibold shadow-md hover:[#1C1E53] focus:ring-2 focus:[#1C1E53] focus:outline-none"
-                    // disabled={!selectedOperator || !formData.phoneNumber || !formData.amount}
-                >
-                    Valider le paiement
-                </button>
-            </form>
+  const handleCheckStatus = async () => {
+    if (!orderId) {
+      setError("Aucune transaction en cours !");
+      return;
+    }
+    setLoading(true);
+    setError("");
+
+    try {
+      const response = await checkPaymentStatus(orderId);
+      setStatus(response.status); // success, pending, failed, etc.
+    } catch (err) {
+      console.error("Erreur lors de la vérification du statut :", err);
+      setError("Impossible de vérifier le statut du paiement.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="max-w-lg mx-auto bg-white shadow-lg rounded-xl p-6 mt-10">
+      <h2 className="text-2xl font-bold text-center text-orange-500 mb-4">Paiement Orange Money</h2>
+
+      {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+
+      <div className="mb-4">
+        <label className="block text-gray-700">Montant (XOF):</label>
+        <input
+          type="number"
+          value={amount}
+          onChange={(e) => setAmount(parseFloat(e.target.value))}
+          placeholder="Montant"
+          className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
+        />
+      </div>
+
+      <div className="mb-4">
+        <label className="block text-gray-700">Numéro de téléphone :</label>
+        <input
+          type="text"
+          value={phoneNumber}
+          onChange={(e) => setPhoneNumber(e.target.value)}
+          placeholder="+2250123456789"
+          className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
+        />
+      </div>
+
+      <button
+        onClick={handlePayment}
+        className="w-full bg-orange-500 text-white py-2 rounded-md hover:bg-orange-600 transition disabled:opacity-50"
+        disabled={loading}
+      >
+        {loading ? "Traitement..." : "Payer"}
+      </button>
+
+      {paymentUrl && (
+        <div className="mt-4 p-4 bg-green-100 text-green-800 rounded-md text-center">
+          <p>Payez en cliquant sur le lien ci-dessous :</p>
+          <a
+            href={paymentUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-600 font-bold underline"
+          >
+            Effectuer le paiement
+          </a>
         </div>
-    );
+      )}
+
+      {orderId && (
+        <div className="mt-6">
+          <button
+            onClick={handleCheckStatus}
+            className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition disabled:opacity-50"
+            disabled={loading}
+          >
+            Vérifier le statut du paiement
+          </button>
+          {status && (
+            <p className="mt-3 text-center font-bold text-gray-700">
+              Statut : <span className="text-orange-500">{status}</span>
+            </p>
+          )}
+        </div>
+      )}
+    </div>
+  );
 };
 
-export default PaymentPage;
+export default Payment;
