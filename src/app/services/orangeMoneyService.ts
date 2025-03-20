@@ -3,7 +3,6 @@ import axios from "axios";
 const BASE_URL = "https://api.orange.com";
 const API_KEY = "WPORqoApYNJgujeHfpUm9M0ECesGEb3Z"; 
 const CLIENT_SECRET = "LnnDs2QmxeNB2z1C5UfVv2DnqG2EytprMun09F4srA78"; 
-const MERCHANT_KEY = "101018"; 
 
 // Fonction pour obtenir le token d'authentification
 export const getAccessToken = async () => {
@@ -19,10 +18,9 @@ export const getAccessToken = async () => {
             }
         );
         return response.data.access_token;
-    } catch (error: any) {
-        console.error("Erreur lors de la récupération du token :", error.response?.data || error.message);
-        throw error;
-    }
+    } catch (err) {
+        console.error("Erreur lors de la récupération du token :");
+        throw new Error("Impossible de récupérer le token d'authentification.");}
 };
 
 // Fonction pour initier un paiement
@@ -49,9 +47,9 @@ export const initiatePayment = async (amount: number, phoneNumber: string) => {
             }
         );
         return response.data;
-    } catch (error: any) {
-        console.error("Erreur lors de l'initiation du paiement :", error.response?.data || error.message);
-        throw error;
+    } catch (error) {
+        console.error("Erreur lors de l'initiation du paiement :");
+        throw new Error("Impossible d'initier le paiement.");
     }
 };
 
@@ -68,8 +66,8 @@ export const checkPaymentStatus = async (orderId: string) => {
             }
         );
         return response.data;
-    } catch (error: any) {
-        console.error("Erreur lors de la vérification du paiement :", error.response?.data || error.message);
-        throw error;
+    } catch (error) {
+        console.error("Erreur lors de la vérification du paiement :");
+        throw new Error("Impossible de vérifier le statut du paiement.");
     }
 };
